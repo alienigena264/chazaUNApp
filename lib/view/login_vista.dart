@@ -51,31 +51,33 @@ class _LoginVistaState extends State<LoginVista> {
             ),
             inputEmail_(),
             inputPassword_(),
-            const SizedBox(
-              height: 5,
-            ),
             Row(
-              children: const [
-                SizedBox(
+              children: [
+                const SizedBox(
                   width: 25,
                 ),
-                Text(
-                  '¿Olvidaste tu contraseña?',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: "Inder",
-                      fontWeight: FontWeight.normal),
-                ),
+                TextButton(
+                    style:
+                        TextButton.styleFrom(padding: const EdgeInsets.all(1)),
+                    onPressed: () => print('Olvido la password'),
+                    child: const Text(
+                      '¿Olvidó su contraseña?',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontFamily: "Inder",
+                          fontWeight: FontWeight.bold),
+                    )),
               ],
             ),
             const SizedBox(
-              height: 43,
+              height: 20,
             ),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffEFB810),
-                  minimumSize:
-                      const Size(327, 55), // double.infinity is the width and 30 is the height
+                  minimumSize: const Size(340,
+                      55), // double.infinity is the width and 30 is the height
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14.0),
                   ),
@@ -83,11 +85,34 @@ class _LoginVistaState extends State<LoginVista> {
                 onPressed: verificar_(),
                 child: const Text(
                   "Iniciar sesión",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18
-                  ),
-                ))
+                  style: TextStyle(color: Colors.black, fontSize: 18),
+                )),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 55,
+                ),
+                const Text(
+                  '¿No tienes una cuenta?',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                    style: TextButton.styleFrom(
+                        padding: const EdgeInsets.only(left: 10)),
+                    onPressed: () => print('Registrarse'),
+                    child: const Text(
+                      'Regístrate aquí',
+                      style: TextStyle(
+                          color: Color(0xffEFB810),
+                          fontSize: 15,
+                          fontFamily: "Inder",
+                          fontWeight: FontWeight.bold),
+                    )),
+              ],
+            )
           ],
         ),
       ),
@@ -138,5 +163,9 @@ class _LoginVistaState extends State<LoginVista> {
     return () {
       print("Verificar");
     };
+  }
+
+  recuperarPassword_() {
+    print('Se recupero');
   }
 }
