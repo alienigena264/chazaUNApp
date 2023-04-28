@@ -26,7 +26,7 @@ class _LoginVistaState extends State<LoginVista> {
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(50.0),
             ),
-            ),
+          ),
           child: const Center(
             child:  FittedBox(
               fit: BoxFit.scaleDown,
@@ -35,7 +35,8 @@ class _LoginVistaState extends State<LoginVista> {
                 style: TextStyle(
                   color: Colors.white, // Establece el color del texto
                   fontSize: 55.0, // Establece el tamaño del texto
-                  fontFamily: "Calibri Light (Títulos)"
+                  fontFamily: "Inder",
+                  fontWeight: FontWeight.normal
                 ),
               ),
             ),
@@ -44,7 +45,6 @@ class _LoginVistaState extends State<LoginVista> {
       ),
       ],
     ),
-    );
-
+  );
   }
 }
