@@ -5,20 +5,29 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 const String _title = 'Registro';
 bool isChecked = false; //Aceptar terminos y condiciones
 
-class RegistroTrabajadorView extends StatelessWidget {
+class RegistroTrabajadorView extends StatefulWidget {
   const RegistroTrabajadorView({super.key});
 
   @override
+  State<RegistroTrabajadorView> createState() => _RegistroTrabajadorState();
+}
+
+class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
-        body: Container(
-            color: const Color(0xffF6F6F6),
-            child: Column(
-              children: const [Title(), SizedBox(height: 250,), LoginButton(), AgreeCheck()],
-            )),
-      ),
+    return Scaffold(
+      body: Container(
+          color: const Color(0xffF6F6F6),
+          child: Column(
+            children: const [
+              Title(),
+              SizedBox(
+                height: 250,
+              ),
+              LoginButton(),
+              AgreeCheck()
+            ],
+          )),
     );
   }
 }
@@ -67,7 +76,8 @@ class _LoginButton extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
     return SignInButton(
-      Buttons.Google,
+      Buttons.GoogleDark,
+      text: 'Ingresar con google unal',
       onPressed: () {},
     );
   }
@@ -96,18 +106,13 @@ class _Checkbox extends State<AgreeCheck> {
     }
 
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 50.0),
+        padding: const EdgeInsets.symmetric(
+          vertical: 0.0,
+        ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const Expanded(
-                child: Text(
-              'Acepto los términos y condiciones', // el texto que quieres mostrar
-              style: TextStyle(
-                  color: Colors.black, // Establece el color del texto
-                  fontSize: 14.0, // Establece el tamaño del texto
-                  fontFamily: "Inder",
-                  fontWeight: FontWeight.normal),
-            )),
             Checkbox(
                 checkColor: Colors.white,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
@@ -116,7 +121,16 @@ class _Checkbox extends State<AgreeCheck> {
                   setState(() {
                     isChecked = value!;
                   });
-                })
+                }),
+            const Expanded(
+                child: Text(
+              'Acepto los términos y condiciones.', // el texto que quieres mostrar
+              style: TextStyle(
+                  color: Colors.black, // Establece el color del texto
+                  fontSize: 14.0, // Establece el tamaño del texto
+                  fontFamily: "Inder",
+                  fontWeight: FontWeight.normal),
+            )),
           ],
         ));
   }
