@@ -18,14 +18,15 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
     return Scaffold(
       body: Container(
           color: const Color(0xffF6F6F6),
+          alignment: Alignment.center,
           child: Column(
             children: const [
               Title(),
-              SizedBox(
-                height: 250,
-              ),
+              Flexible(flex: 1, child:SizedBox(
+                height: 300,
+              )),
               LoginButton(),
-              AgreeCheck()
+              Center(child: AgreeCheck()),
             ],
           )),
     );
@@ -105,14 +106,12 @@ class _Checkbox extends State<AgreeCheck> {
       return Colors.red;
     }
 
-    return Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 0.0,
-        ),
+    return SizedBox(
+        width: 250.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+          children:[
             Checkbox(
                 checkColor: Colors.white,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
@@ -127,9 +126,10 @@ class _Checkbox extends State<AgreeCheck> {
               'Acepto los términos y condiciones.', // el texto que quieres mostrar
               style: TextStyle(
                   color: Colors.black, // Establece el color del texto
-                  fontSize: 14.0, // Establece el tamaño del texto
+                  fontSize: 12.0, // Establece el tamaño del texto
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.center,
             )),
           ],
         ));
