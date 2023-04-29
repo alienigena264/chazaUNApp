@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
 return MaterialApp(
   debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: '/registro/trabajador', //prueba
+      initialRoute: '/', //prueba
       routes: {
         '/': (context) => const LoginVista(),
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),

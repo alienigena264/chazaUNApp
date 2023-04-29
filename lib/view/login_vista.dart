@@ -193,7 +193,7 @@ class _LoginVistaState extends State<LoginVista> {
 
   registrarse_() {
     return () {
-      print('Se registro');
+      Navigator.pushNamed(context, '/registro/trabajador');
     };
   }
 }
