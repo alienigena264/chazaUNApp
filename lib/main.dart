@@ -1,5 +1,6 @@
 import 'package:chazaunapp/view/login_vista.dart';
 import 'package:chazaunapp/view/registro_trabajador.dart';
+import 'package:chazaunapp/view/recuperar_pswrd_vista.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -16,6 +17,7 @@ return MaterialApp(
       routes: {
         '/': (context) => const LoginVista(),
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),
+        '/recuperarpswrd': (context) => const RecuperarPswrdVista(),
         //'/Otra':(context) => const OtherPage(),
         //'/Services':(context) => const ServicesPage(),
       },

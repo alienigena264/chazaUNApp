@@ -182,6 +182,7 @@ class _LoginVistaState extends State<LoginVista> {
   recuperarPassword_() {
     return () {
       print('Se recupero');
+      Navigator.pushNamed(context, '/recuperarpswrd');
     };
   }
 
