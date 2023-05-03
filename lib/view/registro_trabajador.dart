@@ -18,14 +18,15 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
     return Scaffold(
       body: Container(
           color: const Color(0xffF6F6F6),
+          alignment: Alignment.center,
           child: Column(
             children: const [
               Title(),
-              SizedBox(
-                height: 250,
-              ),
+              Flexible(flex: 1, child:SizedBox(
+                height: 300,
+              )),
               LoginButton(),
-              AgreeCheck()
+              Center(child: AgreeCheck()),
             ],
           )),
     );
@@ -76,7 +77,7 @@ class _LoginButton extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
     return SignInButton(
-      Buttons.GoogleDark,
+      Buttons.Google,
       text: 'Ingresar con google unal',
       onPressed: () {},
     );
@@ -100,21 +101,19 @@ class _Checkbox extends State<AgreeCheck> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
+        return const Color(0xff7B1FA2);
       }
-      return Colors.red;
+      return const Color(0xff00B5C0);
     }
 
-    return Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 0.0,
-        ),
+    return SizedBox(
+        width: 250.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+          children:[
             Checkbox(
-                checkColor: Colors.white,
+                checkColor: const Color(0xffF6F6F6),
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 value: isChecked,
                 onChanged: (bool? value) {
@@ -127,9 +126,10 @@ class _Checkbox extends State<AgreeCheck> {
               'Acepto los términos y condiciones.', // el texto que quieres mostrar
               style: TextStyle(
                   color: Colors.black, // Establece el color del texto
-                  fontSize: 14.0, // Establece el tamaño del texto
+                  fontSize: 12.0, // Establece el tamaño del texto
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.center,
             )),
           ],
         ));
