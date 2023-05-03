@@ -77,7 +77,7 @@ class _LoginButton extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
     return SignInButton(
-      Buttons.GoogleDark,
+      Buttons.Google,
       text: 'Ingresar con google unal',
       onPressed: () {},
     );
@@ -101,9 +101,9 @@ class _Checkbox extends State<AgreeCheck> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
+        return const Color(0xff7B1FA2);
       }
-      return Colors.red;
+      return const Color(0xff00B5C0);
     }
 
     return SizedBox(
@@ -113,7 +113,7 @@ class _Checkbox extends State<AgreeCheck> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children:[
             Checkbox(
-                checkColor: Colors.white,
+                checkColor: const Color(0xffF6F6F6),
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 value: isChecked,
                 onChanged: (bool? value) {
