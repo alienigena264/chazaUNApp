@@ -17,7 +17,7 @@ class SelectorVista extends StatelessWidget {
                   Text(
                     'Registrarse como:',
                     style: TextStyle(
-                        color: const Color(0xff00B5C0), fontSize: 26),
+                        color: const Color(0xff00B5C0), fontSize: 26, fontFamily: "Inder"),
                   ),
                 ],
               ),
@@ -49,7 +49,7 @@ class SelectorVista extends StatelessWidget {
       onPressed: registrarseTrabajador(context),
       child: const Text(
         "TRABAJADOR",
-        style: TextStyle(color: Colors.white, fontSize: 24),
+        style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: "Inder"),
       ),
     );
   }
@@ -67,7 +67,7 @@ class SelectorVista extends StatelessWidget {
       onPressed: registrarseChazero(context),
       child: const Text(
         "CHAZERO",
-        style: TextStyle(color: Colors.white, fontSize: 24),
+        style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: "Inder"),
       ),
     );
   }
