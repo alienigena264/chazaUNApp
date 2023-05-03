@@ -13,11 +13,11 @@ class SelectorVista extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Stack(
-                children: [
+                children:const  [
                   Text(
                     'Registrarse como:',
                     style: TextStyle(
-                        color: const Color(0xff00B5C0), fontSize: 26),
+                        color:  Color(0xff00B5C0), fontSize: 26),
                   ),
                 ],
               ),

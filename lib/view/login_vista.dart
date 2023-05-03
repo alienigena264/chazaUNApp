@@ -63,25 +63,23 @@ class _LoginVistaState extends State<LoginVista> {
   }
 
   SizedBox barraSuperior_() {
-    
     return SizedBox(
       height: 186.0,
       child: Container(
         decoration: const BoxDecoration(
           color: colorPrincipal, // Establece el color de fondo del contenedor con el texto
           borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(50.0),
-          ),
+          bottomLeft: Radius.circular(50.0)),
         ),
         child: const Center(
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text('Ingresar', // el texto que quieres mostrar
               style: TextStyle(
-                color:Colors.white, // Establece el color del texto
-                fontSize: 55.0, // Establece el tamaño del texto
-                fontFamily: "Inder",
-                fontWeight: FontWeight.normal),
+                  color:Colors.white, // Establece el color del texto
+                  fontSize: 55.0, // Establece el tamaño del texto
+                  fontFamily: "Inder",
+                  fontWeight: FontWeight.normal),
             ),
           ),
         ),
@@ -151,17 +149,20 @@ class _LoginVistaState extends State<LoginVista> {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorChazero,
-          minimumSize: const Size(
-              340, 55), // double.infinity is the width and 30 is the height
+          minimumSize: const Size(340, 55), // double.infinity is the width and 30 is the height
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14.0),
+            borderRadius: BorderRadius.circular(14.0)
           ),
         ),
         onPressed: verificar_(),
         child: const Text(
           "Iniciar sesión",
-          style: TextStyle(color: Colors.black, fontSize: 18),
-        ));
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18
+          ),
+        )
+      );
   }
 
   TextButton registrarseButtom_() {
