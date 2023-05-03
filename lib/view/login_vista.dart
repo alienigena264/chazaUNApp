@@ -1,3 +1,4 @@
+import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
 class LoginVista extends StatefulWidget {
@@ -13,7 +14,7 @@ class _LoginVistaState extends State<LoginVista> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          color: const Color(0xffF6F6F6),
+          color: colorBackground,
           child: Column(
             children: [
               Stack(
@@ -63,31 +64,27 @@ class _LoginVistaState extends State<LoginVista> {
 
   SizedBox barraSuperior_() {
     return SizedBox(
-                height: 186.0,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color(
-                        0xff00B5C0), // Establece el color de fondo del contenedor con el texto
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(50.0),
-                    ),
-                  ),
-                  child: const Center(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        'Ingresar', // el texto que quieres mostrar
-                        style: TextStyle(
-                            color:
-                                Colors.white, // Establece el color del texto
-                            fontSize: 55.0, // Establece el tamaño del texto
-                            fontFamily: "Inder",
-                            fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                  ),
-                ),
-              );
+      height: 186.0,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: colorPrincipal, // Establece el color de fondo del contenedor con el texto
+          borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(50.0)),
+        ),
+        child: const Center(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text('Ingresar', // el texto que quieres mostrar
+              style: TextStyle(
+                  color:Colors.white, // Establece el color del texto
+                  fontSize: 55.0, // Establece el tamaño del texto
+                  fontFamily: "Inder",
+                  fontWeight: FontWeight.normal),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   inputEmail_() {
@@ -151,18 +148,21 @@ class _LoginVistaState extends State<LoginVista> {
   ElevatedButton inicioSesionButtom_() {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xffEFB810),
-          minimumSize: const Size(
-              340, 55), // double.infinity is the width and 30 is the height
+          backgroundColor: colorChazero,
+          minimumSize: const Size(340, 55), // double.infinity is the width and 30 is the height
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14.0),
+            borderRadius: BorderRadius.circular(14.0)
           ),
         ),
         onPressed: verificar_(),
         child: const Text(
           "Iniciar sesión",
-          style: TextStyle(color: Colors.black, fontSize: 18),
-        ));
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18
+          ),
+        )
+      );
   }
 
   TextButton registrarseButtom_() {
@@ -172,7 +172,7 @@ class _LoginVistaState extends State<LoginVista> {
         child: const Text(
           'Regístrate aquí',
           style: TextStyle(
-              color: Color(0xffEFB810),
+              color: colorChazero,
               fontSize: 15,
               fontFamily: "Inder",
               fontWeight: FontWeight.bold),

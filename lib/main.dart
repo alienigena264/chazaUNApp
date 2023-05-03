@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginVista(),
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),
-        '/registro/selector':(context) => const SelectorVista(),
+        '/registro/selector': (context) => const SelectorVista(),
         //'/Otra':(context) => const PageName(),
         //'/Services':(context) => const ServicesPage(),
       },
