@@ -12,6 +12,7 @@ class _LoginVistaState extends State<LoginVista> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colorBackground,
       body: SingleChildScrollView(
         child: Container(
           color: colorBackground,
