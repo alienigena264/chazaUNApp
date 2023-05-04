@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-
+import 'colors.dart';
 //Titulo del banner
 const String _title = 'Registro';
 bool isChecked = false; //Aceptar terminos y condiciones
@@ -17,7 +17,7 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          color: const Color(0xffF6F6F6),
+          color: colorBackground,
           alignment: Alignment.center,
           child: Column(
             children: const [
@@ -42,8 +42,7 @@ class Title extends StatelessWidget {
       height: 186.0,
       child: Container(
         decoration: const BoxDecoration(
-          color: Color(
-              0xff00B5C0), // Establece el color de fondo del contenedor con el texto
+          color: colorPrincipal,
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(50.0),
           ),
@@ -101,9 +100,9 @@ class _Checkbox extends State<AgreeCheck> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return const Color(0xff7B1FA2);
+        return colorTrabajador;
       }
-      return const Color(0xff00B5C0);
+      return colorPrincipal;
     }
 
     return SizedBox(
@@ -113,7 +112,7 @@ class _Checkbox extends State<AgreeCheck> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children:[
             Checkbox(
-                checkColor: const Color(0xffF6F6F6),
+                checkColor: colorBackground,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 value: isChecked,
                 onChanged: (bool? value) {
