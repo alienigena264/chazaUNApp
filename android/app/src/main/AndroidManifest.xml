@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.chazaunapp">
+    package="com.queremoscancelar.chazaunapp">
    <application
         android:label="chazaunapp"
         android:name="${applicationName}"
