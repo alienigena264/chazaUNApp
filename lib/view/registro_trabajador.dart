@@ -1,6 +1,12 @@
+//Temporal - Debug
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import 'colors.dart';
+
+final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 //Titulo del banner
 const String _title = 'Registro';
 bool isChecked = false; //Aceptar terminos y condiciones
@@ -12,7 +18,18 @@ class RegistroTrabajadorView extends StatefulWidget {
   State<RegistroTrabajadorView> createState() => _RegistroTrabajadorState();
 }
 
+GoogleSignInAccount? _currentUser;
+
 class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
+  @override
+  void initState() {
+    _googleSignIn.onCurrentUserChanged.listen((account) {
+      _currentUser = account;
+    });
+    _googleSignIn.signInSilently();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +39,11 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
           child: Column(
             children: const [
               Title(),
-              Flexible(flex: 1, child:SizedBox(
-                height: 300,
-              )),
+              Flexible(
+                  flex: 1,
+                  child: SizedBox(
+                    height: 300,
+                  )),
               LoginButton(),
               Center(child: AgreeCheck()),
             ],
@@ -73,13 +92,30 @@ class LoginButton extends StatefulWidget {
 }
 
 class _LoginButton extends State<LoginButton> {
+  GoogleSignInAccount? user = _currentUser;
   @override
   Widget build(BuildContext context) {
     return SignInButton(
       Buttons.Google,
       text: 'Ingresar con google unal',
-      onPressed: () {},
+      onPressed: () {
+        if (isChecked) {
+          signIn();
+        } else {
+          //mensaje de error por no aceptar términos y condiciones
+        }
+      },
     );
+  }
+}
+
+Future<void> signIn() async {
+  try {
+    await _googleSignIn.signIn();
+  } catch (e) {
+    if (kDebugMode) {
+      print('Error $e');
+    }
   }
 }
 
@@ -110,7 +146,7 @@ class _Checkbox extends State<AgreeCheck> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children:[
+          children: [
             Checkbox(
                 checkColor: colorBackground,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
@@ -128,7 +164,7 @@ class _Checkbox extends State<AgreeCheck> {
                   fontSize: 12.0, // Establece el tamaño del texto
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
-                  textAlign: TextAlign.center,
+              textAlign: TextAlign.center,
             )),
           ],
         ));
