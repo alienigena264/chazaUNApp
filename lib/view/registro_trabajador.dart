@@ -1,5 +1,3 @@
-//Temporal - Debug
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -10,6 +8,7 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 //Titulo del banner
 const String _title = 'Registro';
 bool isChecked = false; //Aceptar terminos y condiciones
+GoogleSignInAccount? _currentUser;
 
 class RegistroTrabajadorView extends StatefulWidget {
   const RegistroTrabajadorView({super.key});
@@ -17,8 +16,6 @@ class RegistroTrabajadorView extends StatefulWidget {
   @override
   State<RegistroTrabajadorView> createState() => _RegistroTrabajadorState();
 }
-
-GoogleSignInAccount? _currentUser;
 
 class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
   @override
@@ -102,7 +99,7 @@ class _LoginButton extends State<LoginButton> {
         if (isChecked) {
           signIn();
         } else {
-          //mensaje de error por no aceptar términos y condiciones
+          print('No ha aceptado');
         }
       },
     );
@@ -112,11 +109,19 @@ class _LoginButton extends State<LoginButton> {
 Future<void> signIn() async {
   try {
     await _googleSignIn.signIn();
+    //correo de la cuenta
+    print(_currentUser?.email);
+    //nombre
+    print(_currentUser?.displayName);
+    //foto de la cuenta
+    //GoogleUserCircleAvatar.sizeDirective(_currentUser);
   } catch (e) {
-    if (kDebugMode) {
-      print('Error $e');
-    }
+    print('Error $e');
   }
+}
+
+void signOut() {
+  _googleSignIn.disconnect();
 }
 
 class AgreeCheck extends StatefulWidget {
