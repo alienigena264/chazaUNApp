@@ -1,4 +1,10 @@
+import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
+import 'package:chazaunapp/view/Sprint2/perfil_chazero_vista.dart';
+import 'package:chazaunapp/view/Sprint2/perfil_trabajador_vista.dart';
+import 'package:chazaunapp/view/codigo_vista.dart';
 import 'package:chazaunapp/view/login_vista.dart';
+import 'package:chazaunapp/view/menu_inicial_vista.dart';
+import 'package:chazaunapp/view/registro_chazero.dart';
 import 'package:chazaunapp/view/registro_trabajador.dart';
 import 'package:chazaunapp/view/selector_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
@@ -17,11 +23,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/', //prueba
       routes: {
         '/': (context) => const LoginVista(),
-        '/registro/trabajador': (context) => const RegistroTrabajadorView(),
+        //'/contrasena': (context) => const ContrasenaVista(),//Poner nombre clase santiago
         '/registro/selector':(context) => const SelectorVista(),
-        '/menu/chazero':(context) => const MenuChazero(),
-        //'/Otra':(context) => const OtherPage(),
-        //'/Services':(context) => const ServicesPage(),
+        '/registro/trabajador': (context) => const RegistroTrabajadorView(),
+        '/registro/chazero': (context) => const RegistroChazeroVista(),
+        '/registro/chazero/codigo': (context) => const CodigoVista(),
+        '/menu/chazero':(context) => const MenuChazeroVista(),
+        '/menu/trabajador':(context) => const MenuTrabajadorVista(),
+        '/menu/trabajador/perfil':(context) => const PerfilTrabajadorVista(),
+        '/menu/chazero/perfil':(context) => const PerfilChazeroVista(),
+        '/menu/configuracion':(context) => const ConfiguracionVista(),
       },
     );
   }

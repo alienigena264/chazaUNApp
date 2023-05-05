@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:chazaunapp/view/colors.dart';
 //Pruebita pull request
 
-class MenuChazero extends StatefulWidget {
-  const MenuChazero({super.key});
+class MenuChazeroVista extends StatefulWidget {
+  const MenuChazeroVista({super.key});
 
   @override
-  State<MenuChazero> createState() => _MenuChazeroState();
+  State<MenuChazeroVista> createState() => _MenuChazeroVistaState();
 }
 
-class _MenuChazeroState extends State<MenuChazero> {
+class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,7 +91,7 @@ class _MenuChazeroState extends State<MenuChazero> {
                 children: [
                   Text(
                     nombre, // Nombre de la chaza
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Color(0xff242424),
                         fontSize: 22.0,
                         fontFamily: "Inder",
@@ -120,11 +120,11 @@ class _MenuChazeroState extends State<MenuChazero> {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Icon(Icons.location_on_rounded, color: Color(0xff919191), size: 16.0),
+      children:[
+        const Icon(Icons.location_on_rounded, color: Color(0xff919191), size: 16.0),
         Text(
           ubicacion,
-          style: TextStyle(
+          style: const  TextStyle(
               color: Color(0xff919191),
               fontSize: 14.5,
               fontFamily: "Inder",
@@ -138,15 +138,15 @@ class _MenuChazeroState extends State<MenuChazero> {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Icon(
+      children: [
+        const Icon(
           Icons.star,
           color: colorChazero,
           size: 16.0,
         ),
         Text(
           puntuacion,
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.black,
               fontSize: 16.0,
               fontFamily: "Inder",
@@ -173,14 +173,14 @@ class _MenuChazeroState extends State<MenuChazero> {
           ),
         ),
         Text(
-          pago + " / Hora",
-          style: TextStyle(
+          "$pago / Hora",
+          style: const TextStyle(
               color: colorTrabajador,
               fontSize: 13.0,
               fontFamily: "Inder",
               fontWeight: FontWeight.normal),
         ),
-        Icon(
+        const Icon(
           Icons.more_horiz,
           color: Color(0xffEFB810ff919191),
           size: 24.0,
