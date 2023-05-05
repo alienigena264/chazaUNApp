@@ -4,6 +4,7 @@ import 'package:chazaunapp/view/Sprint2/perfil_trabajador_vista.dart';
 import 'package:chazaunapp/view/codigo_vista.dart';
 import 'package:chazaunapp/view/login_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
+import 'package:chazaunapp/view/recuperar_contrasena_vista.dart';
 import 'package:chazaunapp/view/registro_chazero.dart';
 import 'package:chazaunapp/view/registro_trabajador.dart';
 import 'package:chazaunapp/view/selector_vista.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/', //prueba
       routes: {
         '/': (context) => const LoginVista(),
-        //'/contrasena': (context) => const ContrasenaVista(),//Poner nombre clase santiago
+        '/contrasena': (context) => const ContrasenaVista(),
         '/registro/selector':(context) => const SelectorVista(),
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),
         '/registro/chazero': (context) => const RegistroChazeroVista(),
