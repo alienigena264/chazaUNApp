@@ -16,9 +16,10 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       initialRoute: '/', //prueba
       routes: {
-        '/': (context) => const MenuChazero(),
+        '/': (context) => const LoginVista(),
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),
         '/registro/selector':(context) => const SelectorVista(),
+        '/menu/chazero':(context) => const MenuChazero(),
         //'/Otra':(context) => const OtherPage(),
         //'/Services':(context) => const ServicesPage(),
       },
