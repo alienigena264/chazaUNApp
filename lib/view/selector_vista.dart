@@ -1,13 +1,16 @@
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
-class SelectorVista extends StatelessWidget {
-  const SelectorVista({Key? key}) : super(key: key);
+class SelectorVista extends StatefulWidget {
+  const SelectorVista({super.key});
+  @override
+  State<SelectorVista> createState() => _SelectorVistaState();
+}
 
+class _SelectorVistaState extends State<SelectorVista>{
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: colorBackground,
         body: Center(
           child: Column(
@@ -33,8 +36,7 @@ class SelectorVista extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   ElevatedButton trabajadorButton(BuildContext context) {
