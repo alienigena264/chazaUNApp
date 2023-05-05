@@ -1,3 +1,4 @@
+import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
 class SelectorVista extends StatelessWidget {
@@ -7,7 +8,7 @@ class SelectorVista extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: colorBackground,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -17,7 +18,7 @@ class SelectorVista extends StatelessWidget {
                   Text(
                     'Registrarse como:',
                     style: TextStyle(
-                        color: const Color(0xff00B5C0), fontSize: 26, fontFamily: "Inder"),
+                        color: colorPrincipal, fontSize: 26, fontFamily: "Inder"),
                   ),
                 ],
               ),
@@ -39,7 +40,7 @@ class SelectorVista extends StatelessWidget {
   ElevatedButton trabajadorButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xff7B1FA2),
+        backgroundColor: colorTrabajador,
         minimumSize:
         const Size(316, 55), // double.infinity is the width and 30 is the height
         shape: RoundedRectangleBorder(
@@ -49,7 +50,7 @@ class SelectorVista extends StatelessWidget {
       onPressed: registrarseTrabajador(context),
       child: const Text(
         "TRABAJADOR",
-        style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: "Inder"),
+        style: TextStyle(color: colorBackground, fontSize: 24, fontFamily: "Inder"),
       ),
     );
   }
@@ -57,7 +58,7 @@ class SelectorVista extends StatelessWidget {
   ElevatedButton chazeroButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xffEFB810),
+        backgroundColor: colorChazero,
         minimumSize:
         const Size(316, 55), // double.infinity is the width and 30 is the height
         shape: RoundedRectangleBorder(
@@ -67,7 +68,7 @@ class SelectorVista extends StatelessWidget {
       onPressed: registrarseChazero(context),
       child: const Text(
         "CHAZERO",
-        style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: "Inder"),
+        style: TextStyle(color: colorBackground, fontSize: 24, fontFamily: "Inder"),
       ),
     );
   }

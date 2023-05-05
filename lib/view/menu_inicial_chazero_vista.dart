@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chazaunapp/view/colors.dart';
 
 class MenuChazero extends StatefulWidget {
   const MenuChazero({super.key});
@@ -13,7 +14,7 @@ class _MenuChazeroState extends State<MenuChazero> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          color: Colors.white,
+          color: colorBackground,
           child: Column(
             children: [
               Stack(
@@ -49,7 +50,7 @@ class _MenuChazeroState extends State<MenuChazero> {
       height: 186.0,
       child: Container(
         decoration: const BoxDecoration(
-          color: Color(0xff00B5C0),
+          color: colorPrincipal,
           // Establece el color de fondo del contenedor con el texto
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(50.0),
@@ -61,7 +62,7 @@ class _MenuChazeroState extends State<MenuChazero> {
             child: Text(
               'Chazero', // el texto que quieres mostrar
               style: TextStyle(
-                color: Colors.white, // Establece el color del texto
+                color: colorBackground, // Establece el color del texto
                 fontSize: 35.0, // Establece el tamaño del texto
                 fontFamily: "Inder",
               ),
@@ -139,7 +140,7 @@ class _MenuChazeroState extends State<MenuChazero> {
       children: <Widget>[
         Icon(
           Icons.star,
-          color: Color(0xffEFB810),
+          color: colorChazero,
           size: 16.0,
         ),
         Text(
@@ -173,7 +174,7 @@ class _MenuChazeroState extends State<MenuChazero> {
         Text(
           pago + " / Hora",
           style: TextStyle(
-              color: Color(0xff7B1FA2),
+              color: colorTrabajador,
               fontSize: 13.0,
               fontFamily: "Inder",
               fontWeight: FontWeight.normal),
@@ -188,7 +189,7 @@ class _MenuChazeroState extends State<MenuChazero> {
   }
   ElevatedButton botonHorarios(){
     return ElevatedButton(style: ElevatedButton.styleFrom(
-      backgroundColor: const Color(0xffEFB810),
+      backgroundColor:colorChazero,
       minimumSize: const Size(
           132, 39), // double.infinity is the width and 30 is the height
       shape: RoundedRectangleBorder(
@@ -203,7 +204,7 @@ class _MenuChazeroState extends State<MenuChazero> {
   }
   ElevatedButton botonPersonal(){
     return ElevatedButton(style: ElevatedButton.styleFrom(
-      backgroundColor: const Color(0xffEFB810),
+      backgroundColor: colorChazero,
       minimumSize: const Size(
           132, 39), // double.infinity is the width and 30 is the height
       shape: RoundedRectangleBorder(
