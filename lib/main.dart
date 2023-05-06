@@ -3,15 +3,24 @@ import 'package:chazaunapp/view/Sprint2/perfil_chazero_vista.dart';
 import 'package:chazaunapp/view/Sprint2/perfil_trabajador_vista.dart';
 import 'package:chazaunapp/view/codigo_vista.dart';
 import 'package:chazaunapp/view/login_vista.dart';
+import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
 import 'package:chazaunapp/view/recuperar_contrasena_vista.dart';
 import 'package:chazaunapp/view/registro_chazero.dart';
 import 'package:chazaunapp/view/registro_trabajador.dart';
 import 'package:chazaunapp/view/selector_vista.dart';
-import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -25,15 +34,15 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginVista(),
         '/contrasena': (context) => const ContrasenaVista(),
-        '/registro/selector':(context) => const SelectorVista(),
+        '/registro/selector': (context) => const SelectorVista(),
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),
         '/registro/chazero': (context) => const RegistroChazeroVista(),
         '/registro/chazero/codigo': (context) => const CodigoVista(),
-        '/menu/chazero':(context) => const MenuChazeroVista(),
-        '/menu/trabajador':(context) => const MenuTrabajadorVista(),
-        '/menu/trabajador/perfil':(context) => const PerfilTrabajadorVista(),
-        '/menu/chazero/perfil':(context) => const PerfilChazeroVista(),
-        '/menu/configuracion':(context) => const ConfiguracionVista(),
+        '/menu/chazero': (context) => const MenuChazeroVista(),
+        '/menu/trabajador': (context) => const MenuTrabajadorVista(),
+        '/menu/trabajador/perfil': (context) => const PerfilTrabajadorVista(),
+        '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),
+        '/menu/configuracion': (context) => const ConfiguracionVista(),
       },
     );
   }
