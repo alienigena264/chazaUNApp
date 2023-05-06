@@ -99,18 +99,25 @@ class _LoginButton extends State<LoginButton> {
     return SignInButton(
       Buttons.Google,
       text: 'Ingresar con google unal',
-      onPressed: () {
+      onPressed: () async {
         if (isChecked) {
-          GAuthService().ingresarGoogle();
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const MenuTrabajadorVista()));
+          try {
+            await GAuthService().ingresarGoogle();
+            await goMenu();
+          } catch (e) {
+            print('ingresa con cuenta unal');
+          }
         } else {
           print('No ha aceptado');
         }
       },
     );
+  }
+
+  //async para esperar el ingreso
+  goMenu() async {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const MenuTrabajadorVista()));
   }
 }
 
