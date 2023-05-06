@@ -23,9 +23,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -60,29 +66,5 @@ class DefaultFirebaseOptions {
     projectId: 'chazaunapp-original',
     databaseURL: 'https://chazaunapp-original-default-rtdb.firebaseio.com',
     storageBucket: 'chazaunapp-original.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAr95G2B6NER8x8YuzfUji0N1jJ0pTwSuY',
-    appId: '1:198907188314:ios:fbf3e6811a6f0eb5667463',
-    messagingSenderId: '198907188314',
-    projectId: 'chazaunapp-original',
-    databaseURL: 'https://chazaunapp-original-default-rtdb.firebaseio.com',
-    storageBucket: 'chazaunapp-original.appspot.com',
-    androidClientId: '198907188314-pbddhmtlhfpdh3k6olpekedsapuh00r3.apps.googleusercontent.com',
-    iosClientId: '198907188314-fa0t3dav0n31m5kd9d4aiooatb1l9grv.apps.googleusercontent.com',
-    iosBundleId: 'com.example.chazaunapp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAr95G2B6NER8x8YuzfUji0N1jJ0pTwSuY',
-    appId: '1:198907188314:ios:fbf3e6811a6f0eb5667463',
-    messagingSenderId: '198907188314',
-    projectId: 'chazaunapp-original',
-    databaseURL: 'https://chazaunapp-original-default-rtdb.firebaseio.com',
-    storageBucket: 'chazaunapp-original.appspot.com',
-    androidClientId: '198907188314-pbddhmtlhfpdh3k6olpekedsapuh00r3.apps.googleusercontent.com',
-    iosClientId: '198907188314-fa0t3dav0n31m5kd9d4aiooatb1l9grv.apps.googleusercontent.com',
-    iosBundleId: 'com.example.chazaunapp',
   );
 }
