@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../colors.dart';
+
 class PerfilChazeroVista extends StatefulWidget {
   const PerfilChazeroVista({super.key});
 
@@ -10,6 +12,8 @@ class PerfilChazeroVista extends StatefulWidget {
 class _PerfilChazeroVistaState extends State<PerfilChazeroVista> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+        backgroundColor: colorBackground,
+      );
   }
 }
