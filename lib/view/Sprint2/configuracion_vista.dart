@@ -30,7 +30,7 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
         opciones_(Icons.account_box, "Cuenta","Privacidad, Visibilidad, Editar Perfil", cuentaMove_()),
         opciones_(Icons.notifications, "Notificaciones", "Perfil",notificacionesMove_()),
         opciones_(Icons.help_outline_outlined,"Ayuda","Preguntas frecuentes, soporte, \n politica de privacidad",notificacionesMove_()),
-        const SizedBox(height: 20,),
+        const SizedBox(height: 30,),
         cerrarSesionBoton_()
         ]
       ),
@@ -70,7 +70,7 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
   }
 
   volverInicio_() {
-    return () {
+    return () {//No modificar, esto directamente manda a la anterior ventana
       Navigator.pop(context,);
     };
   }
