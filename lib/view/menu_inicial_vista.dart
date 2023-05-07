@@ -61,8 +61,38 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                 masBottom_(),
               ],
             ),
+            const SizedBox(
+              width: 55,
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(
+                        'Chazas', // el texto que quieres mostrar
+                        style: TextStyle(
+                            color: Colors.black, // Establece el color del texto
+                            fontSize: 30.0, // Establece el tamaño del texto
+                            fontFamily: "Inder",
+                            fontWeight: FontWeight.normal),
+                      )),
+                ]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              chazaBottom_('SexChaza', 'Sociologia', '40k'),
+              chazaBottom_('RubikChaza', 'Entrada 30', '40k')
+            ])
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_rounded), label: "Usuario"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: "Configuracion")
+        ],
       ),
     );
   }
@@ -79,8 +109,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                 onTap: () {},
                 child: Image.asset(
                   'assets/imagenes/chef.png',
-                  height: 75,
-                  width: 75,
+                  height: 60,
+                  width: 60,
                   fit: BoxFit.cover,
                 ))));
   }
@@ -96,9 +126,9 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                 splashColor: Colors.black26,
                 onTap: () {},
                 child: Image.asset(
-                  'assets/imagenes/cubiertos.png',
-                  height: 75,
-                  width: 75,
+                  'assets/imagenes/snack.png',
+                  height: 60,
+                  width: 60,
                   fit: BoxFit.cover,
                 ))));
   }
@@ -115,9 +145,22 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                 onTap: () {},
                 child: Image.asset(
                   'assets/imagenes/mas.png',
-                  height: 75,
-                  width: 75,
+                  height: 60,
+                  width: 60,
                   fit: BoxFit.cover,
                 ))));
+  }
+
+  chazaBottom_(String nombre, String ubicacion, String precio) {
+    return InkWell(
+      child: SizedBox(
+        width: 100,
+        height: 100,
+        child: Card(
+            child: Column(
+          children: [Text(nombre), Text(ubicacion), Text(precio)],
+        )),
+      ),
+    );
   }
 }
