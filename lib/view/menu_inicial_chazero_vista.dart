@@ -182,7 +182,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         ),
         const Icon(
           Icons.more_horiz,
-          color: Color(0xffEFB810ff919191),
+          color: Color.fromARGB(255, 143, 143, 143),
           size: 24.0,
         ),
       ],

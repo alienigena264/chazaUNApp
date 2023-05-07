@@ -1,3 +1,4 @@
+import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
 class MenuTrabajadorVista extends StatefulWidget {
@@ -10,6 +11,9 @@ class MenuTrabajadorVista extends StatefulWidget {
 class _MenuTrabajadorVistaState extends State<MenuTrabajadorVista> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      backgroundColor: colorBackground,
+      body: Center(child: Text("Hola suptierra"),),
+    );
   }
 }
