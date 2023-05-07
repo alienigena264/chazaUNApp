@@ -1,9 +1,17 @@
+import 'package:chazaunapp/Services/gauth_service.dart';
+import 'package:chazaunapp/view/menu_inicial_vista.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
+import 'colors.dart';
+
+final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 //Titulo del banner
 const String _title = 'Registro';
+//Verificación de los terminos y condiciones
 bool isChecked = false; //Aceptar terminos y condiciones
+GoogleSignInAccount? _currentUser;
 
 class RegistroTrabajadorView extends StatefulWidget {
   const RegistroTrabajadorView({super.key});
@@ -14,18 +22,32 @@ class RegistroTrabajadorView extends StatefulWidget {
 
 class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
   @override
+  void initState() {
+    //ingreso de google
+    _googleSignIn.onCurrentUserChanged.listen((account) {
+      _currentUser = account;
+    });
+    _googleSignIn.signInSilently();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          color: const Color(0xffF6F6F6),
+          color: colorBackground,
+          alignment: Alignment.center,
           child: Column(
             children: const [
-              Title(),
-              SizedBox(
-                height: 250,
-              ),
-              LoginButton(),
-              AgreeCheck()
+              Title(), //Banner azul
+              Flexible(
+                  //espacio
+                  flex: 1,
+                  child: SizedBox(
+                    height: 300,
+                  )),
+              LoginButton(), // Boton de google
+              Center(child: AgreeCheck()), //checkbox de terminos y condiciones
             ],
           )),
     );
@@ -41,8 +63,7 @@ class Title extends StatelessWidget {
       height: 186.0,
       child: Container(
         decoration: const BoxDecoration(
-          color: Color(
-              0xff00B5C0), // Establece el color de fondo del contenedor con el texto
+          color: colorPrincipal,
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(50.0),
           ),
@@ -67,20 +88,32 @@ class Title extends StatelessWidget {
 
 class LoginButton extends StatefulWidget {
   const LoginButton({super.key});
-
   @override
   State<LoginButton> createState() => _LoginButton();
 }
 
 class _LoginButton extends State<LoginButton> {
+  GoogleSignInAccount? user = _currentUser;
   @override
   Widget build(BuildContext context) {
     return SignInButton(
-      Buttons.GoogleDark,
+      Buttons.Google,
       text: 'Ingresar con google unal',
-      onPressed: () {},
+      onPressed: () async {
+        if (isChecked) {
+          try {
+            await GAuthService().ingresarGoogle();
+          } catch (e) {
+            print('ingresa con cuenta unal');
+          }
+        } else {
+          print('No ha aceptado');
+        }
+      },
     );
   }
+
+  //async para esperar el ingreso
 }
 
 class AgreeCheck extends StatefulWidget {
@@ -100,21 +133,19 @@ class _Checkbox extends State<AgreeCheck> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
+        return colorTrabajador;
       }
-      return Colors.red;
+      return colorPrincipal;
     }
 
-    return Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 0.0,
-        ),
+    return SizedBox(
+        width: 250.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+          children: [
             Checkbox(
-                checkColor: Colors.white,
+                checkColor: colorBackground,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 value: isChecked,
                 onChanged: (bool? value) {
@@ -127,11 +158,18 @@ class _Checkbox extends State<AgreeCheck> {
               'Acepto los términos y condiciones.', // el texto que quieres mostrar
               style: TextStyle(
                   color: Colors.black, // Establece el color del texto
-                  fontSize: 14.0, // Establece el tamaño del texto
+                  fontSize: 12.0, // Establece el tamaño del texto
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
+              textAlign: TextAlign.center,
             )),
           ],
         ));
+  }
+
+  menuTrabajador() {
+    return () {
+      Navigator.pushNamed(context, '/menu/trabajador');
+    };
   }
 }
