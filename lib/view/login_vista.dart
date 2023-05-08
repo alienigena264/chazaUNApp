@@ -188,8 +188,9 @@ class _LoginVistaState extends State<LoginVista> {
 
   verificar_() {
     return () {
-      Navigator.pushNamed(context, '/menu/chazero');
+      //Navigator.pushNamed(context, '/menu/chazero');
       //Navigator.pushNamed(context, '/menu/configuracion');// Si quieren ver esto activen el comentrario
+      Navigator.pushNamed(context, '/progreso');
     };
   }
 
