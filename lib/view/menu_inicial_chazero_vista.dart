@@ -24,17 +24,19 @@ class _MenuChazeroState extends State<MenuChazero> {
                 ],
               ),
               Container(
-                height: 435, // Tamaño fijo
+                height: 440,
+                width: 340,// Tamaño fijo
                 child: ListView.builder( //Hace una lista de todas las filas que había en la matriz chazas
                   shrinkWrap: true,
+                  itemExtent: 198,
+                  padding: EdgeInsets.only(bottom: 20),
                   itemCount: chazas.length, // casi como un for que itera las veces de las filas de la matriz
                   itemBuilder: (BuildContext context, int index) {
-                    return SizedBox(
-                      height: 162,
-                      width: MediaQuery.of(context).size.width * 0.9,
+                    return Column(children: [SizedBox(height: 183,
                       child: infoChaza_( // hace una card infochaza con los detalles de cada fila, osea cada chaza
                           chazas[index][0], chazas[index][1], chazas[index][2],
-                          chazas[index][3], chazas[index][4]),
+                          chazas[index][3], chazas[index][4]),),
+                      SizedBox(height: 15,)], //Espacio entre las cards
                     );
                   },
                 ),
@@ -103,6 +105,9 @@ class _MenuChazeroState extends State<MenuChazero> {
               ),
               columnFotoYPagoChaza_(imagen, pago),
             ],
+          ), Divider(
+            color: Colors.black45,
+            thickness: 1.5, // ajusta el grosor de la línea
           ),
           Row( mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
