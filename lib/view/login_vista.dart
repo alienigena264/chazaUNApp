@@ -92,17 +92,17 @@ class _LoginVistaState extends State<LoginVista> {
     return Container(
       margin: const EdgeInsets.only(top: 0.0),
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-      child: const TextField(
+      child: TextField(
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           filled: true,
-          fillColor: Colors.white,
-          border: OutlineInputBorder(
+          fillColor: colorFondoField,
+          border:const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
           hintText: 'Correo',
           hintStyle: TextStyle(
-              color: Colors.grey,
+              color: Colors.grey.shade700,
               fontFamily: "Inder",
               fontWeight: FontWeight.normal),
         ),
@@ -114,17 +114,17 @@ class _LoginVistaState extends State<LoginVista> {
     return Container(
       margin: const EdgeInsets.only(top: 12.0),
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-      child: const TextField(
+      child: TextField(
         obscureText: true,
         decoration: InputDecoration(
           filled: true,
-          fillColor: Colors.white,
-          border: OutlineInputBorder(
+          fillColor: colorFondoField,
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
           hintText: 'Contraseña',
           hintStyle: TextStyle(
-              color: Colors.grey,
+              color: Colors.grey.shade700,
               fontFamily: "Inder",
               fontWeight: FontWeight.normal),
         ),
@@ -188,9 +188,9 @@ class _LoginVistaState extends State<LoginVista> {
 
   verificar_() {
     return () {
-      //Navigator.pushNamed(context, '/menu/chazero');
+      Navigator.pushNamed(context, '/menu/chazero');
       //Navigator.pushNamed(context, '/menu/configuracion');// Si quieren ver esto activen el comentrario
-      Navigator.pushNamed(context, '/progreso');
+      //Navigator.pushNamed(context, '/registro/chazero');
     };
   }
 
