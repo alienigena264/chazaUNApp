@@ -24,22 +24,22 @@ class _MenuChazeroState extends State<MenuChazero> {
                 ],
               ),
               Container(
-                height: 550, // Tamaño fijo
-                child: ListView.builder(
+                height: 435, // Tamaño fijo
+                child: ListView.builder( //Hace una lista de todas las filas que había en la matriz chazas
                   shrinkWrap: true,
-                  itemCount: chazas.length,
+                  itemCount: chazas.length, // casi como un for que itera las veces de las filas de la matriz
                   itemBuilder: (BuildContext context, int index) {
                     return SizedBox(
                       height: 162,
                       width: MediaQuery.of(context).size.width * 0.9,
-                      child: infoChaza_(
+                      child: infoChaza_( // hace una card infochaza con los detalles de cada fila, osea cada chaza
                           chazas[index][0], chazas[index][1], chazas[index][2],
                           chazas[index][3], chazas[index][4]),
                     );
                   },
                 ),
               ),
-            ],
+              Stack(children: [barraChazero()],)],
           ),
         ),
       ),
@@ -70,13 +70,13 @@ class _MenuChazeroState extends State<MenuChazero> {
             ),
           ),
         ),
-      ),
+        )
     );
   }
 
   Card infoChaza_(String nombre, String ubicacion, String puntuacion,
       String pago, String imagen) {
-    return Card(
+    return Card( //Una columna que contiene rows y columnas de rows para conseguir el aspecto que habia en el mockup
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -93,7 +93,7 @@ class _MenuChazeroState extends State<MenuChazero> {
                     nombre, // Nombre de la chaza
                     style: TextStyle(
                         color: Color(0xff242424),
-                        fontSize: 22.0,
+                        fontSize: 20.0,
                         fontFamily: "Inder",
                         fontWeight: FontWeight.normal),
                   ),
@@ -116,12 +116,12 @@ class _MenuChazeroState extends State<MenuChazero> {
     );
   }
 
-  Row rowUbicacion_(String ubicacion) {
+  Row rowUbicacion_(String ubicacion) { //row para juntar el icono y el texto
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Icon(Icons.location_on_rounded, color: Color(0xff919191), size: 16.0),
+        Icon(Icons.location_on_rounded, color: Color(0xff919191), size: 15.0),
         Text(
           ubicacion,
           style: TextStyle(
@@ -134,7 +134,7 @@ class _MenuChazeroState extends State<MenuChazero> {
     );
   }
 
-  Row rowPuntuacion_(String puntuacion) {
+  Row rowPuntuacion_(String puntuacion) { //row para juntar el icono y el texto
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -142,7 +142,7 @@ class _MenuChazeroState extends State<MenuChazero> {
         Icon(
           Icons.star,
           color: colorChazero,
-          size: 16.0,
+          size: 15.0,
         ),
         Text(
           puntuacion,
@@ -164,12 +164,11 @@ class _MenuChazeroState extends State<MenuChazero> {
         const SizedBox(
           height: 5,
         ),
-        ClipRRect(
+        ClipRRect( // Contenedor para que la imagen tenga borde redondeado
           borderRadius: BorderRadius.circular(8.0),
-          // Ajusta el radio del borde según tus necesidades
           child: Image(
-            image: NetworkImage(imagen),
-            height: 61.0,
+            image: NetworkImage(imagen), //Parametro del enlace de la imagen de la chaza
+            height: 61.0, // Tamaño
           ),
         ),
         Text(
@@ -188,11 +187,11 @@ class _MenuChazeroState extends State<MenuChazero> {
       ],
     );
   }
-  ElevatedButton botonHorarios(){
+  ElevatedButton botonHorarios(){ //Au no hace nada porque no tengo seguridad de si esa pantalla está disponible
     return ElevatedButton(style: ElevatedButton.styleFrom(
       backgroundColor:colorChazero,
       minimumSize: const Size(
-          132, 39), // double.infinity is the width and 30 is the height
+          130, 34), // double.infinity is the width and 30 is the height
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6.0),
       ),
@@ -203,11 +202,11 @@ class _MenuChazeroState extends State<MenuChazero> {
           style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
         ));
   }
-  ElevatedButton botonPersonal(){
+  ElevatedButton botonPersonal(){ //Aun no hace nada porque no tengo seguridad de cual es esa pantalla y si está disponible
     return ElevatedButton(style: ElevatedButton.styleFrom(
       backgroundColor: colorChazero,
       minimumSize: const Size(
-          132, 39), // double.infinity is the width and 30 is the height
+          130, 34),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6.0),
       ),
@@ -217,6 +216,16 @@ class _MenuChazeroState extends State<MenuChazero> {
           "Personal",
           style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
         ));
+  }
+  BottomNavigationBar barraChazero(){ //La barra de opciones inferior
+    return BottomNavigationBar(items:[
+      BottomNavigationBarItem(icon: Icon(Icons.home), label:'Inicio'),//Icono home
+    BottomNavigationBarItem(icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
+    BottomNavigationBarItem(icon: Icon(Icons.settings_outlined), label: 'Ajustes')
+    ], backgroundColor: Colors.white, selectedItemColor: colorPrincipal,
+    unselectedItemColor: Color(0xff909090), unselectedLabelStyle: TextStyle(fontFamily: "Inder"),
+    selectedLabelStyle: TextStyle(fontFamily: "Inder"), iconSize: 34,//Detalles del color del item seleccionado y la fuente de lo labels
+    );
   }
 }
 
@@ -236,11 +245,4 @@ List<List<String>> chazas = [
     "8000",
     "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg"
   ],
-  [
-    "Calcas a 800",
-    "La playita",
-    "4.4",
-    "5000",
-    "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg"
-  ]
 ];
