@@ -46,7 +46,11 @@ app.*.map.json
 /lib/main.dart
 
 #google firebase idKeys
-chazaUNApp\android\app\google-services.json
-chazaUNApp\ios\firebase_app_id_file.json
-chazaUNApp\macos\firebase_app_id_file.json
+android/app/google-services.json
+
+#plataformas no soportadas
+ios/
+macos/
+web/
+linux/
 ```

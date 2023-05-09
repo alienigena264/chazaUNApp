@@ -10,7 +10,8 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 //Titulo del banner
 const String _title = 'Registro';
 //Verificación de los terminos y condiciones
-bool isChecked = false; //Aceptar terminos y condiciones
+bool isChecked = false;
+//Cuenta de google
 GoogleSignInAccount? _currentUser;
 
 class RegistroTrabajadorView extends StatefulWidget {
