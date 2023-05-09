@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:chazaunapp/Services/gauth_service.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
 import 'package:flutter/material.dart';

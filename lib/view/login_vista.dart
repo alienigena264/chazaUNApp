@@ -191,6 +191,7 @@ class _LoginVistaState extends State<LoginVista> {
       Navigator.pushNamed(context, '/menu/chazero');
       //Navigator.pushNamed(context, '/menu/configuracion');// Si quieren ver esto activen el comentrario
       //Navigator.pushNamed(context, '/registro/chazero');
+      //Navigator.pushNamed(context, '/menu/trabajador');
     };
   }
 

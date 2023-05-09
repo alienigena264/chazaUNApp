@@ -17,7 +17,7 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
     return Scaffold(
       backgroundColor: colorBackground,
       body: SingleChildScrollView(
-          child: Container(
+        child: Container(
         color: colorBackground,
         child: Column(
           children: [
