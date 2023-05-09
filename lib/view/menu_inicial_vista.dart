@@ -1,7 +1,6 @@
-import 'package:chazaunapp/Services/gauth_service.dart';
-import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:chazaunapp/Models/menu_inicial_model.dart';
+import 'package:chazaunapp/view/colors.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
   const MenuInicialVistaView({super.key});
@@ -81,7 +80,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                             fontWeight: FontWeight.normal),
                       )),
                 ]),
-            Container(
+            SizedBox(
               height: 300.0,
               width: 300.0,
               child: chazas(),
@@ -91,12 +90,19 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_rounded), label: "Usuario"),
+              icon: Icon(Icons.home), label: 'Inicio'), //Icono home
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Configuracion")
+              icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings_outlined), label: 'Ajustes')
         ],
+        backgroundColor: Colors.white,
+        selectedItemColor: colorPrincipal,
+        unselectedItemColor: const Color(0xff909090),
+        unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+        selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+        iconSize: 34,
       ),
     );
   }
@@ -158,7 +164,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   ElevatedButton chazaBottom() {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xffEFB810),
+          backgroundColor: const Color(0xffEFB810),
           minimumSize: const Size(
               120, 39), // double.infinity is the width and 30 is the height
           shape: RoundedRectangleBorder(
@@ -190,9 +196,9 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   Widget card(chaza) => Container(
         decoration: BoxDecoration(
             border: Border.all(
-              color: Color.fromARGB(255, 131, 131, 131),
+              color: const Color.fromARGB(255, 131, 131, 131),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(20))),
+            borderRadius: const BorderRadius.all(Radius.circular(20))),
         width: 50,
         height: 250,
         child: Column(children: [
@@ -259,4 +265,25 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
           ),
         ]),
       );
+
+  BottomNavigationBar barraChazero() {
+    //La barra de opciones inferior
+    return BottomNavigationBar(
+      items: const [
+        BottomNavigationBarItem(
+            icon: Icon(Icons.home), label: 'Inicio'), //Icono home
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined), label: 'Ajustes')
+      ],
+      backgroundColor: Colors.white,
+      selectedItemColor: colorPrincipal,
+      unselectedItemColor: const Color(0xff909090),
+      unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+      selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+      iconSize:
+          34, //Detalles del color del item seleccionado y la fuente de lo labels
+    );
+  }
 }
