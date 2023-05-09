@@ -23,8 +23,9 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                   barraSuperior_(),
                 ],
               ),
+              const SizedBox(height: 25,),
               SizedBox(
-                height: 505,
+                height: 570,
                 width: 335,// Tamaño fijo
                 child: ListView.builder( //Hace una lista de todas las filas que había en la matriz chazas
                   shrinkWrap: true,
@@ -41,6 +42,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                   },
                 ),
               ),
+              
               Stack(children: [barraChazero()],)],
           ),
         ),
@@ -66,7 +68,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
               'Chazero', // el texto que quieres mostrar
               style: TextStyle(
                 color: colorBackground, // Establece el color del texto
-                fontSize: 50.0, // Establece el tamaño del texto
+                fontSize: 60.0, // Establece el tamaño del texto
                 fontFamily: "Inder",
               ),
             ),

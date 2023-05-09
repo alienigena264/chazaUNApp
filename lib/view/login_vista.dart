@@ -78,7 +78,7 @@ class _LoginVistaState extends State<LoginVista> {
             child: Text('Ingresar', // el texto que quieres mostrar
               style: TextStyle(
                   color:Colors.white, // Establece el color del texto
-                  fontSize: 55.0, // Establece el tamaño del texto
+                  fontSize: 60.0, // Establece el tamaño del texto
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
             ),

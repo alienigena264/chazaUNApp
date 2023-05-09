@@ -112,7 +112,7 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
               'CHAZERO', // el texto que quieres mostrar
               style: TextStyle(
                   color: Colors.white, // Establece el color del texto
-                  fontSize: 64.0, // Establece el tamaño del texto
+                  fontSize: 60.0, // Establece el tamaño del texto
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
             ),
