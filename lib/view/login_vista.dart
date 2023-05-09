@@ -182,13 +182,14 @@ class _LoginVistaState extends State<LoginVista> {
 
   recuperarPassword_() {
     return () {
-      print('Se recupero');
+      Navigator.pushNamed(context, '/contrasena');
     };
   }
 
   verificar_() {
     return () {
-      print("Inicio sesion");
+      Navigator.pushNamed(context, '/menu/chazero');
+      //Navigator.pushNamed(context, '/menu/configuracion');// Si quieren ver esto activen el comentrario
     };
   }
 

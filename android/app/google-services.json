@@ -23,7 +23,7 @@
           }
         },
         {
-          "client_id": "198907188314-raa9jdp7lipk2ajgg5pkj3fpd01dcup1.apps.googleusercontent.com",
+          "client_id": "198907188314-t5fhj7r2dff4j06c6r2iu3l9fv29oraj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -38,6 +38,13 @@
             {
               "client_id": "198907188314-raa9jdp7lipk2ajgg5pkj3fpd01dcup1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "198907188314-fa0t3dav0n31m5kd9d4aiooatb1l9grv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chazaunapp"
+              }
             }
           ]
         }

@@ -1,3 +1,5 @@
+import 'package:chazaunapp/Services/gauth_service.dart';
+import 'package:chazaunapp/view/menu_inicial_vista.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,7 +9,9 @@ import 'colors.dart';
 final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 //Titulo del banner
 const String _title = 'Registro';
-bool isChecked = false; //Aceptar terminos y condiciones
+//Verificación de los terminos y condiciones
+bool isChecked = false;
+//Cuenta de google
 GoogleSignInAccount? _currentUser;
 
 class RegistroTrabajadorView extends StatefulWidget {
@@ -20,6 +24,7 @@ class RegistroTrabajadorView extends StatefulWidget {
 class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
   @override
   void initState() {
+    //ingreso de google
     _googleSignIn.onCurrentUserChanged.listen((account) {
       _currentUser = account;
     });
@@ -35,14 +40,15 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
           alignment: Alignment.center,
           child: Column(
             children: const [
-              Title(),
+              Title(), //Banner azul
               Flexible(
+                  //espacio
                   flex: 1,
                   child: SizedBox(
                     height: 300,
                   )),
-              LoginButton(),
-              Center(child: AgreeCheck()),
+              LoginButton(), // Boton de google
+              Center(child: AgreeCheck()), //checkbox de terminos y condiciones
             ],
           )),
     );
@@ -83,7 +89,6 @@ class Title extends StatelessWidget {
 
 class LoginButton extends StatefulWidget {
   const LoginButton({super.key});
-
   @override
   State<LoginButton> createState() => _LoginButton();
 }
@@ -95,33 +100,26 @@ class _LoginButton extends State<LoginButton> {
     return SignInButton(
       Buttons.Google,
       text: 'Ingresar con google unal',
-      onPressed: () {
+      onPressed: () async {
         if (isChecked) {
-          signIn();
+          try {
+            await GAuthService().ingresarGoogle();
+            await goMenu();
+          } catch (e) {
+            print('ingresa con cuenta unal');
+          }
         } else {
           print('No ha aceptado');
         }
       },
     );
   }
-}
 
-Future<void> signIn() async {
-  try {
-    await _googleSignIn.signIn();
-    //correo de la cuenta
-    print(_currentUser?.email);
-    //nombre
-    print(_currentUser?.displayName);
-    //foto de la cuenta
-    //GoogleUserCircleAvatar.sizeDirective(_currentUser);
-  } catch (e) {
-    print('Error $e');
+  //async para esperar el ingreso
+  goMenu() async {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const MenuTrabajadorVista()));
   }
-}
-
-void signOut() {
-  _googleSignIn.disconnect();
 }
 
 class AgreeCheck extends StatefulWidget {
@@ -173,5 +171,11 @@ class _Checkbox extends State<AgreeCheck> {
             )),
           ],
         ));
+  }
+
+  menuTrabajador() {
+    return () {
+      Navigator.pushNamed(context, '/menu/trabajador');
+    };
   }
 }
