@@ -43,7 +43,6 @@ class MyApp extends StatelessWidget {
         '/registro/chazero': (context) => const RegistroChazeroVista(),
         '/registro/chazero/codigo': (context) => const CodigoVista(),
         '/menu/chazero': (context) => const MenuChazeroVista(),
-        '/menu/trabajador': (context) => const MenuTrabajadorVista(),
         '/menu/trabajador/perfil': (context) => const PerfilTrabajadorVista(),
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),
         '/menu/configuracion': (context) => const ConfiguracionVista(),

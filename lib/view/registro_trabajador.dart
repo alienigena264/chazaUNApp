@@ -104,7 +104,6 @@ class _LoginButton extends State<LoginButton> {
         if (isChecked) {
           try {
             await GAuthService().ingresarGoogle();
-            await goMenu();
           } catch (e) {
             print('ingresa con cuenta unal');
           }
@@ -116,10 +115,6 @@ class _LoginButton extends State<LoginButton> {
   }
 
   //async para esperar el ingreso
-  goMenu() async {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const MenuTrabajadorVista()));
-  }
 }
 
 class AgreeCheck extends StatefulWidget {
