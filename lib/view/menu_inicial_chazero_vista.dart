@@ -24,8 +24,8 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                 ],
               ),
               Container(
-                height: 440,
-                width: 340,// Tamaño fijo
+                height: 505,
+                width: 335,// Tamaño fijo
                 child: ListView.builder( //Hace una lista de todas las filas que había en la matriz chazas
                   shrinkWrap: true,
                   itemExtent: 198,
@@ -50,7 +50,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
 
   SizedBox barraSuperior_() {
     return SizedBox(
-      height: 186.0,
+      height: 150.0,
       child: Container(
         decoration: const BoxDecoration(
           color: colorPrincipal,
@@ -66,7 +66,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
               'Chazero', // el texto que quieres mostrar
               style: TextStyle(
                 color: colorBackground, // Establece el color del texto
-                fontSize: 35.0, // Establece el tamaño del texto
+                fontSize: 50.0, // Establece el tamaño del texto
                 fontFamily: "Inder",
               ),
             ),
@@ -250,4 +250,18 @@ List<List<String>> chazas = [
     "8000",
     "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg"
   ],
+  [
+    "Calcas a 800",
+    "La playita",
+    "5.0",
+    "5800",
+    "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg"
+  ],
+  [
+    "Buho-Chaza",
+    "Entrada de la 26",
+    "3.9",
+    "2500",
+    "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg"
+  ]
 ];
