@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chazaunapp/Models/menu_inicial_model.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
   const MenuInicialVistaView({super.key});
@@ -78,10 +79,11 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                             fontWeight: FontWeight.normal),
                       )),
                 ]),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              chazaBottom_('SexChaza', 'Sociologia', '40k'),
-              chazaBottom_('RubikChaza', 'Entrada 30', '40k')
-            ])
+            Container(
+              height: 300.0,
+              width: 300.0,
+              child: chazas(),
+            )
           ],
         ),
       ),
@@ -101,7 +103,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
     return Container(
         margin: const EdgeInsets.only(top: 10.0),
         child: Material(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
             clipBehavior: Clip.antiAliasWithSaveLayer,
             child: InkWell(
                 //Coidgo extra para funcionar boton
@@ -151,16 +153,108 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                 ))));
   }
 
-  chazaBottom_(String nombre, String ubicacion, String precio) {
-    return InkWell(
-      child: SizedBox(
-        width: 100,
-        height: 100,
-        child: Card(
-            child: Column(
-          children: [Text(nombre), Text(ubicacion), Text(precio)],
-        )),
-      ),
-    );
+  ElevatedButton chazaBottom() {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color(0xffEFB810),
+          minimumSize: const Size(
+              120, 39), // double.infinity is the width and 30 is the height
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6.0),
+          ),
+        ),
+        onPressed: () {},
+        child: const Text(
+          "Entrar",
+          style:
+              TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+        ));
   }
+
+  ListView chazas() {
+    return ListView.separated(
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(height: 30);
+        },
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        itemCount: chazaList.length,
+        itemBuilder: (context, index) {
+          Chaza chaza = chazaList[index];
+          return card(chaza);
+        });
+  }
+
+  Widget card(chaza) => Container(
+        decoration: BoxDecoration(
+            border: Border.all(
+              color: Color.fromARGB(255, 131, 131, 131),
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        width: 50,
+        height: 250,
+        child: Column(children: [
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.asset(
+                chaza.imagen,
+                height: 112,
+                width: 150,
+              ),
+            ),
+          ),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  chaza.nombre, // el texto que quieres mostrar
+                  style: const TextStyle(
+                      color: Colors.black, // Establece el color del texto
+                      fontSize: 30.0, // Establece el tamaño del texto
+                      fontFamily: "Inder",
+                      fontWeight: FontWeight.normal),
+                ),
+                Text(
+                  chaza.pagoHora,
+                  style: const TextStyle(
+                      color: Color(0xff7B1FA2), // Establece el color del texto
+                      fontSize: 20.0, // Establece el tamaño del texto
+                      fontFamily: "Inder",
+                      fontWeight: FontWeight.normal),
+                )
+              ]),
+          Container(
+            margin: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Icon(Icons.location_on_rounded,
+                        color: Color(0xff919191), size: 16.0),
+                    Text(
+                      chaza.ubicacion,
+                      style: const TextStyle(
+                          color: Color(0xff919191),
+                          fontSize: 14.5,
+                          fontFamily: "Inder",
+                          fontWeight: FontWeight.normal),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [chazaBottom()],
+                )
+              ],
+            ),
+          ),
+        ]),
+      );
 }
