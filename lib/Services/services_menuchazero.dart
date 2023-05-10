@@ -11,7 +11,7 @@ Future<List> getChazasporChazero(String idChazero) async {
   querychazas.docs.forEach((id) {
     chazas.add(id.data());
   });
-  Future.delayed(const Duration(milliseconds: 1500));
+  Future.delayed(const Duration(milliseconds: 800));
 
   return chazas;
 }

@@ -13,8 +13,8 @@ class MenuChazeroVista extends StatefulWidget {
 
 class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   int _currentIndex = 0;
-  String idChazero = "D5KI1DaVGA8e9toA0lCq";
-  @override
+  String idChazero = "D5KI1DaVGA8e9toA0lCq"; //Id del chazero, cambiar para probar el otro chazero
+  @override                                   //Se supone que esa Id se tomará sola al hacer login
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -33,7 +33,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                 child: FutureBuilder(
                   future: getChazasporChazero(idChazero),
                   builder: ((context, snapshot) {
-                    if(snapshot.hasData){
+                    if(snapshot.hasData){ //Si la consulta devuelve algo o espera
                       return ListView.builder(
                         //Hace una lista de todas las filas que había en la matriz chazas
                         shrinkWrap: true,
@@ -61,7 +61,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                       );
                     } else{
                       return const Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(), // Si la bd se tarda o no da nada
                       );
                     }
                   }),
