@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:chazaunapp/Services/gauth_service.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +78,7 @@ class Title extends StatelessWidget {
               _title, // el texto que quieres mostrar
               style: TextStyle(
                   color: Colors.white, // Establece el color del texto
-                  fontSize: 55.0, // Establece el tamaño del texto
+                  fontSize: 60.0, // Establece el tamaño del texto
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
             ),

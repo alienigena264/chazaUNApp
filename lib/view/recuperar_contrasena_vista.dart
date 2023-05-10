@@ -35,7 +35,7 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
             ),
             const SizedBox(
               height: 100,
-              child: Center(
+              child:  Center(
                 child: Text(
                   "Escribe el correo electrónico con\nel que te registraste para poder\n      recuperar tu contraseña",
                   style: TextStyle(

@@ -23,24 +23,26 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                   barraSuperior_(),
                 ],
               ),
-              Container(
-                height: 505,
+              const SizedBox(height: 25,),
+              SizedBox(
+                height: 570,
                 width: 335,// Tamaño fijo
                 child: ListView.builder( //Hace una lista de todas las filas que había en la matriz chazas
                   shrinkWrap: true,
                   itemExtent: 198,
-                  padding: EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 20),
                   itemCount: chazas.length, // casi como un for que itera las veces de las filas de la matriz
                   itemBuilder: (BuildContext context, int index) {
                     return Column(children: [SizedBox(height: 183,
                       child: infoChaza_( // hace una card infochaza con los detalles de cada fila, osea cada chaza
                           chazas[index][0], chazas[index][1], chazas[index][2],
                           chazas[index][3], chazas[index][4]),),
-                      SizedBox(height: 15,)], //Espacio entre las cards
+                      const SizedBox(height: 15,)], //Espacio entre las cards
                     );
                   },
                 ),
               ),
+              
               Stack(children: [barraChazero()],)],
           ),
         ),
@@ -66,7 +68,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
               'Chazero', // el texto que quieres mostrar
               style: TextStyle(
                 color: colorBackground, // Establece el color del texto
-                fontSize: 50.0, // Establece el tamaño del texto
+                fontSize: 60.0, // Establece el tamaño del texto
                 fontFamily: "Inder",
               ),
             ),
@@ -105,8 +107,10 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
               ),
               columnFotoYPagoChaza_(imagen, pago),
             ],
-          ), Divider(
-            color: Colors.black45,
+          ), const Divider(
+            color: Colors.black54,
+            indent: 15,
+            endIndent: 15,
             thickness: 1.5, // ajusta el grosor de la línea
           ),
           Row( mainAxisSize: MainAxisSize.max,
@@ -202,9 +206,15 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
       ),
     ),
         onPressed: (){},
-        child: const Text(
-          "Horarios",
-          style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+        child: Row(
+          children: const [
+            Text(
+              "Horarios",
+              style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+            ),
+            SizedBox(width: 15,),
+            Icon(Icons.arrow_forward_ios_rounded, color: Colors.black, size: 16.0,)
+          ],
         ));
   }
   ElevatedButton botonPersonal(){ //Aun no hace nada porque no tengo seguridad de cual es esa pantalla y si está disponible
@@ -217,19 +227,25 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
       ),
     ),
         onPressed: (){},
-        child: const Text(
-          "Personal",
-          style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+        child: Row(
+          children: const [
+            Text(
+              "Personal",
+              style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+            ),
+            SizedBox(width: 15,),
+            Icon(Icons.arrow_forward_ios_rounded, color: Colors.black, size: 16.0,)
+          ],
         ));
   }
   BottomNavigationBar barraChazero(){ //La barra de opciones inferior
-    return BottomNavigationBar(items:[
+    return BottomNavigationBar(items:const [
       BottomNavigationBarItem(icon: Icon(Icons.home), label:'Inicio'),//Icono home
     BottomNavigationBarItem(icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
     BottomNavigationBarItem(icon: Icon(Icons.settings_outlined), label: 'Ajustes')
     ], backgroundColor: Colors.white, selectedItemColor: colorPrincipal,
-    unselectedItemColor: Color(0xff909090), unselectedLabelStyle: TextStyle(fontFamily: "Inder"),
-    selectedLabelStyle: TextStyle(fontFamily: "Inder"), iconSize: 34,//Detalles del color del item seleccionado y la fuente de lo labels
+    unselectedItemColor: const Color(0xff909090), unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+    selectedLabelStyle: const TextStyle(fontFamily: "Inder"), iconSize: 34,//Detalles del color del item seleccionado y la fuente de lo labels
     );
   }
 }

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "198907188314-jauk4fivc5q5gjgl39q9nndr28157f6g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.queremoscancelar.chazaunapp",
+            "certificate_hash": "bde5ec934dbf2ea6beb31aacaedc74592f41e51d"
+          }
+        },
+        {
           "client_id": "198907188314-lpkatfai33prhca9fdp4397j2q51q53i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
