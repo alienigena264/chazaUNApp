@@ -13,8 +13,9 @@ class MenuChazeroVista extends StatefulWidget {
 
 class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   int _currentIndex = 0;
-  String idChazero = "D5KI1DaVGA8e9toA0lCq"; //Id del chazero, cambiar para probar el otro chazero
-  @override                                   //Se supone que esa Id se tomará sola al hacer login
+  String idChazero =
+      "D5KI1DaVGA8e9toA0lCq"; //Id del chazero, cambiar para probar el otro chazero
+  @override //Se supone que esa Id se tomará sola al hacer login
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -27,41 +28,45 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                   barraSuperior_(),
                 ],
               ),
-              Container(
+              SizedBox(
                 height: 690,
                 width: 410, // Tamaño fijo
                 child: FutureBuilder(
                   future: getChazasporChazero(idChazero),
                   builder: ((context, snapshot) {
-                    if(snapshot.hasData){ //Si la consulta devuelve algo o espera
+                    if (snapshot.hasData) {
+                      //Si la consulta devuelve algo o espera
                       return ListView.builder(
                         //Hace una lista de todas las filas que había en la matriz chazas
                         shrinkWrap: true,
                         itemExtent: 215,
-                        padding: EdgeInsets.only(bottom: 20),
-                        itemCount: snapshot.data?.length,  // casi como un for que itera las veces de las filas de la matriz
+                        padding: const EdgeInsets.only(bottom: 20),
+                        itemCount: snapshot.data
+                            ?.length, // casi como un for que itera las veces de las filas de la matriz
                         itemBuilder: (ontext, index) {
                           return Column(
                             children: [
                               SizedBox(
                                 height: 200,
                                 child: infoChaza_(
-                                  // hace una card infochaza con los detalles de cada fila, osea cada chaza
+                                    // hace una card infochaza con los detalles de cada fila, osea cada chaza
                                     snapshot.data?[index]['nombre'],
                                     snapshot.data?[index]['ubicacion'],
                                     snapshot.data?[index]['puntuacion'],
                                     snapshot.data?[index]['paga'],
                                     snapshot.data?[index]['imagen']),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
-                              )], //Espacio entre las cards
+                              )
+                            ], //Espacio entre las cards
                           );
                         },
                       );
-                    } else{
+                    } else {
                       return const Center(
-                        child: CircularProgressIndicator(), // Si la bd se tarda o no da nada
+                        child:
+                            CircularProgressIndicator(), // Si la bd se tarda o no da nada
                       );
                     }
                   }),
@@ -135,7 +140,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
               columnFotoYPagoChaza_(imagen, pago),
             ],
           ),
-          Divider(
+          const Divider(
             color: Colors.black45,
             thickness: 1.5, // ajusta el grosor de la línea
           ),
@@ -242,7 +247,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         child: const Text(
           "Horarios",
           style:
-          TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+              TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
         ));
   }
 
@@ -260,7 +265,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         child: const Text(
           "Personal",
           style:
-          TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+              TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
         ));
   }
 
@@ -279,11 +284,11 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
       ],
       backgroundColor: Colors.white,
       selectedItemColor: colorPrincipal,
-      unselectedItemColor: Color(0xff909090),
-      unselectedLabelStyle: TextStyle(fontFamily: "Inder"),
-      selectedLabelStyle: TextStyle(fontFamily: "Inder"),
+      unselectedItemColor: const Color(0xff909090),
+      unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+      selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
       iconSize:
-      34, //Detalles del color del item seleccionado y la fuente de lo labels
+          34, //Detalles del color del item seleccionado y la fuente de lo labels
     );
   }
 
