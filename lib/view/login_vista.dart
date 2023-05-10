@@ -190,9 +190,9 @@ class _LoginVistaState extends State<LoginVista> {
 
   verificar_() {
     return () async {
-      print(correoController.text);
+      //print(correoController.text);
       List data = await getEmail();
-      print(data.length);
+      //print(data.length);
       if (verificarUsuario(correoController.text, data)) {
         // ignore: use_build_context_synchronously
         Navigator.pushNamed(context, '/menu/chazero');
@@ -211,8 +211,8 @@ class _LoginVistaState extends State<LoginVista> {
 
   bool verificarUsuario(String mail, List data) {
     for (var i = 0; i < data.length; i++) {
-        print(data[i]['correo']);
-        print(mail);
+        //print(data[i]['correo']);
+        //print(mail);
       if (data[i]['correo'] == mail) {
         return true;
       }
