@@ -13,79 +13,80 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: const Color(0xffF6F6F6),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                // Contenedor con texto y fondo
-                SizedBox(
-                  height: 186.0,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(
-                          0xff00B5C0), // Establece el color de fondo del contenedor con el texto
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(50.0),
+      body: SingleChildScrollView(
+        child: Container(
+          color: colorBackground,
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  // Contenedor con texto y fondo
+                  SizedBox(
+                    height: 186.0,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color:
+                            colorPrincipal, // Establece el color de fondo del contenedor con el texto
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(50.0),
+                        ),
                       ),
-                    ),
-                    child: const Center(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          'Usuario', // el texto que quieres mostrar
-                          style: TextStyle(
-                              color:
-                                  Colors.white, // Establece el color del texto
-                              fontSize: 55.0, // Establece el tamaño del texto
-                              fontFamily: "Inder",
-                              fontWeight: FontWeight.normal),
+                      child: const Center(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            'Usuario', // el texto que quieres mostrar
+                            style: TextStyle(
+                                color: Colors
+                                    .white, // Establece el color del texto
+                                fontSize: 55.0, // Establece el tamaño del texto
+                                fontFamily: "Inder",
+                                fontWeight: FontWeight.normal),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                chefBottom_(),
-                cubiertosBottom_(),
-                masBottom_(),
-              ],
-            ),
-            const SizedBox(
-              width: 55,
-            ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Text(
-                        'Chazas', // el texto que quieres mostrar
-                        style: TextStyle(
-                            color: Colors.black, // Establece el color del texto
-                            fontSize: 30.0, // Establece el tamaño del texto
-                            fontFamily: "Inder",
-                            fontWeight: FontWeight.normal),
-                      )),
-                ]),
-            SizedBox(
-              height: 300.0,
-              width: 300.0,
-              child: chazas(),
-            )
-          ],
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  chefBottom_(),
+                  cubiertosBottom_(),
+                  masBottom_(),
+                ],
+              ),
+              const SizedBox(
+                width: 55,
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: const <
+                  Widget>[
+                Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Text(
+                      'Chazas', // el texto que quieres mostrar
+                      style: TextStyle(
+                          color: Colors.black, // Establece el color del texto
+                          fontSize: 30.0, // Establece el tamaño del texto
+                          fontFamily: "Inder",
+                          fontWeight: FontWeight.normal),
+                    )),
+              ]),
+              Container(
+                height: 300.0,
+                width: 300.0,
+                child: chazas(),
+              )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -164,7 +165,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   ElevatedButton chazaBottom() {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xffEFB810),
+          backgroundColor: colorChazero,
           minimumSize: const Size(
               120, 39), // double.infinity is the width and 30 is the height
           shape: RoundedRectangleBorder(
@@ -227,7 +228,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                 Text(
                   chaza.pagoHora,
                   style: const TextStyle(
-                      color: Color(0xff7B1FA2), // Establece el color del texto
+                      color: colorTrabajador, // Establece el color del texto
                       fontSize: 20.0, // Establece el tamaño del texto
                       fontFamily: "Inder",
                       fontWeight: FontWeight.normal),
