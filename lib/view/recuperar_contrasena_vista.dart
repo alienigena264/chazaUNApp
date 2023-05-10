@@ -82,7 +82,8 @@ class _InputEmailVistaState extends State<InputEmailVista>{
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0))
           ),
-          hintText: "Correo",
+          labelText: "Correo",
+          hintText: "example@mail.com",
           hintStyle: TextStyle(
             color: Colors.grey,
             fontFamily: "Inder",
