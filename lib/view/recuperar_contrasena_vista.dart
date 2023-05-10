@@ -20,7 +20,7 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
         child: Column(
           children: [
             // Titulo "¿Olvidaste tu Contraseña?
-            SizedBox(
+            const SizedBox(
               height: 200,
               child: Center(
                 child: Text(
@@ -33,7 +33,7 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
                 ),
               ) ,
             ),
-            SizedBox(
+            const SizedBox(
               height: 100,
               child: Center(
                 child: Text(
@@ -76,13 +76,14 @@ class _InputEmailVistaState extends State<InputEmailVista>{
       child: TextField(
         controller: widget.emailTextController,
         keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0))
           ),
-          hintText: "Correo",
+          labelText: "Correo",
+          hintText: "example@mail.com",
           hintStyle: TextStyle(
             color: Colors.grey,
             fontFamily: "Inder",
