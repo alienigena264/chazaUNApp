@@ -100,7 +100,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                 'Chazero', // el texto que quieres mostrar
                 style: TextStyle(
                   color: colorBackground, // Establece el color del texto
-                  fontSize: 50.0, // Establece el tamaño del texto
+                  fontSize: 60.0, // Establece el tamaño del texto
                   fontFamily: "Inder",
                 ),
               ),
@@ -139,9 +139,11 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
               ),
               columnFotoYPagoChaza_(imagen, pago),
             ],
-          ),
-          const Divider(
-            color: Colors.black45,
+          ), const Divider(
+            color: Colors.black54,
+            indent: 15,
+            endIndent: 15,
+
             thickness: 1.5, // ajusta el grosor de la línea
           ),
           Row(
