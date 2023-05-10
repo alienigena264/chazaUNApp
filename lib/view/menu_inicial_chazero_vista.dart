@@ -28,8 +28,8 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                 ],
               ),
               Container(
-                height: 670,
-                width: 390, // Tamaño fijo
+                height: 690,
+                width: 410, // Tamaño fijo
                 child: FutureBuilder(
                   future: getChazasporChazero(idChazero),
                   builder: ((context, snapshot) {
@@ -37,14 +37,14 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                       return ListView.builder(
                         //Hace una lista de todas las filas que había en la matriz chazas
                         shrinkWrap: true,
-                        itemExtent: 198,
+                        itemExtent: 215,
                         padding: EdgeInsets.only(bottom: 20),
                         itemCount: snapshot.data?.length,  // casi como un for que itera las veces de las filas de la matriz
                         itemBuilder: (ontext, index) {
                           return Column(
                             children: [
                               SizedBox(
-                                height: 183,
+                                height: 200,
                                 child: infoChaza_(
                                   // hace una card infochaza con los detalles de cada fila, osea cada chaza
                                     snapshot.data?[index]['nombre'],
@@ -79,7 +79,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
 
   SizedBox barraSuperior_() {
     return SizedBox(
-        height: 170.0,
+        height: 200.0,
         child: Container(
           decoration: const BoxDecoration(
             color: colorPrincipal,
@@ -124,7 +124,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                     nombre, // Nombre de la chaza
                     style: const TextStyle(
                         color: Color(0xff242424),
-                        fontSize: 20.0,
+                        fontSize: 22.0,
                         fontFamily: "Inder",
                         fontWeight: FontWeight.normal),
                   ),
@@ -207,7 +207,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
             image: NetworkImage(imagen),
             //Parametro del enlace de la imagen de la chaza
             height: 65.0,
-            width: 65.0,// Tamaño
+            // Tamaño
           ),
         ),
         Text(
@@ -233,7 +233,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         style: ElevatedButton.styleFrom(
           backgroundColor: colorChazero,
           minimumSize: const Size(
-              130, 34), // double.infinity is the width and 30 is the height
+              132, 40), // double.infinity is the width and 30 is the height
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6.0),
           ),
@@ -251,7 +251,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorChazero,
-          minimumSize: const Size(130, 34),
+          minimumSize: const Size(132, 40),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6.0),
           ),
