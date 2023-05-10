@@ -5,8 +5,8 @@ late final GoogleSignInAccount? gUser;
 
 class GAuthService {
   //Ingresar por Google
-  ingresarGoogle() async {
-    gUser = await GoogleSignIn().signIn();
+  Future<UserCredential> ingresarGoogle() async {
+    gUser = await GoogleSignIn(hostedDomain: "unal.edu.co").signIn();
     final GoogleSignInAuthentication gAuth = await gUser!.authentication;
     //datos para guardar en firebase
     final credential = GoogleAuthProvider.credential(
