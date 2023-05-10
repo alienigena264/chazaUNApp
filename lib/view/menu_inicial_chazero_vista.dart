@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chazaunapp/view/colors.dart';
+import 'package:chazaunapp/Services/services_menuchazero.dart';
 
 //Pruebita pull request
 
@@ -12,6 +13,7 @@ class MenuChazeroVista extends StatefulWidget {
 
 class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   int _currentIndex = 0;
+  String idChazero = "D5KI1DaVGA8e9toA0lCq";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,32 +30,41 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
               Container(
                 height: 670,
                 width: 390, // Tamaño fijo
-                child: ListView.builder(
-                  //Hace una lista de todas las filas que había en la matriz chazas
-                  shrinkWrap: true,
-                  itemExtent: 198,
-                  padding: EdgeInsets.only(bottom: 20),
-                  itemCount: chazas.length,
-                  // casi como un for que itera las veces de las filas de la matriz
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: 183,
-                          child: infoChaza_(
-                              // hace una card infochaza con los detalles de cada fila, osea cada chaza
-                              chazas[index][0],
-                              chazas[index][1],
-                              chazas[index][2],
-                              chazas[index][3],
-                              chazas[index][4]),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        )
-                      ], //Espacio entre las cards
-                    );
-                  },
+                child: FutureBuilder(
+                  future: getChazasporChazero(idChazero),
+                  builder: ((context, snapshot) {
+                    if(snapshot.hasData){
+                      return ListView.builder(
+                        //Hace una lista de todas las filas que había en la matriz chazas
+                        shrinkWrap: true,
+                        itemExtent: 198,
+                        padding: EdgeInsets.only(bottom: 20),
+                        itemCount: snapshot.data?.length,  // casi como un for que itera las veces de las filas de la matriz
+                        itemBuilder: (ontext, index) {
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 183,
+                                child: infoChaza_(
+                                  // hace una card infochaza con los detalles de cada fila, osea cada chaza
+                                    snapshot.data?[index]['nombre'],
+                                    snapshot.data?[index]['ubicacion'],
+                                    snapshot.data?[index]['puntuacion'],
+                                    snapshot.data?[index]['paga'],
+                                    snapshot.data?[index]['imagen']),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              )], //Espacio entre las cards
+                          );
+                        },
+                      );
+                    } else{
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }),
                 ),
               ),
               Stack(
@@ -230,7 +241,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         child: const Text(
           "Horarios",
           style:
-              TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+          TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
         ));
   }
 
@@ -248,7 +259,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         child: const Text(
           "Personal",
           style:
-              TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+          TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
         ));
   }
 
@@ -271,9 +282,10 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
       unselectedLabelStyle: TextStyle(fontFamily: "Inder"),
       selectedLabelStyle: TextStyle(fontFamily: "Inder"),
       iconSize:
-          34, //Detalles del color del item seleccionado y la fuente de lo labels
+      34, //Detalles del color del item seleccionado y la fuente de lo labels
     );
   }
+
   void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -289,6 +301,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
 }
 
 //Ejemplo para ver si funciona una card por chaza
+/*
 List<List<String>> chazas = [
   [
     "Sex-Chaza",
@@ -319,3 +332,4 @@ List<List<String>> chazas = [
     "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg"
   ]
 ];
+*/
