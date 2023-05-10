@@ -206,7 +206,8 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
           child: Image(
             image: NetworkImage(imagen),
             //Parametro del enlace de la imagen de la chaza
-            height: 61.0, // Tamaño
+            height: 65.0,
+            width: 65.0,// Tamaño
           ),
         ),
         Text(
