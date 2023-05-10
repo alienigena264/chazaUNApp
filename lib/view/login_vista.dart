@@ -190,15 +190,13 @@ class _LoginVistaState extends State<LoginVista> {
 
   verificar_() {
     return () async {
-      //print(correoController.text);
       List data = await getEmail();
       //print(data.length);
-      if (verificarUsuario(correoController.text, data)) {
+      if (verificarUsuario(correoController.text, data, contrasenaController.text)) {
         // ignore: use_build_context_synchronously
         Navigator.pushNamed(context, '/menu/chazero');
       } else {
-        print('Fallo el inicio de sesion');
-        
+        mostrarErroe();
       }
     };
   }
@@ -209,14 +207,53 @@ class _LoginVistaState extends State<LoginVista> {
     };
   }
 
-  bool verificarUsuario(String mail, List data) {
+  bool verificarUsuario(String mail, List data,String pass) {
     for (var i = 0; i < data.length; i++) {
-        //print(data[i]['correo']);
-        //print(mail);
-      if (data[i]['correo'] == mail) {
+      if (data[i]['correo'] == mail &&
+          verificarContrasena(pass, data, i)) {
         return true;
       }
     }
     return false;
+  }
+
+  bool verificarContrasena(String text, List data, int posicion) {
+      if (data[posicion]['contraseña'] == text) {
+        return true;
+    }
+    return false;
+  }
+  
+  void mostrarErroe() {
+  showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      title: const Text("Credenciales incorrectas", style: TextStyle(fontSize: 35, color: colorPrincipal),),
+      content: const Text("Por favor, inténtelo de nuevo.", style: TextStyle(fontSize: 25)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 20, bottom: 5),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colorPrincipal,
+              minimumSize: const Size(100, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+            child: const Text("Cerrar",style: TextStyle(fontSize: 25, color: Colors.white)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
+      ],
+    );
+  },
+);
   }
 }
