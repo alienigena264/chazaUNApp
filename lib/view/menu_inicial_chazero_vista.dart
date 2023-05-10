@@ -30,6 +30,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
               ),
               SizedBox(
                 height: 690,
+                //height: 520 para Juan 
                 width: 410, // Tamaño fijo
                 child: FutureBuilder(
                   future: getChazasporChazero(idChazero),
