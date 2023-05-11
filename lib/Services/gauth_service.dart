@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -5,7 +7,8 @@ late final GoogleSignInAccount? gUser;
 
 class GAuthService {
   //Ingresar por Google
-  Future<UserCredential> ingresarGoogle() async {
+  ingresarGoogle() async {
+    //Ya bloquea desde la consola de Google Cloud, pero esta mas bonito asi xD
     gUser = await GoogleSignIn(hostedDomain: "unal.edu.co").signIn();
     final GoogleSignInAuthentication gAuth = await gUser!.authentication;
     //datos para guardar en firebase
@@ -21,13 +24,51 @@ class GAuthService {
     return await FirebaseAuth.instance.signOut();
   }
 
+//lo encontre en internet para conseguir nombres y apellidos separados
+  static Map<String, dynamic>? parseJwt(String token) {
+    // validate token
+    if (token == null) return null;
+    final List<String> parts = token.split('.');
+    if (parts.length != 3) {
+      return null;
+    }
+    // retrieve token payload
+    final String payload = parts[1];
+    final String normalized = base64Url.normalize(payload);
+    final String resp = utf8.decode(base64Url.decode(normalized));
+    // convert to Map
+    final payloadMap = json.decode(resp);
+    if (payloadMap is! Map<String, dynamic>) {
+      return null;
+    }
+    return payloadMap;
+  }
+
+  /* Para ingresarlo a google
+    Map<String, dynamic>? idMap = parseJwt(gUser!.id);
+
+    final String firstName = idMap!["given_name"];
+    final String lastName = idMap["family_name"];*/
+
   //Nombre de la cuenta
-  getUser() {
+  getNombreCompleto() {
     if (gUser?.displayName != null) {
       return gUser?.displayName;
     } else {
       return "no hay usuario";
     }
+  }
+
+  getNombre() {
+    Map<String, dynamic>? idMap = parseJwt(gUser!.id);
+
+    return idMap!["given_name"];
+  }
+
+  getApellido() {
+    Map<String, dynamic>? idMap = parseJwt(gUser!.id);
+
+    return idMap!["family_name"];
   }
 
   //email registrado
