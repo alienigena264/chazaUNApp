@@ -30,8 +30,8 @@ class _BotonGoogle extends State<BotonGoogle> {
                 Expanded(
                     child: Divider(
                   indent: 40,
-                  endIndent: 40,
-                  color: Colors.black,
+                  endIndent: 10,
+                  color: Colors.grey,
                 )),
                 Expanded(
                     child: Text(
@@ -45,13 +45,13 @@ class _BotonGoogle extends State<BotonGoogle> {
                 )),
                 Expanded(
                     child: Divider(
-                  indent: 40,
+                  indent: 10,
                   endIndent: 40,
-                  color: Colors.black,
+                  color: Colors.grey,
                 ))
               ]),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           Container(
             padding: const EdgeInsets.all(10),
