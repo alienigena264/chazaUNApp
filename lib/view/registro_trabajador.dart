@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_print
 
 import 'package:chazaunapp/Services/gauth_service.dart';
+import 'package:chazaunapp/view/inicio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 import 'colors.dart';
-import 'menu_inicial_vista.dart';
 
 //Titulo del banner
 const String _title = 'Registro';
@@ -105,10 +105,18 @@ class _LoginButton extends State<LoginButton> {
 
   //async para esperar el ingreso
   goMenu() async {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const MenuInicialVistaView()));
+    //Vuelve al inicio y borra lo anterior(login, registro y trabajador) para que no se pueda regresar al registro una vez ingresado,
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const PaginaInicio(),
+      ),
+      //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
+      (_) => false,
+    );
   }
 }
+
 //TERMINOS Y CONDICIONES
 //https://doc-hosting.flycricket.io/chazaunapp-terms-of-use/61d6b708-bd87-4bb3-8392-cc8b9ab1fe48/terms
 //https://doc-hosting.flycricket.io/chazaunapp-privacy-policy/f674154c-f1f3-4291-a55f-77743561a2b2/privacy
