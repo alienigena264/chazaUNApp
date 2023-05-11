@@ -8,9 +8,9 @@ Future<List> getChazasporChazero(String idChazero) async {
   QuerySnapshot querychazas = await collectionReferenceChazas
       .where('ID_Chazero', isEqualTo: idChazero)
       .get();
-  querychazas.docs.forEach((id) {
+  for (var id in querychazas.docs) {
     chazas.add(id.data());
-  });
+  }
   Future.delayed(const Duration(milliseconds: 800));
 
   return chazas;
