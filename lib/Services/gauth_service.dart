@@ -1,15 +1,11 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-late final GoogleSignInAccount? gUser;
 
 class GAuthService {
   //Ingresar por Google
   ingresarGoogle() async {
     //Ya bloquea desde la consola de Google Cloud, pero esta mas bonito asi xD
-    gUser = await GoogleSignIn(hostedDomain: "unal.edu.co").signIn();
+    final gUser = await GoogleSignIn(hostedDomain: "unal.edu.co").signIn();
     final GoogleSignInAuthentication gAuth = await gUser!.authentication;
     //datos para guardar en firebase
     final credential = GoogleAuthProvider.credential(
@@ -24,6 +20,7 @@ class GAuthService {
     return await FirebaseAuth.instance.signOut();
   }
 
+  /*no funciono xd
 //lo encontre en internet para conseguir nombres y apellidos separados
   static Map<String, dynamic>? parseJwt(String token) {
     // validate token
@@ -50,40 +47,42 @@ class GAuthService {
     final String firstName = idMap!["given_name"];
     final String lastName = idMap["family_name"];*/
 
+
+  static Future<String?> getNombre(String user) async {
+    //final GoogleSignInAuthentication gAuth =
+    //  await FirebaseAuth.instance.currentUser?.getIdToken();
+    print(user);
+    Map<String, dynamic>? idMap = parseJwt(user);
+    print(idMap!["given_name"]);
+    return idMap["given_name"];
+  }
+
+  Future<String?> getApellido() async {
+    String? user = await FirebaseAuth.instance.currentUser?.getIdToken();
+    Map<String, dynamic>? idMap = parseJwt(user!);
+    return await idMap!["family_name"];
+    print('e2');
+  }
+*/
   //Nombre de la cuenta
   getNombreCompleto() {
-    if (gUser?.displayName != null) {
-      return gUser?.displayName;
+    String? nombre = FirebaseAuth.instance.currentUser?.displayName;
+    if (nombre == null) {
+      print('e');
     } else {
-      return "no hay usuario";
+      return nombre;
     }
-  }
-
-  getNombre() {
-    Map<String, dynamic>? idMap = parseJwt(gUser!.id);
-
-    return idMap!["given_name"];
-  }
-
-  getApellido() {
-    Map<String, dynamic>? idMap = parseJwt(gUser!.id);
-
-    return idMap!["family_name"];
   }
 
   //email registrado
   getEmail() {
-    if (gUser?.email != null) {
-      return gUser?.email;
-    } else {
-      return "no hay usuario";
-    }
+    return FirebaseAuth.instance.currentUser!.email;
   }
 
   //foto que tenga en google
   getProfilePic() {
     try {
-      return gUser?.photoUrl;
+      return FirebaseAuth.instance.currentUser!.photoURL;
     } catch (e) {
       return "no hay usuario";
     }
