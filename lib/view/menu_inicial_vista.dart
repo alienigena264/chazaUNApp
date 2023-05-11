@@ -1,15 +1,21 @@
-import 'package:chazaunapp/Models/menu_inicial_model.dart';
-import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:chazaunapp/view/colors.dart';
+import 'package:chazaunapp/Services/services_menu_inicial.dart';
+import 'package:chazaunapp/Services/gauth_service.dart';
+import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
+import 'package:chazaunapp/view/menu_inicia_cards/image_card_content.dart';
+import 'package:chazaunapp/Models/menu_inicial_model.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
-  const MenuInicialVistaView({super.key});
+  MenuInicialVistaView({super.key});
 
   @override
   State<MenuInicialVistaView> createState() => _MenuInicialVistaView();
 }
 
 class _MenuInicialVistaView extends State<MenuInicialVistaView> {
+  int _currentIndex = 0;
+  String idChazero = "D5KI1DaVGA8e9toA0lCq";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,9 +87,53 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     )),
               ]),
               SizedBox(
-                height: 300.0,
-                width: 300.0,
-                child: chazas(),
+
+                height: 500,
+                width: 410, // Tamaño fijo
+                child: FutureBuilder(
+                  future: getChazas(),
+                  builder: ((context, snapshot) {
+                    if (snapshot.hasData) {
+                      //Si la consulta devuelve algo o espera
+                      return ListView.separated(
+                        //Hace una lista de todas las filas que había en la matriz chazas
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.only(bottom: 20),
+                        itemCount: snapshot.data?.length ??
+                            0, // casi como un for que itera las veces de las filas de la matriz
+                        itemBuilder: (text, index) {
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 250,
+                                width: 300,
+                                child: card(
+                                    // hace una card infochaza con los detalles de cada fila, osea cada chaza
+                                    snapshot.data?[index]['nombre'],
+                                    snapshot.data?[index]['ubicacion'],
+                                    snapshot.data?[index]['puntuacion'],
+                                    snapshot.data?[index]['paga'],
+                                    snapshot.data?[index]['imagen']),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              )
+                            ], //Espacio entre las cards
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(height: 30);
+                        },
+                      );
+                    } else {
+                      return const Center(
+                        child:
+                            CircularProgressIndicator(), // Si la bd se tarda o no da nada
+                      );
+                    }
+                  }),
+                ),
+
               )
             ],
           ),
@@ -91,12 +141,19 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_rounded), label: "Usuario"),
+              icon: Icon(Icons.home), label: 'Inicio'), //Icono home
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Configuracion")
+              icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings_outlined), label: 'Ajustes')
         ],
+        backgroundColor: Colors.white,
+        selectedItemColor: colorPrincipal,
+        unselectedItemColor: const Color(0xff909090),
+        unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+        selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+        iconSize: 34,
       ),
     );
   }
@@ -110,7 +167,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
             child: InkWell(
                 //Coidgo extra para funcionar boton
                 splashColor: Colors.black26,
-                onTap: () {},
+                onTap: _enProgreso(context),
                 child: Image.asset(
                   'assets/imagenes/chef.png',
                   height: 60,
@@ -128,7 +185,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
             child: InkWell(
                 //Coidgo extra para funcionar boton
                 splashColor: Colors.black26,
-                onTap: () {},
+                onTap: _enProgreso(context),
                 child: Image.asset(
                   'assets/imagenes/snack.png',
                   height: 60,
@@ -146,7 +203,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
             child: InkWell(
                 //Coidgo extra para funcionar boton
                 splashColor: Colors.black26,
-                onTap: () {},
+                onTap: _enProgreso(context),
                 child: Image.asset(
                   'assets/imagenes/mas.png',
                   height: 60,
@@ -165,7 +222,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-        onPressed: () {},
+        onPressed: _enProgreso(context),
         child: const Text(
           "Entrar",
           style:
@@ -173,90 +230,167 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
         ));
   }
 
-  ListView chazas() {
-    return ListView.separated(
-        separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(height: 30);
-        },
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemCount: chazaList.length,
-        itemBuilder: (context, index) {
-          Chaza chaza = chazaList[index];
-          return card(chaza);
-        });
+  // ListView chazas(String nombre, String ubicacion, String puntuacion,
+  //     String pago, String imagen) {
+  //   return ListView.separated(
+  //     separatorBuilder: (BuildContext context, int index) {
+  //       return const SizedBox(height: 30);
+  //     },
+  //     shrinkWrap: true,
+  //     scrollDirection: Axis.vertical,
+  //     itemCount: chazaList.length,
+  //     itemBuilder: (ontext, index) {
+  //       return Column(
+  //         children: [
+  //           SizedBox(
+  //             height: 200,
+  //             child: card(
+  //                 // hace una card infochaza con los detalles de cada fila, osea cada chaza
+  //                 nombre,
+  //                 ubicacion,
+  //                 puntuacion,
+  //                 pago,
+  //                 imagen),
+  //           ),
+  //           const SizedBox(
+  //             height: 15,
+  //           )
+  //         ], //Espacio entre las cards
+  //       );
+  //     },
+  //   );
+  // }
+
+  Card card(String nombre, String ubicacion, String puntuacion, String pago,
+      String imagen) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          FillImageCard(
+            width: 300,
+            heightImage: 140,
+            imageProvider: NetworkImage(imagen),
+            tags: [_tag('Ingresar', () {})],
+            title: _title(nombre),
+            description: _content(ubicacion, pago),
+          ),
+          const SizedBox(width: 12),
+        ],
+      ),
+    );
   }
 
-  Widget card(chaza) => Container(
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: const Color.fromARGB(255, 131, 131, 131),
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(20))),
-        width: 50,
-        height: 250,
-        child: Column(children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Image.asset(
-                chaza.imagen,
-                height: 112,
-                width: 150,
-              ),
-            ),
-          ),
+  BottomNavigationBar barraChazero() {
+    //La barra de opciones inferior
+    return BottomNavigationBar(
+      currentIndex: _currentIndex,
+      onTap: _onItemTapped,
+      items: const [
+        BottomNavigationBarItem(
+            icon: Icon(Icons.home), label: 'Inicio'), //Icono home
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined), label: 'Ajustes')
+      ],
+      backgroundColor: Colors.white,
+      selectedItemColor: colorPrincipal,
+      unselectedItemColor: const Color(0xff909090),
+      unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+      selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+      iconSize:
+          34, //Detalles del color del item seleccionado y la fuente de lo labels
+    );
+  }
+
+  Widget _title(nombre) {
+    return Text(
+      nombre,
+      style: const TextStyle(
+          fontFamily: "Inder",
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: Colors.black),
+    );
+  }
+
+  Widget _content(ubicacion, pago) {
+    return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
           Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                const Icon(Icons.location_on_rounded,
+                    color: Color(0xff919191), size: 16.0),
                 Text(
-                  chaza.nombre, // el texto que quieres mostrar
-                  style: const TextStyle(
-                      color: Colors.black, // Establece el color del texto
-                      fontSize: 30.0, // Establece el tamaño del texto
-                      fontFamily: "Inder",
-                      fontWeight: FontWeight.normal),
+                  ubicacion,
+                  style: TextStyle(fontFamily: "Inder", color: Colors.black),
                 ),
-                Text(
-                  chaza.pagoHora,
-                  style: const TextStyle(
-                      color: colorTrabajador, // Establece el color del texto
-                      fontSize: 20.0, // Establece el tamaño del texto
-                      fontFamily: "Inder",
-                      fontWeight: FontWeight.normal),
-                )
               ]),
-          Container(
-            margin: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.location_on_rounded,
-                        color: Color(0xff919191), size: 16.0),
-                    Text(
-                      chaza.ubicacion,
-                      style: const TextStyle(
-                          color: Color(0xff919191),
-                          fontSize: 14.5,
-                          fontFamily: "Inder",
-                          fontWeight: FontWeight.normal),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [chazaBottom()],
-                )
-              ],
-            ),
+          Text(
+            "$pago / Hora",
+            style: const TextStyle(
+                color: colorTrabajador,
+                fontSize: 13.0,
+                fontFamily: "Inder",
+                fontWeight: FontWeight.normal),
           ),
-        ]),
-      );
+        ]);
+  }
+
+  // footer por si se ponia imagen de usuario abajo o boton de compartir
+
+  // Widget _footer({Color? color}) {
+  //   return Row(
+  //     children: [
+  //       CircleAvatar(
+  //         backgroundImage: AssetImage(
+  //           'assets/avatar.png',
+  //         ),
+  //         radius: 12,
+  //       ),
+  //       const SizedBox(
+  //         width: 4,
+  //       ),
+  //       Expanded(
+  //           child: Text(
+  //         'Super user',
+  //         style: TextStyle(color: color),
+  //       )),
+  //       IconButton(onPressed: () {}, icon: Icon(Icons.share))
+  //     ],
+  //   );
+  // }
+
+  Widget _tag(String tag, VoidCallback onPressed) {
+    return InkWell(
+      onTap: _enProgreso(context),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6), color: colorChazero),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        child: Text(
+          tag,
+          style: TextStyle(fontFamily: "Inder", color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    _enProgreso(context);
+  }
+
+  Function() _enProgreso(BuildContext context) {
+    return () {
+      Navigator.pushNamed(context, '/progreso');
+    };
+  }
 }
