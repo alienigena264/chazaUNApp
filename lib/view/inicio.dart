@@ -23,7 +23,7 @@ class _PaginaInicio extends State<PaginaInicio> {
             if (snapshot.hasData) {
               if (FirebaseAuth.instance.currentUser!.email!
                   .endsWith('unal.edu.co')) {
-                return const MenuInicialVistaView();
+                return MenuInicialVistaView();
               } else {
                 return const MenuChazeroVista();
               }
