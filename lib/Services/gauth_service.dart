@@ -5,7 +5,8 @@ late final GoogleSignInAccount? gUser;
 
 class GAuthService {
   //Ingresar por Google
-  Future<UserCredential> ingresarGoogle() async {
+  ingresarGoogle() async {
+    //Ya bloquea desde la consola de Google Cloud, pero esta mas bonito asi xD
     gUser = await GoogleSignIn(hostedDomain: "unal.edu.co").signIn();
     final GoogleSignInAuthentication gAuth = await gUser!.authentication;
     //datos para guardar en firebase

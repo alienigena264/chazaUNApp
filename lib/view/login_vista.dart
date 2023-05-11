@@ -1,4 +1,5 @@
-import 'package:chazaunapp/Controller/login_controller.dart';
+import 'package:chazaunapp/Components/boton_google.dart';
+import 'package:chazaunapp/Controller/Login_Controller.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,7 @@ class _LoginVistaState extends State<LoginVista> {
               const SizedBox(
                 height: 15,
               ),
+              const BotonGoogle(),
               Row(
                 children: [
                   const SizedBox(
@@ -192,7 +194,8 @@ class _LoginVistaState extends State<LoginVista> {
     return () async {
       List data = await getEmail();
       //print(data.length);
-      if (verificarUsuario(correoController.text, data, contrasenaController.text)) {
+      if (verificarUsuario(
+          correoController.text, data, contrasenaController.text)) {
         // ignore: use_build_context_synchronously
         Navigator.pushNamed(context, '/menu/chazero');
       } else {
@@ -207,10 +210,9 @@ class _LoginVistaState extends State<LoginVista> {
     };
   }
 
-  bool verificarUsuario(String mail, List data,String pass) {
+  bool verificarUsuario(String mail, List data, String pass) {
     for (var i = 0; i < data.length; i++) {
-      if (data[i]['correo'] == mail &&
-          verificarContrasena(pass, data, i)) {
+      if (data[i]['correo'] == mail && verificarContrasena(pass, data, i)) {
         return true;
       }
     }
@@ -218,42 +220,47 @@ class _LoginVistaState extends State<LoginVista> {
   }
 
   bool verificarContrasena(String text, List data, int posicion) {
-      if (data[posicion]['contraseña'] == text) {
-        return true;
+    if (data[posicion]['contraseña'] == text) {
+      return true;
     }
     return false;
   }
-  
+
   void mostrarErroe() {
-  showDialog(
-  context: context,
-  builder: (BuildContext context) {
-    return AlertDialog(
-      title: const Text("Credenciales incorrectas", style: TextStyle(fontSize: 35, color: colorPrincipal),),
-      content: const Text("Por favor, inténtelo de nuevo.", style: TextStyle(fontSize: 25)),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 20, bottom: 5),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: colorPrincipal,
-              minimumSize: const Size(100, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            "Credenciales incorrectas",
+            style: TextStyle(fontSize: 35, color: colorPrincipal),
+          ),
+          content: const Text("Por favor, inténtelo de nuevo.",
+              style: TextStyle(fontSize: 25)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 20, bottom: 5),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colorPrincipal,
+                  minimumSize: const Size(100, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+                child: const Text("Cerrar",
+                    style: TextStyle(fontSize: 25, color: Colors.white)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
             ),
-            child: const Text("Cerrar",style: TextStyle(fontSize: 25, color: Colors.white)),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
-  },
-);
   }
 }
