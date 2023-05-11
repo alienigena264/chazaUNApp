@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'colors.dart';
+import 'package:chazaunapp/Services/services_registrochazero.dart';
 
 class RegistroChazeroVista extends StatefulWidget {
   const RegistroChazeroVista({super.key});
@@ -12,13 +13,21 @@ class RegistroChazeroVista extends StatefulWidget {
 class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
   // controladores de todos los campos de texto
   final emailController = TextEditingController();
-  final password = TextEditingController();
+  final contrasenaController = TextEditingController();
   final primerNombreController = TextEditingController();
   final segundoNombreController = TextEditingController();
   final primerApellidoController = TextEditingController();
   final segundoApellidoController = TextEditingController();
   final telefonoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  String? emailValidator_;
+  String? contrasenaValidator_;
+  String? telefonoValidator_;
+  String? primerNombreValidator_;
+  String? segundoNombreValidator_;
+  String? primerApellidoValidator_;
+  String? segundoApellidoValidator_;
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +50,17 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
                 height: 25,
               ),
               largeInput("Correo", Icons.mail, false,
-                  TextInputType.emailAddress, emailValidator),
+                  TextInputType.emailAddress, emailValidator_, emailController),
               largeInput("Contraseña", Icons.password, true, TextInputType.name,
-                  emailValidator),
+                  contrasenaValidator_, contrasenaController),
               shortInput("Primer Nombre", "Segundo Nombre",
-                  primerNombreController, segundoNombreController),
+                  primerNombreController, segundoNombreController,
+              primerNombreValidator_, segundoNombreValidator_),
               shortInput("Primer Apellido", "Segundo Apellido",
-                  primerApellidoController, segundoApellidoController),
+                  primerApellidoController, segundoApellidoController,
+              primerApellidoValidator_, segundoApellidoValidator_),
               largeInput("Telefono", Icons.phone, false, TextInputType.phone,
-                  emailValidator),
+                  telefonoValidator_, telefonoController),
               //aca debe ir el de confirmar
               const SizedBox(height: 40),
               registroButtom_()
@@ -64,17 +75,19 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
       String primerCampo,
       String segundoCampo,
       TextEditingController controllerPrimerCampo,
-      TextEditingController controllerSegundoCampo) {
+      TextEditingController controllerSegundoCampo,
+      String? primerCampoValidator,
+      String? segundoCampovalidator) {
     return Row(
       children: [
-        miniButom(30, 20, primerCampo, controllerPrimerCampo),
-        miniButom(10, 30, segundoCampo, controllerSegundoCampo),
+        miniButom(30, 20, primerCampo, controllerPrimerCampo, primerCampoValidator),
+        miniButom(10, 30, segundoCampo, controllerSegundoCampo, segundoCampovalidator),
       ],
     );
   }
 
   Expanded miniButom(double paddingIzq, double paddingDer, String campo,
-      TextEditingController controller) {
+      TextEditingController controller, String? validator) {
     return Expanded(
       child: Container(
           padding:
@@ -82,7 +95,9 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
           child: TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: controller,
-            validator: (String? val) => val!.isEmpty ? "enter valid" : null,
+            validator: (value) {
+              return validator;
+            },
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               filled: true,
@@ -98,15 +113,19 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
   }
 
   Container largeInput(String label, IconData dibujo, bool oculto,
-      TextInputType teclado, String? Function(String?) validator) {
+      TextInputType teclado, String? validator,
+      TextEditingController controller) {
     return Container(
         margin: const EdgeInsets.only(top: 20.0),
         padding: const EdgeInsets.only(left: 30.0, right: 30.0),
         child: TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: validator,
+          validator: (value){
+            return validator;
+          },
           keyboardType: teclado,
           obscureText: oculto,
+          controller: controller,
           decoration: InputDecoration(
             filled: true,
             fillColor: colorFondoField,
@@ -153,11 +172,34 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
           minimumSize: const Size(340, 55),
           // double.infinity is the width and 30 is the height
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
         ),
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            Navigator.pushNamed(context, '/menu/chazero');
+        onPressed: () async {
+          var emailResponse = await emailValidator(emailController.text);
+          var contrasenaResponse = await contrasenaValidator(contrasenaController.text);
+          var telefonoResponse = await telefonoValidator(telefonoController.text);
+          var primerNombreResponse = await nombreValidator(primerNombreController.text);
+          var segundoNombreResponse = await nombreValidator(segundoNombreController.text);
+          var primerApellidoResponse = await nombreValidator(primerApellidoController.text);
+          var segundoApellidoResponse = await nombreValidator(segundoApellidoController.text);
+
+          setState(() {
+            emailValidator_ = emailResponse;
+            contrasenaValidator_ = contrasenaResponse;
+            telefonoValidator_ = telefonoResponse;
+            primerNombreValidator_ = primerNombreResponse;
+            segundoNombreValidator_ = segundoNombreResponse;
+            primerApellidoValidator_ = primerApellidoResponse;
+            segundoApellidoValidator_ = segundoApellidoResponse;
+          });
+          if (_formKey.currentState!.validate()){
+            crearChazero(emailController.text, contrasenaController.text,
+                primerNombreController.text, segundoNombreController.text,
+                primerApellidoController.text, segundoApellidoController.text);
+            if (context.mounted){
+              Navigator.pushNamed(context, '/menu/chazero');
+
+            }
           }
         },
         child: const Text(
@@ -166,13 +208,59 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
         ));
   }
 
-  String? emailValidator(String? field) {
-    if (EmailValidator.validate(field!)) {
-      return null;
+  Future<String?> emailValidator(String? field)  async {
+
+    if (await emailExists(field)){
+      return "Este correo ya existe";
     }
-    return "email must be valid";
+    else if(EmailValidator.validate(field!) == false){
+      return "Correo invalido";
+    }
+    else return null;
+
   }
 
-  //
+  Future<String?> contrasenaValidator(String? field) async {
+
+    /*
+    al menos una mayuscula
+    al menos una minuscula
+    al menos un digito
+    al menos un caracter especial (!@#\$&*~)
+    minimo 8 caracteres
+     */
+    RegExp regex =
+    RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    if (field!.isEmpty){
+      return "Por favor ingrese su contrasena";
+    } else if (!regex.hasMatch(field)){
+      return "Ingrese una contrasena valida";
+    }
+    else {
+      return null;
+    }
+  }
+
+  Future<String?> telefonoValidator(String? field) async {
+    if (field!.isEmpty){
+      return "Por favor ingrese su numero";
+    }
+    else if (field.length != 10){
+      return "Ingrese un numero valido";
+    }
+    else {
+      return null;
+    }
+  }
+  
+  Future<String?> nombreValidator(String? field) async{
+    RegExp regExp = RegExp(r"^[a-zA-Z]+$");
+    if (field!.isEmpty){
+      return "Por favor ingrese su nombre";
+    }
+    else if (!regExp.hasMatch(field)){
+      "Ingrese un nombre valido";
+    }
+  }
 
 }
