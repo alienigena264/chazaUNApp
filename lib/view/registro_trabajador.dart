@@ -1,20 +1,17 @@
 // ignore_for_file: avoid_print
 
 import 'package:chazaunapp/Services/gauth_service.dart';
-import 'package:chazaunapp/view/menu_inicial_vista.dart';
+import 'package:chazaunapp/view/inicio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import 'colors.dart';
 
-final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 //Titulo del banner
 const String _title = 'Registro';
 //Verificación de los terminos y condiciones
 bool isChecked = false;
 //Cuenta de google
-GoogleSignInAccount? _currentUser;
 
 class RegistroTrabajadorView extends StatefulWidget {
   const RegistroTrabajadorView({super.key});
@@ -24,16 +21,6 @@ class RegistroTrabajadorView extends StatefulWidget {
 }
 
 class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
-  @override
-  void initState() {
-    //ingreso de google
-    _googleSignIn.onCurrentUserChanged.listen((account) {
-      _currentUser = account;
-    });
-    _googleSignIn.signInSilently();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +36,7 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
                   child: SizedBox(
                     height: 300,
                   )),
-              LoginButton(), // Boton de google
+              LoginButton(),
               Center(child: AgreeCheck()), //checkbox de terminos y condiciones
             ],
           )),
@@ -96,7 +83,6 @@ class LoginButton extends StatefulWidget {
 }
 
 class _LoginButton extends State<LoginButton> {
-  GoogleSignInAccount? user = _currentUser;
   @override
   Widget build(BuildContext context) {
     return SignInButton(
@@ -106,6 +92,7 @@ class _LoginButton extends State<LoginButton> {
         if (isChecked) {
           try {
             await GAuthService().ingresarGoogle();
+            await goMenu();
           } catch (e) {
             print('ingresa con cuenta unal');
           }
@@ -117,8 +104,22 @@ class _LoginButton extends State<LoginButton> {
   }
 
   //async para esperar el ingreso
+  goMenu() async {
+    //Vuelve al inicio y borra lo anterior(login, registro y trabajador) para que no se pueda regresar al registro una vez ingresado,
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const PaginaInicio(),
+      ),
+      //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
+      (_) => false,
+    );
+  }
 }
 
+//TERMINOS Y CONDICIONES
+//https://doc-hosting.flycricket.io/chazaunapp-terms-of-use/61d6b708-bd87-4bb3-8392-cc8b9ab1fe48/terms
+//https://doc-hosting.flycricket.io/chazaunapp-privacy-policy/f674154c-f1f3-4291-a55f-77743561a2b2/privacy
 class AgreeCheck extends StatefulWidget {
   const AgreeCheck({super.key});
 
