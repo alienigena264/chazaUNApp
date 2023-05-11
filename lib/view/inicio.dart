@@ -1,4 +1,5 @@
 import 'package:chazaunapp/view/login_vista.dart';
+import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +16,19 @@ class _PaginaInicio extends State<PaginaInicio> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<User?>(
+          //cambios en el ingreso
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
+            //ingreso?
             if (snapshot.hasData) {
-              return MenuInicialVistaView();
+              if (FirebaseAuth.instance.currentUser!.email!
+                  .endsWith('unal.edu.co')) {
+                return const MenuInicialVistaView();
+              } else {
+                return const MenuChazeroVista();
+              }
             } else {
-              return LoginVista();
+              return const LoginVista();
             }
           }),
     );

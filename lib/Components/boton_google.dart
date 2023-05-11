@@ -1,7 +1,7 @@
-import 'package:chazaunapp/view/menu_inicial_vista.dart';
 import 'package:flutter/material.dart';
 
 import '../Services/gauth_service.dart';
+import '../view/menu_inicial_vista.dart';
 
 //Verificación de los terminos y condiciones
 bool isChecked = true;
@@ -17,7 +17,7 @@ class _BotonGoogle extends State<BotonGoogle> {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xFF4285F4),
           minimumSize: const Size(
               340, 55), // double.infinity is the width and 30 is the height
           shape:
@@ -35,10 +35,10 @@ class _BotonGoogle extends State<BotonGoogle> {
             print('No ha aceptado');
           }
         },
-        child: Row(children: const [
+        child: Row(mainAxisSize: MainAxisSize.min, children: const [
           Text(
             "Ingresar con google unal",
-            style: TextStyle(color: Colors.black, fontSize: 18),
+            style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ]));
   }
