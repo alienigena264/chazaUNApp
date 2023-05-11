@@ -109,7 +109,9 @@ class _LoginButton extends State<LoginButton> {
         MaterialPageRoute(builder: (context) => const MenuInicialVistaView()));
   }
 }
-
+//TERMINOS Y CONDICIONES
+//https://doc-hosting.flycricket.io/chazaunapp-terms-of-use/61d6b708-bd87-4bb3-8392-cc8b9ab1fe48/terms
+//https://doc-hosting.flycricket.io/chazaunapp-privacy-policy/f674154c-f1f3-4291-a55f-77743561a2b2/privacy
 class AgreeCheck extends StatefulWidget {
   const AgreeCheck({super.key});
 

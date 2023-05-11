@@ -1,13 +1,16 @@
+import 'package:chazaunapp/Services/gauth_service.dart';
+import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
-import '../Services/gauth_service.dart';
 import '../view/menu_inicial_vista.dart';
 
 //Verificación de los terminos y condiciones
 bool isChecked = true;
 
 class BotonGoogle extends StatefulWidget {
-  const BotonGoogle({super.key});
+  const BotonGoogle({
+    super.key,
+  });
   @override
   State<BotonGoogle> createState() => _BotonGoogle();
 }
@@ -15,31 +18,55 @@ class BotonGoogle extends StatefulWidget {
 class _BotonGoogle extends State<BotonGoogle> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFF4285F4),
-          minimumSize: const Size(
-              340, 55), // double.infinity is the width and 30 is the height
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
-        ),
-        onPressed: () async {
-          if (isChecked) {
-            try {
-              await GAuthService().ingresarGoogle();
-              await goMenu();
-            } catch (e) {
-              print('ingresa con cuenta unal');
-            }
-          } else {
-            print('No ha aceptado');
-          }
-        },
-        child: Row(mainAxisSize: MainAxisSize.min, children: const [
-          Text(
-            "Ingresar con google unal",
-            style: TextStyle(color: Colors.white, fontSize: 18),
+    return GestureDetector(
+        onTap: () => GAuthService().ingresarGoogle(),
+        child: Column(mainAxisSize: MainAxisSize.max, children: [
+          const SizedBox(
+            height: 10,
           ),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                Expanded(
+                    child: Divider(
+                  indent: 40,
+                  endIndent: 40,
+                  color: Colors.black,
+                )),
+                Expanded(
+                    child: Text(
+                  'O continua con Google unal',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black, // Establece el color del texto
+                      fontSize: 14.0, // Establece el tamaño del texto
+                      fontFamily: "Inder",
+                      fontWeight: FontWeight.normal),
+                )),
+                Expanded(
+                    child: Divider(
+                  indent: 40,
+                  endIndent: 40,
+                  color: Colors.black,
+                ))
+              ]),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border.all(color: colorFondoField),
+                borderRadius: BorderRadius.circular(16),
+                color: Colors.white),
+            child: Image.asset(
+              ('assets/imagenes/btn_google_light_normal.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          )
         ]));
   }
 
