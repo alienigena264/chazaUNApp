@@ -1,3 +1,5 @@
+import 'package:chazaunapp/Services/services_menu_inicial.dart';
+
 class Chaza {
   late String nombre;
   late String ubicacion;
@@ -16,18 +18,18 @@ class Chaza {
 }
 
 List<Chaza> chazaList = [
-  Chaza(
-      nombre: 'Sexchaza',
-      ubicacion: 'Sociologia',
-      tipo: 'varios',
-      pagoHora: '40k',
-      descripcion: 'Vaya chaza',
-      imagen: 'assets/imagenes/SexChaza.png'),
-  Chaza(
-      nombre: 'RubikChaza',
-      ubicacion: 'Entrada 30',
-      tipo: 'varios',
-      pagoHora: '40k',
-      descripcion: 'Lleve su cubo Rubik',
-      imagen: 'assets/imagenes/RubikChaza.png')
+  // Chaza(
+  //     nombre: 'Sexchaza',
+  //     ubicacion: 'Sociologia',
+  //     tipo: 'varios',
+  //     pagoHora: '40k',
+  //     descripcion: 'Vaya chaza',
+  //     imagen: 'assets/imagenes/SexChaza.png'),
+  // Chaza(
+  //     nombre: 'RubikChaza',
+  //     ubicacion: 'Entrada 30',
+  //     tipo: 'varios',
+  //     pagoHora: '40k',
+  //     descripcion: 'Lleve su cubo Rubik',
+  //     imagen: 'assets/imagenes/RubikChaza.png')
 ];
