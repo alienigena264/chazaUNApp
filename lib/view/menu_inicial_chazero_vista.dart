@@ -28,9 +28,10 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                   barraSuperior_(),
                 ],
               ),
+              const SizedBox(height: 20,),
               SizedBox(
-                height: 690,
-                //height: 520 para Juan 
+                //height: 690,
+                height: 500,//Esto es para juan
                 width: 410, // Tamaño fijo
                 child: FutureBuilder(
                   future: getChazasporChazero(idChazero),
@@ -58,7 +59,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                                     snapshot.data?[index]['imagen']),
                               ),
                               const SizedBox(
-                                height: 15,
+                                height: 5,
                               )
                             ], //Espacio entre las cards
                           );
@@ -110,49 +111,53 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         ));
   }
 
-  Card infoChaza_(String nombre, String ubicacion, String puntuacion,
+  Padding infoChaza_(String nombre, String ubicacion, String puntuacion,
       String pago, String imagen) {
-    return Card(
-      //Una columna que contiene rows y columnas de rows para conseguir el aspecto que habia en el mockup
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    nombre, // Nombre de la chaza
-                    style: const TextStyle(
-                        color: Color(0xff242424),
-                        fontSize: 22.0,
-                        fontFamily: "Inder",
-                        fontWeight: FontWeight.normal),
-                  ),
-                  rowUbicacion_(ubicacion),
-                  rowPuntuacion_(puntuacion),
-                ],
-              ),
-              columnFotoYPagoChaza_(imagen, pago),
-            ],
-          ), const Divider(
-            color: Colors.black54,
-            indent: 15,
-            endIndent: 15,
-
-            thickness: 1.5, // ajusta el grosor de la línea
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [botonHorarios(context), botonPersonal(context)],
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: Card(
+        //Una columna que contiene rows y columnas de rows para conseguir el aspecto que habia en el mockup
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      nombre, // Nombre de la chaza
+                      style: const TextStyle(
+                          color: Color(0xff242424),
+                          fontSize: 22.0,
+                          fontFamily: "Inder",
+                          fontWeight: FontWeight.normal),
+                    ),
+                    rowUbicacion_(ubicacion),
+                    rowPuntuacion_(puntuacion),
+                  ],
+                ),
+                columnFotoYPagoChaza_(imagen, pago),
+              ],
+            ),
+            const Divider(
+              color: Colors.black54,
+              indent: 15,
+              endIndent: 15,
+    
+              thickness: 1.5, // ajusta el grosor de la línea
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [botonHorarios(context), botonPersonal(context)],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -246,7 +251,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-        onPressed: irEnProgreso(context),
+        onPressed: irEnProgreso(),
         child: const Text(
           "Horarios",
           style:
@@ -264,7 +269,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-        onPressed: irEnProgreso(context),
+        onPressed: irEnProgreso(),
         child: const Text(
           "Personal",
           style:
@@ -299,10 +304,10 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
     setState(() {
       _currentIndex = index;
     });
-    irEnProgreso(context);
+    irEnProgreso();
   }
 
-  Function() irEnProgreso(BuildContext context) {
+  irEnProgreso() {
     return () {
       Navigator.pushNamed(context, '/progreso');
     };
