@@ -51,12 +51,24 @@ class GAuthService {
     final String lastName = idMap["family_name"];*/
 
   //Nombre de la cuenta
-  getUser() {
+  getNombreCompleto() {
     if (gUser?.displayName != null) {
       return gUser?.displayName;
     } else {
       return "no hay usuario";
     }
+  }
+
+  getNombre() {
+    Map<String, dynamic>? idMap = parseJwt(gUser!.id);
+
+    return idMap!["given_name"];
+  }
+
+  getApellido() {
+    Map<String, dynamic>? idMap = parseJwt(gUser!.id);
+
+    return idMap!["family_name"];
   }
 
   //email registrado
