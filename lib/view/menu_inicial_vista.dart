@@ -1,7 +1,6 @@
-import 'package:chazaunapp/Services/gauth_service.dart';
+import 'package:chazaunapp/Models/menu_inicial_model.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:chazaunapp/Models/menu_inicial_model.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
   const MenuInicialVistaView({super.key});
@@ -26,7 +25,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     height: 186.0,
                     child: Container(
                       decoration: const BoxDecoration(
-                        color:colorPrincipal, // Establece el color de fondo del contenedor con el texto
+                        color:
+                            colorPrincipal, // Establece el color de fondo del contenedor con el texto
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(50.0),
                         ),
@@ -37,8 +37,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                           child: Text(
                             'Usuario', // el texto que quieres mostrar
                             style: TextStyle(
-                                color:
-                                    Colors.white, // Establece el color del texto
+                                color: Colors
+                                    .white, // Establece el color del texto
                                 fontSize: 55.0, // Establece el tamaño del texto
                                 fontFamily: "Inder",
                                 fontWeight: FontWeight.normal),
@@ -67,21 +67,20 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               const SizedBox(
                 width: 55,
               ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text(
-                          'Chazas', // el texto que quieres mostrar
-                          style: TextStyle(
-                              color: Colors.black, // Establece el color del texto
-                              fontSize: 30.0, // Establece el tamaño del texto
-                              fontFamily: "Inder",
-                              fontWeight: FontWeight.normal),
-                        )),
-                  ]),
-              Container(
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: const <
+                  Widget>[
+                Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Text(
+                      'Chazas', // el texto que quieres mostrar
+                      style: TextStyle(
+                          color: Colors.black, // Establece el color del texto
+                          fontSize: 30.0, // Establece el tamaño del texto
+                          fontFamily: "Inder",
+                          fontWeight: FontWeight.normal),
+                    )),
+              ]),
+              SizedBox(
                 height: 300.0,
                 width: 300.0,
                 child: chazas(),
