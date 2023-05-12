@@ -15,41 +15,43 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      body: Container(
-        color: const Color(0xffF6F6F6),
-        child: Column(
-          children: [
-            // Titulo "¿Olvidaste tu Contraseña?
-            const SizedBox(
-              height: 200,
-              child: Center(
-                child: Text(
-                  "¿Olvidaste tu\n contraseña?",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24.0,
-                      fontFamily: "Inder"
+      body: SingleChildScrollView(
+        child: Container(
+          color: const Color(0xffF6F6F6),
+          child: Column(
+            children: [
+              // Titulo "¿Olvidaste tu Contraseña?
+              const SizedBox(
+                height: 200,
+                child: Center(
+                  child: Text(
+                    "¿Olvidaste tu\n contraseña?",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24.0,
+                        fontFamily: "Inder"
+                    ),
                   ),
-                ),
-              ) ,
-            ),
-            const SizedBox(
-              height: 100,
-              child:  Center(
-                child: Text(
-                  "Escribe el correo electrónico con\nel que te registraste para poder\n      recuperar tu contraseña",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      fontFamily: "Inder"
+                ) ,
+              ),
+              const SizedBox(
+                height: 100,
+                child:  Center(
+                  child: Text(
+                    "Escribe el correo electrónico con\nel que te registraste para poder\n      recuperar tu contraseña",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontFamily: "Inder"
+                    ),
                   ),
-                ),
-              ) ,
-            ),
-            InputEmailVista(emailTextController: emailTextController),
-            ContinuarButtonVista(emailTextController: emailTextController)
-          ],
-        )
+                ) ,
+              ),
+              InputEmailVista(emailTextController: emailTextController),
+              ContinuarButtonVista(emailTextController: emailTextController)
+            ],
+          )
+        ),
       ),
     );
   }
