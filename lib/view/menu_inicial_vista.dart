@@ -3,6 +3,8 @@ import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
 import 'package:chazaunapp/Services/gauth_service.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
+import 'package:chazaunapp/view/menu_inicia_cards/image_card_content.dart';
+import 'package:chazaunapp/Models/menu_inicial_model.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
   const MenuInicialVistaView({super.key});
