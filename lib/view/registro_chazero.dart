@@ -1,3 +1,4 @@
+import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'colors.dart';
@@ -195,10 +196,10 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
           if (_formKey.currentState!.validate()){
             crearChazero(emailController.text, contrasenaController.text,
                 primerNombreController.text, segundoNombreController.text,
-                primerApellidoController.text, segundoApellidoController.text);
+                primerApellidoController.text, segundoApellidoController.text,
+                telefonoController.text);
             if (context.mounted){
-              Navigator.pushNamed(context, '/menu/chazero');
-
+              await goMenu();
             }
           }
         },
@@ -262,5 +263,17 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
       "Ingrese un nombre valido";
     }
   }
+  goMenu() async {
+    //Vuelve al inicio y borra lo anterior(login, registro y trabajador) para que no se pueda regresar al registro una vez ingresado,
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const MenuChazeroVista(),
+      ),
+      //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
+          (_) => false,
+    );
+  }
+
 
 }
