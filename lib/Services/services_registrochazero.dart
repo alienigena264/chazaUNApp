@@ -25,11 +25,13 @@ Future<bool> emailExists(String? text) async {
 }
 
 void crearChazero(String correo, String contrasena, String primerNombre,
-  String segundoNombre, String primerApellido, String segundoApellido){
+  String segundoNombre, String primerApellido, String segundoApellido,
+    String numero){
 
-  final data = {"correo": correo, "contrasena": contrasena,
+  final data = {"correo": correo, "contraseña": contrasena,
     "primer_nombre": primerNombre, "segundo_nombre": segundoNombre,
-    "primer_apellido": primerApellido, "segundo_apellido": segundoApellido};
+    "primer_apellido": primerApellido, "segundo_apellido": segundoApellido,
+    "numero": numero};
 
   collectionReferenceEmail.add(data).then((documentSnapshot) =>
       print("Added Data with ID: ${documentSnapshot.id}"));
