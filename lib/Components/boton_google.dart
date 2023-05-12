@@ -73,6 +73,6 @@ class _BotonGoogle extends State<BotonGoogle> {
   //async para esperar el ingreso
   goMenu() async {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => MenuInicialVistaView()));
+        MaterialPageRoute(builder: (context) =>  MenuInicialVistaView()));
   }
 }

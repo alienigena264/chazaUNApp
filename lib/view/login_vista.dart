@@ -107,8 +107,8 @@ class _LoginVistaState extends State<LoginVista> {
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
-          hintText: 'Correo',
-          hintStyle: TextStyle(
+          labelText: 'Correo',
+          labelStyle: TextStyle(
               color: Colors.grey.shade700,
               fontFamily: "Inder",
               fontWeight: FontWeight.normal),
@@ -130,8 +130,8 @@ class _LoginVistaState extends State<LoginVista> {
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
-          hintText: 'Contraseña',
-          hintStyle: TextStyle(
+          labelText: 'Contraseña',
+          labelStyle: TextStyle(
               color: Colors.grey.shade700,
               fontFamily: "Inder",
               fontWeight: FontWeight.normal),
