@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../main.dart';
+
 FirebaseFirestore db = FirebaseFirestore.instance;
 CollectionReference collectionReferenceEmail = db.collection('Chazero');
 
@@ -8,23 +10,16 @@ Future<bool> emailExists(String? text) async {
   //recorremos los documentos
   // ignore: avoid_function_literals_in_foreach_calls
 
-  final emailsExisting = await collectionReferenceEmail.where("correo", isEqualTo: text).get().then(
-          (querySnapshot){
-        if (querySnapshot.docs.isNotEmpty){
-          return true;
-        }
-        return false;
-      }
-  );
+  final emailsExisting = await auth.fetchSignInMethodsForEmail(text!);
 
-  if (emailsExisting) {
+  if (emailsExisting.isNotEmpty) {
     return true;
   } else {
     return false;
   }
 }
 
-void crearChazero(String correo, String contrasena, String primerNombre,
+void crearChazeroEnBD(String correo, String contrasena, String primerNombre,
   String segundoNombre, String primerApellido, String segundoApellido,
     String numero){
 
