@@ -10,11 +10,14 @@ import 'package:chazaunapp/view/recuperar_contrasena_vista.dart';
 import 'package:chazaunapp/view/registro_chazero.dart';
 import 'package:chazaunapp/view/registro_trabajador.dart';
 import 'package:chazaunapp/view/selector_vista.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'firebase_options.dart';
+
+FirebaseAuth auth = FirebaseAuth.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
