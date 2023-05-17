@@ -1,5 +1,5 @@
 import 'package:chazaunapp/Components/boton_google.dart';
-import 'package:chazaunapp/Controller/Login_Controller.dart';
+import 'package:chazaunapp/Controller/login_controller.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

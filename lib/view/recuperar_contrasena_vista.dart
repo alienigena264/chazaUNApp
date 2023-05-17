@@ -7,11 +7,13 @@ class ContrasenaVista extends StatefulWidget{
 
   @override
   State<ContrasenaVista> createState() => _ContrasenaVistaState();
+
 }
 
 class _ContrasenaVistaState extends State<ContrasenaVista>{
 
   final emailTextController = TextEditingController();
+  bool correoEnviado = false;
 
   @override
   Widget build(BuildContext context){
@@ -49,11 +51,45 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
                 ) ,
               ),
               InputEmailVista(emailTextController: emailTextController),
-              ContinuarButtonVista(emailTextController: emailTextController)
+              enviarCorreoButton(),
+              const SizedBox(height: 40,),
+              if (correoEnviado)
+                const Text(
+                  "Te hemos enviado un correo para cambiar tu contraseña,\n sigue las instrucciones en el correo"
+                ),
             ],
           )
         ),
       ),
+    );
+  }
+
+  ElevatedButton enviarCorreoButton() {
+    return ElevatedButton(
+        onPressed: () async {
+          try {
+            await FirebaseAuth.instance.sendPasswordResetEmail(email: emailTextController.text);
+            setState(() {
+              correoEnviado = true;
+            });
+          } on FirebaseAuthException catch (e) {
+            print(emailTextController.text);
+          }
+        },
+        style: ElevatedButton.styleFrom(
+            backgroundColor: colorChazero,
+            minimumSize: const Size(340, 55),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0)
+            )
+        ),
+        child: const Text(
+          'Continuar',
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 18
+          ),
+        )
     );
   }
 }
@@ -65,6 +101,7 @@ class InputEmailVista extends StatefulWidget{
 
   @override
   State<InputEmailVista> createState() => _InputEmailVistaState();
+
 }
 
 class _InputEmailVistaState extends State<InputEmailVista>{
@@ -94,44 +131,6 @@ class _InputEmailVistaState extends State<InputEmailVista>{
           )
         ),
       ),
-    );
-  }
-}
-
-class ContinuarButtonVista extends StatefulWidget{
-
-  final TextEditingController emailTextController;
-
-  const ContinuarButtonVista({super.key, required this.emailTextController});
-
-  @override
-  State<ContinuarButtonVista> createState() => _ContinuarButton();
-}
-
-class _ContinuarButton extends State <ContinuarButtonVista> {
-  @override
-  Widget build(BuildContext context){
-    return ElevatedButton(
-      onPressed: () async {
-        try{
-          await FirebaseAuth.instance.sendPasswordResetEmail(email: widget.emailTextController.text);
-        }catch(e){
-        print(widget.emailTextController.text);}
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xffEFB810),
-        minimumSize: const Size(340, 55),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0)
-        )
-      ),
-      child: const Text(
-        'Continuar',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 18
-        ),
-      )
     );
   }
 }

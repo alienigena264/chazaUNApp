@@ -299,7 +299,6 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
           return telefonoValidator_;
         },
         keyboardType: TextInputType.text,
-        obscureText: true,
         decoration: InputDecoration(
             filled: true,
             fillColor: colorFondoField,
