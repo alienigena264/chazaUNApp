@@ -1,8 +1,6 @@
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
-import 'package:chazaunapp/view/verificar_correo_vista.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import '../main.dart';
 import 'colors.dart';
 import 'package:chazaunapp/Services/services_registrochazero.dart';
 
@@ -117,7 +115,7 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
       margin: const EdgeInsets.only(top: 20.0),
       padding: const EdgeInsets.only(left: 30.0, right: 30.0),
       child: TextFormField(
-        autovalidateMode: AutovalidateMode.always,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: emailController,
         validator: (val) {
           return emailValidator_;
@@ -326,16 +324,7 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
         ),
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
-
-            auth.createUserWithEmailAndPassword(
-                email: emailController.text,
-                password: contrasenaController.text);
-
-            auth.signInWithEmailAndPassword(
-                email: emailController.text,
-                password: contrasenaController.text);
-
-            crearChazeroEnBD(
+            crearChazero(
                 emailController.text,
                 contrasenaController.text,
                 primerNombreController.text,
@@ -343,12 +332,8 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
                 primerApellidoController.text,
                 segundoApellidoController.text,
                 telefonoController.text);
-
             if (context.mounted) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => verificacionEmail())
-              );
+              await goMenu();
             }
           }
         },
@@ -453,6 +438,15 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
     }
   }
 
-
+  goMenu() async {
+    //Vuelve al inicio y borra lo anterior(login, registro y trabajador) para que no se pueda regresar al registro una vez ingresado,
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const MenuChazeroVista(),
+      ),
+      //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
+      (_) => false,
+    );
+  }
 }
-
