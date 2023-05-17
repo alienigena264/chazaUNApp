@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'colors.dart';
-import 'menu_inicial_chazero_vista.dart';
+import 'inicio.dart';
 
 class VerificacionEmail extends StatefulWidget{
 
@@ -43,6 +43,8 @@ class VerificacionEmailState extends State<VerificacionEmail> {
       verificado = FirebaseAuth.instance.currentUser!.emailVerified;
     });
     if (verificado){
+      await FirebaseAuth.instance.currentUser?.reload();
+      print(FirebaseAuth.instance.currentUser);
       await goMenu();
     }
   }
@@ -99,7 +101,7 @@ class VerificacionEmailState extends State<VerificacionEmail> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) => const MenuChazeroVista(),
+        builder: (BuildContext context) => const PaginaInicio(),
       ),
       //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
           (_) => false,

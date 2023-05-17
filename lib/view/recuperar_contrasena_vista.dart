@@ -2,6 +2,8 @@ import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'inicio.dart';
+
 class ContrasenaVista extends StatefulWidget{
   const ContrasenaVista({super.key});
 
@@ -53,10 +55,6 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
               InputEmailVista(emailTextController: emailTextController),
               enviarCorreoButton(),
               const SizedBox(height: 40,),
-              if (correoEnviado)
-                const Text(
-                  "Te hemos enviado un correo para cambiar tu contraseña,\n sigue las instrucciones en el correo"
-                ),
             ],
           )
         ),
@@ -69,10 +67,9 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
         onPressed: () async {
           try {
             await FirebaseAuth.instance.sendPasswordResetEmail(email: emailTextController.text);
-            setState(() {
-              correoEnviado = true;
-            });
-          } on FirebaseAuthException catch (e) {
+            mostrarMensaje(emailTextController.text);
+
+          } on FirebaseAuthException {
             print(emailTextController.text);
           }
         },
@@ -90,6 +87,113 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
               fontSize: 18
           ),
         )
+    );
+  }
+
+  void mostrarMensaje(String correo){
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            actionsAlignment: MainAxisAlignment.spaceBetween,
+            title: const Text(
+              "Correo enviado",
+              style: TextStyle(
+                fontSize: 24.0,
+                color: colorPrincipal
+              ),
+            ),
+            content: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  const TextSpan(
+                    text: "Te hemos enviado un correo a ",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontFamily: "Inder"
+                    )
+                  ),
+                  TextSpan(
+                    text: correo,
+                    style: const TextStyle(
+                      color: colorChazero,
+                      fontSize: 18.0,
+                      fontFamily: "Inder"
+                    ),
+
+                  ),
+                  const TextSpan(
+                    text: " para cambiar tu contraseña, después de cambiarla intenta acceder de nuevo a tu cuenta.",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                      fontFamily: "Inder"
+                    )
+                  )
+                ]
+              ),
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 30, bottom: 5),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: colorPrincipal,
+                    minimumSize: const Size(100, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                  onPressed: () async { await goMenu(); },
+                  child: const Text(
+                    "Iniciar sesión",
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 30, bottom: 5),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: colorPrincipal,
+                    minimumSize: const Size(100, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                  onPressed: ()  { Navigator.of(context).pop(); },
+                  child: const Text(
+                    "Modificar correo",
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white
+                    ),
+                  ),
+                ),
+              ),
+
+            ],
+          );
+        }
+    );
+  }
+
+  goMenu() async {
+    //Vuelve al inicio y borra lo anterior(login, registro y trabajador) para que no se pueda regresar al registro una vez ingresado,
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const PaginaInicio(),
+      ),
+      //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
+          (_) => false,
     );
   }
 }

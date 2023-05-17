@@ -146,7 +146,7 @@ class _LoginVistaState extends State<LoginVista> {
         child: const Text(
           '¿Olvidó su contraseña?',
           style: TextStyle(
-              color: Colors.black,
+              color: colorChazero,
               fontSize: 15,
               fontFamily: "Inder",
               fontWeight: FontWeight.bold),
@@ -191,9 +191,14 @@ class _LoginVistaState extends State<LoginVista> {
 
   verificar_() {
     return () async {
-      FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: correoController.text,
-          password: contrasenaController.text);
+      try{
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: correoController.text,
+            password: contrasenaController.text);
+      } on FirebaseAuthException {
+        mostrarErroe();
+      }
+
     };
   }
 
