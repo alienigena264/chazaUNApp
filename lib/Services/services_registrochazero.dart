@@ -3,12 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 FirebaseFirestore db = FirebaseFirestore.instance;
 CollectionReference collectionReferenceEmail = db.collection('Chazero');
 
-Future<bool> emailExists(String? text) async {
+Future<bool> emailExists(String email) async {
   //nos trae todos los documentos
   //recorremos los documentos
   // ignore: avoid_function_literals_in_foreach_calls
 
-  final emailsExisting = await collectionReferenceEmail.where("correo", isEqualTo: text).get().then(
+  final emailsExisting = await collectionReferenceEmail.where("correo", isEqualTo: email).get().then(
           (querySnapshot){
         if (querySnapshot.docs.isNotEmpty){
           return true;

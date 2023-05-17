@@ -1,3 +1,4 @@
+import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -17,7 +18,7 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          color: const Color(0xffF6F6F6),
+          color: colorBackground,
           child: Column(
             children: [
               // Titulo "¿Olvidaste tu Contraseña?
