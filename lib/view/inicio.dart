@@ -21,11 +21,15 @@ class _PaginaInicio extends State<PaginaInicio> {
           builder: (context, snapshot) {
             //ingreso?
             if (snapshot.hasData) {
-              if (FirebaseAuth.instance.currentUser!.email!
-                  .endsWith('unal.edu.co')) {
-                return  MenuInicialVistaView();
-              } else {
-                return const MenuChazeroVista();
+              if (FirebaseAuth.instance.currentUser != null){
+                if (FirebaseAuth.instance.currentUser!.email!
+                    .endsWith('unal.edu.co')) {
+                  return  const MenuInicialVistaView();
+                } else {
+                  return const MenuChazeroVista();
+                }
+              } else{
+                return const LoginVista();
               }
             } else {
               return const LoginVista();

@@ -1,5 +1,7 @@
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
+import 'package:chazaunapp/view/verificar_correo_vista.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'colors.dart';
 import 'package:chazaunapp/Services/services_registrochazero.dart';
@@ -297,14 +299,13 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
           return telefonoValidator_;
         },
         keyboardType: TextInputType.text,
-        obscureText: true,
         decoration: InputDecoration(
             filled: true,
             fillColor: colorFondoField,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
             ),
-            labelText: "Contraseña",
+            labelText: "Teléfono",
             labelStyle: TextStyle(color: Colors.grey.shade700),
             suffixIcon: const Icon(Icons.phone)),
       ),
@@ -324,6 +325,8 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
         ),
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
+
+            // crea un documento de chazero en FireStore Database
             crearChazero(
                 emailController.text,
                 contrasenaController.text,
@@ -332,9 +335,24 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
                 primerApellidoController.text,
                 segundoApellidoController.text,
                 telefonoController.text);
+
+            // Crea un usuario en Firebase Auth y lo logea automaticamente
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                email: emailController.text,
+                password: contrasenaController.text);
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+                email: emailController.text,
+                password: contrasenaController.text);
+
+            // comentar este if para no hacer la verificacion
             if (context.mounted) {
-              await goMenu();
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const VerificacionEmail()));
             }
+
+            // quitar este comentario para poder acceder sin la verificacion
+            /*if (context.mounted){
+              await goMenu();
+            }*/
           }
         },
         child: const Text(
@@ -363,9 +381,10 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
     al menos un digito
     al menos un caracter especial (!@#\$&*~)
     minimo 8 caracteres
+    (?=.*?[!@#\$&*~]) carac
      */
     RegExp regex =
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
     if (contrasenaController.text.isEmpty) {
       contrasenaValidator_ = "Por favor ingrese su contrasena";
       _formKey.currentState!.validate();
@@ -374,6 +393,8 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
       _formKey.currentState!.validate();
     } else {
       contrasenaValidator_ = null;
+      _formKey.currentState!.validate();
+
     }
   }
 
@@ -383,16 +404,24 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
       _formKey.currentState!.validate();
     } else {
       contrasenaConfirmacionValidator_ = null;
+      _formKey.currentState!.validate();
+
     }
   }
 
   void telefonoValidator() {
     if (telefonoController.text.isEmpty) {
       telefonoValidator_ = "Por favor ingrese su numero";
+      _formKey.currentState!.validate();
+
     } else if (telefonoController.text.length != 10) {
       telefonoValidator_ = "Ingrese un numero valido";
+      _formKey.currentState!.validate();
+
     } else {
       telefonoValidator_ = null;
+      _formKey.currentState!.validate();
+
     }
   }
 
@@ -400,10 +429,16 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
     RegExp regExp = RegExp(r"^[a-zA-Z]+$");
     if (primerNombreController.text.isEmpty) {
       primerNombreValidator_ = "Ingrese su nombre";
+      _formKey.currentState!.validate();
+
     } else if (!regExp.hasMatch(primerNombreController.text)) {
       primerNombreValidator_ = "Ingrese un nombre valido";
+      _formKey.currentState!.validate();
+
     } else {
       primerNombreValidator_ = null;
+      _formKey.currentState!.validate();
+
     }
   }
 
@@ -411,8 +446,12 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
     RegExp regExp = RegExp(r"^[a-zA-Z]+$");
     if (!regExp.hasMatch(primerNombreController.text)) {
       segundoNombreValidator_ = "Ingrese un nombre valido";
+      _formKey.currentState!.validate();
+
     } else {
       segundoNombreValidator_ = null;
+      _formKey.currentState!.validate();
+
     }
   }
 
@@ -420,10 +459,16 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
     RegExp regExp = RegExp(r"^[a-zA-Z]+$");
     if (primerApellidoController.text.isEmpty) {
       primerApellidoValidator_ = "Ingrese su apellido";
+      _formKey.currentState!.validate();
+
     } else if (!regExp.hasMatch(primerApellidoController.text)) {
       primerApellidoValidator_ = "Ingrese un apellido valido";
+      _formKey.currentState!.validate();
+
     } else {
       primerApellidoValidator_ = null;
+      _formKey.currentState!.validate();
+
     }
   }
 
@@ -431,10 +476,16 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
     RegExp regExp = RegExp(r"^[a-zA-Z]+$");
     if (segundoApellidoController.text.isEmpty) {
       segundoApellidoValidator_ = "Ingrese su apellido";
+      _formKey.currentState!.validate();
+
     } else if (!regExp.hasMatch(segundoApellidoController.text)) {
       segundoApellidoValidator_ = "Ingrese un apellido valido";
+      _formKey.currentState!.validate();
+
     } else {
       segundoApellidoValidator_ = null;
+      _formKey.currentState!.validate();
+
     }
   }
 

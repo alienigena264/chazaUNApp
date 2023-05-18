@@ -1,9 +1,8 @@
 import 'package:chazaunapp/Components/boton_google.dart';
-import 'package:chazaunapp/Controller/Login_Controller.dart';
+import 'package:chazaunapp/Controller/login_controller.dart';
 import 'package:chazaunapp/view/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../Services/services_login.dart';
 
 class LoginVista extends StatefulWidget {
   const LoginVista({super.key});
@@ -147,7 +146,7 @@ class _LoginVistaState extends State<LoginVista> {
         child: const Text(
           '¿Olvidó su contraseña?',
           style: TextStyle(
-              color: Colors.black,
+              color: colorChazero,
               fontSize: 15,
               fontFamily: "Inder",
               fontWeight: FontWeight.bold),
@@ -192,15 +191,14 @@ class _LoginVistaState extends State<LoginVista> {
 
   verificar_() {
     return () async {
-      List data = await getEmail();
-      //print(data.length);
-      if (verificarUsuario(
-          correoController.text, data, contrasenaController.text)) {
-        // ignore: use_build_context_synchronously
-        Navigator.pushNamed(context, '/menu/chazero');
-      } else {
+      try{
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: correoController.text,
+            password: contrasenaController.text);
+      } on FirebaseAuthException {
         mostrarErroe();
       }
+
     };
   }
 

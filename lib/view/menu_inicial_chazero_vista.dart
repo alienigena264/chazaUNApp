@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/Services/services_menuchazero.dart';
@@ -17,67 +18,75 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
       "D5KI1DaVGA8e9toA0lCq"; //Id del chazero, cambiar para probar el otro chazero
   @override //Se supone que esa Id se tomará sola al hacer login
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          color: colorBackground,
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  barraSuperior_(),
-                ],
-              ),
-              const SizedBox(height: 20,),
-              SizedBox(
-                //height: 690,
-                height: 500,//Esto es para juan
-                width: 410, // Tamaño fijo
-                child: FutureBuilder(
-                  future: getChazasporChazero(idChazero),
-                  builder: ((context, snapshot) {
-                    if (snapshot.hasData) {
-                      //Si la consulta devuelve algo o espera
-                      return ListView.builder(
-                        //Hace una lista de todas las filas que había en la matriz chazas
-                        shrinkWrap: true,
-                        itemExtent: 215,
-                        padding: const EdgeInsets.only(bottom: 20),
-                        itemCount: snapshot.data
-                            ?.length, // casi como un for que itera las veces de las filas de la matriz
-                        itemBuilder: (ontext, index) {
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: 200,
-                                child: infoChaza_(
-                                    // hace una card infochaza con los detalles de cada fila, osea cada chaza
-                                    snapshot.data?[index]['nombre'],
-                                    snapshot.data?[index]['ubicacion'],
-                                    snapshot.data?[index]['puntuacion'],
-                                    snapshot.data?[index]['paga'],
-                                    snapshot.data?[index]['imagen']),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              )
-                            ], //Espacio entre las cards
-                          );
-                        },
-                      );
-                    } else {
-                      return const Center(
-                        child:
-                            CircularProgressIndicator(), // Si la bd se tarda o no da nada
-                      );
-                    }
-                  }),
+    return WillPopScope(
+
+      // cuando el usuario presiona atras, lo deslogea en vez de sacarlo de la app
+      onWillPop: () async {
+        FirebaseAuth.instance.signOut();
+        return false;
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            color: colorBackground,
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    barraSuperior_(),
+                  ],
                 ),
-              ),
-              Stack(
-                children: [barraChazero(context)],
-              )
-            ],
+                const SizedBox(height: 20,),
+                SizedBox(
+                  //height: 690,
+                  height: 500,//Esto es para juan
+                  width: 410, // Tamaño fijo
+                  child: FutureBuilder(
+                    future: getChazasporChazero(idChazero),
+                    builder: ((context, snapshot) {
+                      if (snapshot.hasData) {
+                        //Si la consulta devuelve algo o espera
+                        return ListView.builder(
+                          //Hace una lista de todas las filas que había en la matriz chazas
+                          shrinkWrap: true,
+                          itemExtent: 215,
+                          padding: const EdgeInsets.only(bottom: 20),
+                          itemCount: snapshot.data
+                              ?.length, // casi como un for que itera las veces de las filas de la matriz
+                          itemBuilder: (ontext, index) {
+                            return Column(
+                              children: [
+                                SizedBox(
+                                  height: 200,
+                                  child: infoChaza_(
+                                      // hace una card infochaza con los detalles de cada fila, osea cada chaza
+                                      snapshot.data?[index]['nombre'],
+                                      snapshot.data?[index]['ubicacion'],
+                                      snapshot.data?[index]['puntuacion'],
+                                      snapshot.data?[index]['paga'],
+                                      snapshot.data?[index]['imagen']),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                )
+                              ], //Espacio entre las cards
+                            );
+                          },
+                        );
+                      } else {
+                        return const Center(
+                          child:
+                              CircularProgressIndicator(), // Si la bd se tarda o no da nada
+                        );
+                      }
+                    }),
+                  ),
+                ),
+                Stack(
+                  children: [barraChazero(context)],
+                )
+              ],
+            ),
           ),
         ),
       ),
