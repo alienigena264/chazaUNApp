@@ -138,44 +138,31 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
               ),
             ),
             actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 30, bottom: 5),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorPrincipal,
-                    minimumSize: const Size(100, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                  onPressed: () async { await goMenu(); },
-                  child: const Text(
-                    "Iniciar sesión",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white
-                    ),
-                  ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.only(left: 20),
+                ),
+                onPressed: () async { await goMenu(); },
+                child: const Text(
+                  "Iniciar sesión",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: colorPrincipal
+                  ), textAlign: TextAlign.center
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 30, bottom: 5),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorPrincipal,
-                    minimumSize: const Size(100, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.only(right: 20),
+                ),
+                onPressed: ()  { Navigator.of(context).pop(); },
+                child: const Text(
+                  "Modificar correo",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: colorPrincipal
                   ),
-                  onPressed: ()  { Navigator.of(context).pop(); },
-                  child: const Text(
-                    "Modificar correo",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white
-                    ),
-                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
 
