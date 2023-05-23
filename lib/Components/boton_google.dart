@@ -24,9 +24,9 @@ class _BotonGoogle extends State<BotonGoogle> {
           const SizedBox(
             height: 10,
           ),
-          Row(
+          const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 Expanded(
                     child: Divider(
                   indent: 40,
@@ -73,6 +73,6 @@ class _BotonGoogle extends State<BotonGoogle> {
   //async para esperar el ingreso
   goMenu() async {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) =>  MenuInicialVistaView()));
+        MaterialPageRoute(builder: (context) =>  const MenuInicialVistaView()));
   }
 }

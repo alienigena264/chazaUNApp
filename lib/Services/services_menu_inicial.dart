@@ -6,9 +6,9 @@ Future<List> getChazas() async {
   List chazas = [];
   CollectionReference collectionReferenceChazas = db.collection('Chaza');
   QuerySnapshot querychazas = await collectionReferenceChazas.get();
-  querychazas.docs.forEach((id) {
+  for (var id in querychazas.docs) {
     chazas.add(id.data());
-  });
+  }
   Future.delayed(const Duration(milliseconds: 800));
 
   return chazas;
