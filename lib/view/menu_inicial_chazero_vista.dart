@@ -278,7 +278,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-        onPressed: irEnProgreso(),
+        onPressed: pantallaPersonal(),
         child: const Text(
           "Personal",
           style:
@@ -319,6 +319,13 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   irEnProgreso() {
     return () {
       Navigator.pushNamed(context, '/progreso');
+    };
+  }
+
+   pantallaPersonal() {
+    return () {
+      print("prueba");
+      Navigator.pushNamed(context, '/menu/chazero/personal');
     };
   }
 }
