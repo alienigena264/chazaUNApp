@@ -42,3 +42,15 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+/lib/main.dart
+
+#google firebase idKeys
+android/app/google-services.json
+
+#plataformas no soportadas
+ios/
+macos/
+web/
+linux/
+```

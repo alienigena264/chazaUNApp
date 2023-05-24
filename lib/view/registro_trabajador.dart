@@ -1,24 +1,45 @@
+// ignore_for_file: avoid_print
+
+import 'package:chazaunapp/Services/gauth_service.dart';
+import 'package:chazaunapp/view/inicio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
+import 'colors.dart';
+
 //Titulo del banner
 const String _title = 'Registro';
-bool isChecked = false; //Aceptar terminos y condiciones
+//Verificación de los terminos y condiciones
+bool isChecked = false;
+//Cuenta de google
 
-class RegistroTrabajadorView extends StatelessWidget {
+class RegistroTrabajadorView extends StatefulWidget {
   const RegistroTrabajadorView({super.key});
 
   @override
+  State<RegistroTrabajadorView> createState() => _RegistroTrabajadorState();
+}
+
+class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
-        body: Container(
-            color: const Color(0xffF6F6F6),
-            child: Column(
-              children: const [Title(), SizedBox(height: 250,), LoginButton(), AgreeCheck()],
-            )),
-      ),
+    return Scaffold(
+      body: Container(
+          color: colorBackground,
+          alignment: Alignment.center,
+          child: const Column(
+            children: [
+              Title(), //Banner azul
+              Flexible(
+                  //espacio
+                  flex: 1,
+                  child: SizedBox(
+                    height: 300,
+                  )),
+              LoginButton(),
+              Center(child: AgreeCheck()), //checkbox de terminos y condiciones
+            ],
+          )),
     );
   }
 }
@@ -32,8 +53,7 @@ class Title extends StatelessWidget {
       height: 186.0,
       child: Container(
         decoration: const BoxDecoration(
-          color: Color(
-              0xff00B5C0), // Establece el color de fondo del contenedor con el texto
+          color: colorPrincipal,
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(50.0),
           ),
@@ -45,7 +65,7 @@ class Title extends StatelessWidget {
               _title, // el texto que quieres mostrar
               style: TextStyle(
                   color: Colors.white, // Establece el color del texto
-                  fontSize: 55.0, // Establece el tamaño del texto
+                  fontSize: 60.0, // Establece el tamaño del texto
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
             ),
@@ -58,7 +78,6 @@ class Title extends StatelessWidget {
 
 class LoginButton extends StatefulWidget {
   const LoginButton({super.key});
-
   @override
   State<LoginButton> createState() => _LoginButton();
 }
@@ -68,11 +87,39 @@ class _LoginButton extends State<LoginButton> {
   Widget build(BuildContext context) {
     return SignInButton(
       Buttons.Google,
-      onPressed: () {},
+      text: 'Ingresar con google unal',
+      onPressed: () async {
+        if (isChecked) {
+          try {
+            await GAuthService().ingresarGoogle();
+            await goMenu();
+          } catch (e) {
+            print('ingresa con cuenta unal');
+          }
+        } else {
+          print('No ha aceptado');
+        }
+      },
+    );
+  }
+
+  //async para esperar el ingreso
+  goMenu() async {
+    //Vuelve al inicio y borra lo anterior(login, registro y trabajador) para que no se pueda regresar al registro una vez ingresado,
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const PaginaInicio(),
+      ),
+      //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
+      (_) => false,
     );
   }
 }
 
+//TERMINOS Y CONDICIONES
+//https://doc-hosting.flycricket.io/chazaunapp-terms-of-use/61d6b708-bd87-4bb3-8392-cc8b9ab1fe48/terms
+//https://doc-hosting.flycricket.io/chazaunapp-privacy-policy/f674154c-f1f3-4291-a55f-77743561a2b2/privacy
 class AgreeCheck extends StatefulWidget {
   const AgreeCheck({super.key});
 
@@ -90,34 +137,43 @@ class _Checkbox extends State<AgreeCheck> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
+        return colorTrabajador;
       }
-      return Colors.red;
+      return colorPrincipal;
     }
 
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 50.0),
+    return SizedBox(
+        width: 250.0,
         child: Row(
-          children: <Widget>[
-            const Expanded(
-                child: Text(
-              'Acepto los términos y condiciones', // el texto que quieres mostrar
-              style: TextStyle(
-                  color: Colors.black, // Establece el color del texto
-                  fontSize: 14.0, // Establece el tamaño del texto
-                  fontFamily: "Inder",
-                  fontWeight: FontWeight.normal),
-            )),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
             Checkbox(
-                checkColor: Colors.white,
+                checkColor: colorBackground,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 value: isChecked,
                 onChanged: (bool? value) {
                   setState(() {
                     isChecked = value!;
                   });
-                })
+                }),
+            const Expanded(
+                child: Text(
+              'Acepto los términos y condiciones.', // el texto que quieres mostrar
+              style: TextStyle(
+                  color: Colors.black, // Establece el color del texto
+                  fontSize: 12.0, // Establece el tamaño del texto
+                  fontFamily: "Inder",
+                  fontWeight: FontWeight.normal),
+              textAlign: TextAlign.center,
+            )),
           ],
         ));
+  }
+
+  menuTrabajador() {
+    return () {
+      Navigator.pushNamed(context, '/menu/trabajador');
+    };
   }
 }
