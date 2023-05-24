@@ -1,4 +1,7 @@
+import 'package:chazaunapp/view/inicio.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GAuthService {
@@ -12,12 +15,50 @@ class GAuthService {
       accessToken: gAuth.accessToken,
       idToken: gAuth.idToken,
     );
+
+    await registrarTrabajador(gUser);
     //ingresar en firebase
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  salirDeGoogle() async {
-    return await FirebaseAuth.instance.signOut();
+//NO FUNCIONA XD
+  registrarTrabajador(GoogleSignInAccount gUser) async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    CollectionReference coleccion = db.collection('/Trabajador');
+    bool emailExists = false;
+    await coleccion
+        .where("correo", isEqualTo: gUser.email)
+        .get()
+        .then((querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        emailExists = true;
+      }
+    });
+    if (emailExists) {
+      final data = {
+        "correo": gUser.email,
+        "nombre": gUser.displayName,
+        "estado": true,
+        "numero": gUser.photoUrl,
+      };
+
+      coleccion.add(data).then((documentSnapshot) =>
+          print("Added Data with ID: ${documentSnapshot.id}"));
+    }
+  }
+
+  salirDeGoogle(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    return () {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const PaginaInicio(),
+        ),
+        //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
+        (_) => false,
+      );
+    };
   }
 
   /*no funciono xd

@@ -7,44 +7,44 @@ class SelectorVista extends StatefulWidget {
   State<SelectorVista> createState() => _SelectorVistaState();
 }
 
-class _SelectorVistaState extends State<SelectorVista>{
+class _SelectorVistaState extends State<SelectorVista> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: colorBackground,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Stack(
-                children:[
-                  Text(
-                    'Registrarse como:',
-                    style: TextStyle(
-                        color: colorPrincipal, fontSize: 26, fontFamily: "Inder"),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              trabajadorButton(context),
-              const SizedBox(
-                height: 88,
-              ),
-              chazeroButton(context),
-            ],
-          ),
+      backgroundColor: colorBackground,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              children: const [
+                Text(
+                  'Registrarse como:',
+                  style: TextStyle(
+                      color: colorPrincipal, fontSize: 26, fontFamily: "Inder"),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            trabajadorButton(context),
+            const SizedBox(
+              height: 88,
+            ),
+            chazeroButton(context),
+          ],
         ),
-      );
+      ),
+    );
   }
 
   ElevatedButton trabajadorButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: colorTrabajador,
-        minimumSize:
-        const Size(316, 55), // double.infinity is the width and 30 is the height
+        minimumSize: const Size(
+            316, 55), // double.infinity is the width and 30 is the height
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14.0),
         ),
@@ -52,7 +52,8 @@ class _SelectorVistaState extends State<SelectorVista>{
       onPressed: registrarseTrabajador(context),
       child: const Text(
         "TRABAJADOR",
-        style: TextStyle(color: colorBackground, fontSize: 24, fontFamily: "Inder"),
+        style: TextStyle(
+            color: colorBackground, fontSize: 24, fontFamily: "Inder"),
       ),
     );
   }
@@ -61,8 +62,8 @@ class _SelectorVistaState extends State<SelectorVista>{
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: colorChazero,
-        minimumSize:
-        const Size(316, 55), // double.infinity is the width and 30 is the height
+        minimumSize: const Size(
+            316, 55), // double.infinity is the width and 30 is the height
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14.0),
         ),
@@ -70,7 +71,8 @@ class _SelectorVistaState extends State<SelectorVista>{
       onPressed: registrarseChazero(context),
       child: const Text(
         "CHAZERO",
-        style: TextStyle(color: colorBackground, fontSize: 24, fontFamily: "Inder"),
+        style: TextStyle(
+            color: colorBackground, fontSize: 24, fontFamily: "Inder"),
       ),
     );
   }
