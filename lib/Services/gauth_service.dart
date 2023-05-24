@@ -85,6 +85,7 @@ class GAuthService {
   }
 
   //Nombre de la cuenta
+  // Es mejor usar la info de la base de datos
   getNombreCompleto() {
     String? nombre = FirebaseAuth.instance.currentUser?.displayName;
     if (nombre == null) {
