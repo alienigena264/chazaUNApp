@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
+import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
+import 'package:flutter/material.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
   const MenuInicialVistaView({super.key});
@@ -70,7 +70,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               const SizedBox(
                 width: 55,
               ),
-              const Row(mainAxisAlignment: MainAxisAlignment.center, children: <
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: const <
                   Widget>[
                 Padding(
                     padding: EdgeInsets.all(15),
@@ -84,7 +84,6 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     )),
               ]),
               SizedBox(
-
                 height: 500,
                 width: 410, // Tamaño fijo
                 child: FutureBuilder(
@@ -130,7 +129,6 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     }
                   }),
                 ),
-
               )
             ],
           ),
@@ -325,10 +323,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     color: Color(0xff919191), size: 16.0),
                 Text(
                   ubicacion,
-                  style: const TextStyle(
-                      fontFamily: "Inder",
-                      color: Colors.black
-                  ),
+                  style:
+                      const TextStyle(fontFamily: "Inder", color: Colors.black),
                 ),
               ]),
           Text(
@@ -375,10 +371,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         child: Text(
           tag,
-          style: const TextStyle(
-              fontFamily: "Inder",
-              color: Colors.white
-          ),
+          style: const TextStyle(fontFamily: "Inder", color: Colors.white),
         ),
       ),
     );
