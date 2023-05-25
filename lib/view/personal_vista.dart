@@ -23,30 +23,24 @@ class PersonalVista extends StatelessWidget{
                       text: "Candidatos"
                     )
                   ],
-                unselectedLabelColor: Colors.black,
+                unselectedLabelColor: Colors.black87,
                 unselectedLabelStyle: TextStyle(
                   fontSize: 24.0,
                   fontFamily: "Inder"
                 ),
-                labelColor: colorChazero,
+                labelColor: Colors.white,
                 labelStyle: TextStyle(
                   fontSize: 24.0,
                   fontFamily: "Inder"
                 ),
-                indicatorColor: colorChazero,
                 indicator: UnderlineTabIndicator(
                   borderSide: BorderSide(
-                    color: colorChazero,
+                    color: Colors.white,
                     width: 3
                   ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(50.0)
-                  ),
-                  insets: EdgeInsets.only(
-                    left: 40,
-                    right: 40
-                  )
-                )
+
+                ),
+                indicatorSize: TabBarIndicatorSize.label,
               ),
               title: const Text("Personal"),
               titleTextStyle: const TextStyle(
