@@ -1,4 +1,4 @@
-import 'package:chazaunapp/Services/services_menu_personal_chazero.dart';
+import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -64,12 +64,13 @@ class PersonalVista extends StatelessWidget{
                 builder: ((context, snapshot) {
                   if (snapshot.hasData){
                     return ListView.builder(
+                      itemCount: snapshot.data?.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
                             SizedBox(
                               height: 200,
-                              child: Text(snapshot.data?[index]['primer_nombre']),
+                              child: Text(snapshot.data?[index]['nombres']),
                             )
                           ],
 
