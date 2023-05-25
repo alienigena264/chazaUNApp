@@ -70,7 +70,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               const SizedBox(
                 width: 55,
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: const <
+              const Row(mainAxisAlignment: MainAxisAlignment.center, children: <
                   Widget>[
                 Padding(
                     padding: EdgeInsets.all(15),
