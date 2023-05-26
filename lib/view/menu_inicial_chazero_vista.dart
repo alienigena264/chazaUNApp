@@ -318,7 +318,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
 
   irEnProgreso() {
     return () {
-      Navigator.pushNamed(context, '/infoCuenta');
+      Navigator.pushNamed(context, '/menu/configuracion/infoPersonal');
     };
   }
 

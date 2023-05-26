@@ -1,6 +1,7 @@
 import 'package:chazaunapp/en_progreso.dart';
 import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
 import 'package:chazaunapp/view/Sprint2/contactanos_vista.dart';
+import 'package:chazaunapp/view/Sprint2/info_Cuenta.dart';
 import 'package:chazaunapp/view/Sprint2/perfil_chazero_vista.dart';
 import 'package:chazaunapp/view/Sprint2/perfil_trabajador_vista.dart';
 import 'package:chazaunapp/view/codigo_vista.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         '/menu/configuracion': (context) => const ConfiguracionVista(),
         '/progreso': (context) => const EnProgreso(),
         '/menu/configuracion/contactanos': (context) => const ContactanosView(),
+        '/menu/configuracion/infoPersonal': (context) => const InfoCuenta()
       },
     );
   }

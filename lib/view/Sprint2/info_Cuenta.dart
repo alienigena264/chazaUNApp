@@ -1,5 +1,6 @@
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 
 class InfoCuenta extends StatefulWidget {
   const InfoCuenta({super.key});
@@ -25,39 +26,107 @@ class _InfoCuentaState extends State<InfoCuenta> {
         const SizedBox(
           height: 10,
         ),
-        TextButton(
-            onPressed: cambiarNombre(),
-            child: datosPersonales('Nombres', 'Juan Pablo')),
+        botonNombre(),
         const SizedBox(
           height: 5,
         ),
-        TextButton(
-            onPressed: cambiarNombre(),
-            child: datosPersonales('Apellidos', 'Garcia Otalora')),
+        botonApellido(),
         const SizedBox(
           height: 5,
         ),
-        TextButton(onPressed: cambiarNombre(), child: otrosDatos('Numero de telefono', '304***6075')),
+        botonTelefono(),
+        const SizedBox(
+          height: 5,
+        ),
+        botonEmail(),
+        const SizedBox(
+          height: 5,
+        ),
+        botonContrasena(),
+        const SizedBox(
+          height: 10,
+        ),
+        visibilidadCuenta()
       ]),
     );
   }
 
-  Row otrosDatos(String tipo,dato) {
+  TextButton botonContrasena() {
+    return TextButton(
+          onPressed: cambiarContrasena(),
+          child: otrosDatos('Contraseña', ''));
+  }
+
+  TextButton botonEmail() {
+    return TextButton(
+          onPressed: cambiarNombre(),
+          child: otrosDatos('Email', 'marco***@gmail.com'));
+  }
+
+  TextButton botonTelefono() {
+    return TextButton(
+          onPressed: cambiarNombre(),
+          child: otrosDatos('Numero de telefono', '304***6075'));
+  }
+
+  TextButton botonApellido() {
+    return TextButton(
+          onPressed: cambiarNombre(),
+          child: datosPersonales('Apellidos', 'Garcia Otalora'));
+  }
+
+  TextButton botonNombre() {
+    return TextButton(
+          onPressed: cambiarNombre(),
+          child: datosPersonales('Nombres', 'Juan Pablo'));
+  }
+
+  Row visibilidadCuenta() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children:  [
-        const SizedBox(
-          width: 5,
-        ),
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            '   Cuenta visible',
+            style: TextStyle(
+                color: colorTextSuperior,
+                fontSize: 20,
+                fontWeight: FontWeight.w600),
+          ),
+          Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.rotationX(3.14159),
+            child: GFToggle(
+              onChanged: (val) {},
+              value: true,
+              enabledThumbColor: Colors.white,
+              enabledTrackColor: colorPrincipal,
+              type: GFToggleType.ios,
+            ),
+          )
+        ],
+      );
+  }
+
+  Row otrosDatos(String tipo, dato) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         Text(
-          tipo,
+          '  $tipo',
           style: const TextStyle(color: colorTextSuperior, fontSize: 20),
         ),
-        Text(
-          dato,
-          style: const TextStyle(color: colorTextInferior, fontSize: 16),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              dato,
+              style: const TextStyle(color: colorTextInferior, fontSize: 16),
+            ),
+            const Icon(Icons.arrow_forward_ios, color: Colors.black),
+          ],
         ),
-        const Icon(Icons.arrow_forward_ios, color: Colors.black ,)
       ],
     );
   }
@@ -71,6 +140,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               tipo,
@@ -186,6 +256,12 @@ class _InfoCuentaState extends State<InfoCuenta> {
   cambiarNombre() {
     return () {
       Navigator.pushNamed(context, '/progreso');
+    };
+  }
+
+  cambiarContrasena() {
+    return () {
+      Navigator.pushNamed(context, '/contrasena');
     };
   }
 }
