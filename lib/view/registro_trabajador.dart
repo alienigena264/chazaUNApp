@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:chazaunapp/Controller/registro_controller.dart';
 import 'package:chazaunapp/Services/gauth_service.dart';
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:flutter/material.dart';
@@ -22,22 +23,49 @@ class RegistroTrabajadorView extends StatefulWidget {
 
 class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
   @override
+  void initState() {
+    super.initState();
+    phoneController.addListener(phoneValidator);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
           color: colorBackground,
           alignment: Alignment.center,
           child: Column(
-            children: const [
-              Title(), //Banner azul
-              Flexible(
+            children: [
+              const Title(), //Banner azul
+              const Flexible(
                   //espacio
                   flex: 1,
                   child: SizedBox(
-                    height: 300,
+                    height: 230,
                   )),
-              LoginButton(),
-              Center(child: AgreeCheck()), //checkbox de terminos y condiciones
+              Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: phoneController,
+                  validator: (val) {
+                    return phoneValidator_;
+                  },
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: colorFondoField,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      labelText: "Teléfono",
+                      labelStyle: TextStyle(color: Colors.grey.shade700),
+                      suffixIcon: const Icon(Icons.phone)),
+                ),
+              ),
+              const LoginButton(),
+              const Center(
+                  child: AgreeCheck()), //checkbox de terminos y condiciones
             ],
           )),
     );
@@ -89,9 +117,9 @@ class _LoginButton extends State<LoginButton> {
       Buttons.Google,
       text: 'Ingresar con google unal',
       onPressed: () async {
-        if (isChecked) {
+        if (isChecked && phoneValidator_ == null) {
           try {
-            await GAuthService().ingresarGoogle();
+            await GAuthService().ingresarGoogle(true, phoneController.text);
             await goMenu();
           } catch (e) {
             print('ingresa con cuenta unal');
@@ -169,11 +197,5 @@ class _Checkbox extends State<AgreeCheck> {
             )),
           ],
         ));
-  }
-
-  menuTrabajador() {
-    return () {
-      Navigator.pushNamed(context, '/menu/trabajador');
-    };
   }
 }
