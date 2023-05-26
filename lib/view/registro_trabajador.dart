@@ -27,8 +27,8 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
       body: Container(
           color: colorBackground,
           alignment: Alignment.center,
-          child: const Column(
-            children: [
+          child: Column(
+            children: const [
               Title(), //Banner azul
               Flexible(
                   //espacio
