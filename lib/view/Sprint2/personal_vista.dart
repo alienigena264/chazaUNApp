@@ -12,7 +12,7 @@ class PersonalVista extends StatelessWidget{
         length: 2,
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(200),
+            preferredSize: const Size.fromHeight(175),
             child: AppBar(
               bottom: const TabBar(
                   tabs: [
@@ -38,7 +38,7 @@ class PersonalVista extends StatelessWidget{
                     color: Colors.white,
                     width: 3
                   ),
-
+                  insets: EdgeInsets.only(bottom: 5)
                 ),
                 indicatorSize: TabBarIndicatorSize.label,
               ),
@@ -47,14 +47,9 @@ class PersonalVista extends StatelessWidget{
                 color:  Colors.white,
                 fontSize: 60.0
               ),
-              toolbarHeight: 200,
+              toolbarHeight: 175,
               centerTitle: true,
               backgroundColor: colorPrincipal,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(50.0),
-                )
-              ),
             ),
           ),
           body: TabBarView(
