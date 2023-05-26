@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,40 +18,35 @@ class GAuthService {
       idToken: gAuth.idToken,
     );
 
+    registrarTrabajador(gUser, gAuth);
     //ingresar en firebase
-    await FirebaseAuth.instance.signInWithCredential(credential);
-
-    // guardar en firebase firestore
-    await registrarTrabajador(gUser);
-
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
 //NO FUNCIONA XD
-  registrarTrabajador(GoogleSignInAccount gUser) async {
+  registrarTrabajador(
+      GoogleSignInAccount gUser, GoogleSignInAuthentication gAuth) async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     CollectionReference coleccion = db.collection('Trabajador');
-    bool emailExists = await coleccion
-        .where("correo", isEqualTo: gUser.email)
+    String email = gUser.email;
+    Map<String, dynamic>? idMap = parseJwt(gAuth.idToken!);
+    final String firstName = idMap!["given_name"];
+    final String lastName = idMap["family_name"];
+    await coleccion
+        .where("correo", isEqualTo: email)
         .get()
         .then((querySnapshot) {
-      if (querySnapshot.docs.isNotEmpty) {
-        return true;
+      if (querySnapshot.docs.isEmpty) {
+        final data = {
+          "correo": email,
+          "nombres": firstName,
+          "apellidos": lastName,
+          "estado": true,
+          "telefono": "",
+        };
+        coleccion.add(data);
       }
-      return false;
     });
-
-
-    if (!emailExists) {
-      final data = {
-        "correo": gUser.email,
-        "nombre": gUser.displayName,
-        "estado": true,
-        "numero": gUser.photoUrl,
-      };
-
-      // añade el usuario a la coleccion usando el uid de fire auth
-      coleccion.doc(FirebaseAuth.instance.currentUser?.uid).set(data);
-    }
   }
 
   salirDeGoogle(BuildContext context) async {
@@ -66,11 +63,9 @@ class GAuthService {
     };
   }
 
-  /*no funciono xd
 //lo encontre en internet para conseguir nombres y apellidos separados
   static Map<String, dynamic>? parseJwt(String token) {
     // validate token
-    if (token == null) return null;
     final List<String> parts = token.split('.');
     if (parts.length != 3) {
       return null;
@@ -87,34 +82,12 @@ class GAuthService {
     return payloadMap;
   }
 
-  /* Para ingresarlo a google
-    Map<String, dynamic>? idMap = parseJwt(gUser!.id);
-
-    final String firstName = idMap!["given_name"];
-    final String lastName = idMap["family_name"];*/
-
-
-  static Future<String?> getNombre(String user) async {
-    //final GoogleSignInAuthentication gAuth =
-    //  await FirebaseAuth.instance.currentUser?.getIdToken();
-    print(user);
-    Map<String, dynamic>? idMap = parseJwt(user);
-    print(idMap!["given_name"]);
-    return idMap["given_name"];
-  }
-
-  Future<String?> getApellido() async {
-    String? user = await FirebaseAuth.instance.currentUser?.getIdToken();
-    Map<String, dynamic>? idMap = parseJwt(user!);
-    return await idMap!["family_name"];
-    print('e2');
-  }
-*/
   //Nombre de la cuenta
+  // Es mejor usar la info de la base de datos
   getNombreCompleto() {
     String? nombre = FirebaseAuth.instance.currentUser?.displayName;
     if (nombre == null) {
-      print('e');
+      //print('e');
     } else {
       return nombre;
     }
