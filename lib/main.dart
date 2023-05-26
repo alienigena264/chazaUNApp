@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ChazaUNApp',
-      initialRoute: '/contactanos',
+      initialRoute: '/',
       routes: {
         '/': (context) => const PaginaInicio(),
         '/contrasena': (context) => const ContrasenaVista(),
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),
         '/menu/configuracion': (context) => const ConfiguracionVista(),
         '/progreso': (context) => const EnProgreso(),
-        '/contactanos': (context) => const ContactanosView(),
+        '/menu/contactanos': (context) => const ContactanosView(),
       },
     );
   }
