@@ -32,7 +32,6 @@ class GAuthService {
     Map<String, dynamic>? idMap = parseJwt(gAuth.idToken!);
     final String firstName = idMap!["given_name"];
     final String lastName = idMap["family_name"];
-    print("$firstName, $lastName");
     await coleccion
         .where("correo", isEqualTo: email)
         .get()
@@ -45,8 +44,7 @@ class GAuthService {
           "estado": true,
           "telefono": "",
         };
-        coleccion.add(data).then((documentSnapshot) =>
-            print("Added Data with ID: ${documentSnapshot.id}"));
+        coleccion.add(data);
       }
     });
   }
@@ -89,7 +87,7 @@ class GAuthService {
   getNombreCompleto() {
     String? nombre = FirebaseAuth.instance.currentUser?.displayName;
     if (nombre == null) {
-      print('e');
+      //print('e');
     } else {
       return nombre;
     }
