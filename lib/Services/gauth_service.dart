@@ -16,25 +16,30 @@ class GAuthService {
       idToken: gAuth.idToken,
     );
 
-    await registrarTrabajador(gUser);
     //ingresar en firebase
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    await FirebaseAuth.instance.signInWithCredential(credential);
+
+    // guardar en firebase firestore
+    await registrarTrabajador(gUser);
+
   }
 
 //NO FUNCIONA XD
   registrarTrabajador(GoogleSignInAccount gUser) async {
     FirebaseFirestore db = FirebaseFirestore.instance;
-    CollectionReference coleccion = db.collection('/Trabajador');
-    bool emailExists = false;
-    await coleccion
+    CollectionReference coleccion = db.collection('Trabajador');
+    bool emailExists = await coleccion
         .where("correo", isEqualTo: gUser.email)
         .get()
         .then((querySnapshot) {
       if (querySnapshot.docs.isNotEmpty) {
-        emailExists = true;
+        return true;
       }
+      return false;
     });
-    if (emailExists) {
+
+
+    if (!emailExists) {
       final data = {
         "correo": gUser.email,
         "nombre": gUser.displayName,
@@ -42,8 +47,8 @@ class GAuthService {
         "numero": gUser.photoUrl,
       };
 
-      coleccion.add(data).then((documentSnapshot) =>
-          print("Added Data with ID: ${documentSnapshot.id}"));
+      // añade el usuario a la coleccion usando el uid de fire auth
+      coleccion.doc(FirebaseAuth.instance.currentUser?.uid).set(data);
     }
   }
 

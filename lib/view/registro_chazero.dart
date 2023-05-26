@@ -334,15 +334,6 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
           segundoApellidoValidator();
 
           if (_formKey.currentState!.validate()) {
-            // crea un documento de chazero en FireStore Database
-            crearChazero(
-                emailController.text,
-                contrasenaController.text,
-                primerNombreController.text,
-                segundoNombreController.text,
-                primerApellidoController.text,
-                segundoApellidoController.text,
-                telefonoController.text);
 
             // Crea un usuario en Firebase Auth y lo logea automaticamente
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -351,6 +342,17 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
             await FirebaseAuth.instance.signInWithEmailAndPassword(
                 email: emailController.text,
                 password: contrasenaController.text);
+
+            // crea un documento de chazero en Firebase Firestore
+            crearChazero(
+                emailController.text,
+                contrasenaController.text,
+                primerNombreController.text,
+                segundoNombreController.text,
+                primerApellidoController.text,
+                segundoApellidoController.text,
+                telefonoController.text, FirebaseAuth.instance.currentUser?.uid);
+
 
             // comentar este if para no hacer la verificacion
             if (context.mounted) {
