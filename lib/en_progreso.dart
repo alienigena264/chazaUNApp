@@ -50,7 +50,7 @@ class _EnProgresoState extends State<EnProgreso> {
         ),
         onPressed: verificar_,
         child: const Text(
-          "Voler",
+          "Volver",
           style: TextStyle(color: Colors.black, fontSize: 18),
         ));
   }
