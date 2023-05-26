@@ -1,6 +1,7 @@
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
@@ -15,140 +16,149 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   String idChazero = "D5KI1DaVGA8e9toA0lCq";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          color: colorBackground,
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  // Contenedor con texto y fondo
-                  SizedBox(
-                    height: 186.0,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color:
-                            colorPrincipal, // Establece el color de fondo del contenedor con el texto
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(50.0),
+    return WillPopScope(
+      onWillPop: () async {
+        FirebaseAuth.instance.signOut();
+        return false;
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            color: colorBackground,
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    // Contenedor con texto y fondo
+                    SizedBox(
+                      height: 186.0,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color:
+                              colorPrincipal, // Establece el color de fondo del contenedor con el texto
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(50.0),
+                          ),
                         ),
-                      ),
-                      child: const Center(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            'Usuario', // el texto que quieres mostrar
-                            style: TextStyle(
-                                color: Colors
-                                    .white, // Establece el color del texto
-                                fontSize: 55.0, // Establece el tamaño del texto
-                                fontFamily: "Inder",
-                                fontWeight: FontWeight.normal),
+                        child: const Center(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              'Usuario', // el texto que quieres mostrar
+                              style: TextStyle(
+                                  color: Colors
+                                      .white, // Establece el color del texto
+                                  fontSize:
+                                      55.0, // Establece el tamaño del texto
+                                  fontFamily: "Inder",
+                                  fontWeight: FontWeight.normal),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  chefBottom_(),
-                  cubiertosBottom_(),
-                  masBottom_(),
-                ],
-              ),
-              const SizedBox(
-                width: 55,
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: const <
-                  Widget>[
-                Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Text(
-                      'Chazas', // el texto que quieres mostrar
-                      style: TextStyle(
-                          color: Colors.black, // Establece el color del texto
-                          fontSize: 30.0, // Establece el tamaño del texto
-                          fontFamily: "Inder",
-                          fontWeight: FontWeight.normal),
-                    )),
-              ]),
-              SizedBox(
-                height: 500,
-                width: 410, // Tamaño fijo
-                child: FutureBuilder(
-                  future: getChazas(),
-                  builder: ((context, snapshot) {
-                    if (snapshot.hasData) {
-                      //Si la consulta devuelve algo o espera
-                      return ListView.separated(
-                        //Hace una lista de todas las filas que había en la matriz chazas
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.only(bottom: 20),
-                        itemCount: snapshot.data?.length ??
-                            0, // casi como un for que itera las veces de las filas de la matriz
-                        itemBuilder: (text, index) {
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: 250,
-                                width: 300,
-                                child: card(
-                                    // hace una card infochaza con los detalles de cada fila, osea cada chaza
-                                    snapshot.data?[index]['nombre'],
-                                    snapshot.data?[index]['ubicacion'],
-                                    snapshot.data?[index]['puntuacion'],
-                                    snapshot.data?[index]['paga'],
-                                    snapshot.data?[index]['imagen']),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              )
-                            ], //Espacio entre las cards
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const SizedBox(height: 30);
-                        },
-                      );
-                    } else {
-                      return const Center(
-                        child:
-                            CircularProgressIndicator(), // Si la bd se tarda o no da nada
-                      );
-                    }
-                  }),
+                  ],
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 10,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    chefBottom_(),
+                    cubiertosBottom_(),
+                    masBottom_(),
+                  ],
+                ),
+                const SizedBox(
+                  width: 55,
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const <Widget>[
+                      Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            'Chazas', // el texto que quieres mostrar
+                            style: TextStyle(
+                                color: Colors
+                                    .black, // Establece el color del texto
+                                fontSize: 30.0, // Establece el tamaño del texto
+                                fontFamily: "Inder",
+                                fontWeight: FontWeight.normal),
+                          )),
+                    ]),
+                SizedBox(
+                  height: 500,
+                  width: 410, // Tamaño fijo
+                  child: FutureBuilder(
+                    future: getChazas(),
+                    builder: ((context, snapshot) {
+                      if (snapshot.hasData) {
+                        //Si la consulta devuelve algo o espera
+                        return ListView.separated(
+                          //Hace una lista de todas las filas que había en la matriz chazas
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.only(bottom: 20),
+                          itemCount: snapshot.data?.length ??
+                              0, // casi como un for que itera las veces de las filas de la matriz
+                          itemBuilder: (text, index) {
+                            return Column(
+                              children: [
+                                SizedBox(
+                                  height: 250,
+                                  width: 300,
+                                  child: card(
+                                      // hace una card infochaza con los detalles de cada fila, osea cada chaza
+                                      snapshot.data?[index]['nombre'],
+                                      snapshot.data?[index]['ubicacion'],
+                                      snapshot.data?[index]['puntuacion'],
+                                      snapshot.data?[index]['paga'],
+                                      snapshot.data?[index]['imagen']),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                )
+                              ], //Espacio entre las cards
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(height: 30);
+                          },
+                        );
+                      } else {
+                        return const Center(
+                          child:
+                              CircularProgressIndicator(), // Si la bd se tarda o no da nada
+                        );
+                      }
+                    }),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home), label: 'Inicio'), //Icono home
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined), label: 'Ajustes')
-        ],
-        backgroundColor: Colors.white,
-        selectedItemColor: colorPrincipal,
-        unselectedItemColor: const Color(0xff909090),
-        unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
-        selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
-        iconSize: 34,
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home), label: 'Inicio'), //Icono home
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings_outlined), label: 'Ajustes')
+          ],
+          backgroundColor: Colors.white,
+          selectedItemColor: colorPrincipal,
+          unselectedItemColor: const Color(0xff909090),
+          unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+          selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
+          iconSize: 34,
+        ),
       ),
     );
   }

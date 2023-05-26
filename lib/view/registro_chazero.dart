@@ -324,8 +324,16 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
         ),
         onPressed: () async {
-          if (_formKey.currentState!.validate()) {
+          await emailValidator();
+          contrasenaValidator();
+          contrasenaConfirmacionValidator();
+          telefonoValidator();
+          primerNombreValidator();
+          segundoNombreValidator();
+          primerApellidoValidator();
+          segundoApellidoValidator();
 
+          if (_formKey.currentState!.validate()) {
             // crea un documento de chazero en FireStore Database
             crearChazero(
                 emailController.text,
