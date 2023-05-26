@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),
         '/menu/configuracion': (context) => const ConfiguracionVista(),
         '/progreso': (context) => const EnProgreso(),
-        '/menu/contactanos': (context) => const ContactanosView(),
+        '/menu/configuracion/contactanos': (context) => const ContactanosView(),
       },
     );
   }
