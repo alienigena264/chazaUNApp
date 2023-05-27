@@ -1,4 +1,6 @@
+import 'package:chazaunapp/Services/Sprint2/info_personal_services.dart';
 import 'package:chazaunapp/view/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -51,82 +53,127 @@ class _InfoCuentaState extends State<InfoCuenta> {
     );
   }
 
-  TextButton botonContrasena() {
-    return TextButton(
-          onPressed: cambiarContrasena(),
-          child: otrosDatos('Contraseña', ''));
+  Stack barraSuperior_() {
+    return Stack(children: [
+      Container(
+        color: colorPrincipal,
+        height: 85,
+        width: 500,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Row(children: [
+                volverBoton_(),
+                const Text(
+                  "Configuración",
+                  style: TextStyle(fontSize: 25, color: Colors.white),
+                )
+              ]),
+            ],
+          ),
+        ),
+      ),
+    ]);
   }
 
-  TextButton botonEmail() {
-    return TextButton(
-          onPressed: cambiarNombre(),
-          child: otrosDatos('Email', 'marco***@gmail.com'));
+  Row fotoPerfil() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const SizedBox(width: 10),
+        fotoActual(),
+        const SizedBox(width: 10),
+        botonCambiar(),
+      ],
+    );
   }
 
-  TextButton botonTelefono() {
-    return TextButton(
-          onPressed: cambiarNombre(),
-          child: otrosDatos('Numero de telefono', '304***6075'));
+  CircleAvatar fotoActual() {
+    return const CircleAvatar(
+      radius: 50,
+      backgroundImage: NetworkImage(
+        'https://cnnespanol.cnn.com/wp-content/uploads/2016/08/juan-gabriel-pleno.jpg?quality=100&strip=info',
+      ),
+    );
   }
 
-  TextButton botonApellido() {
-    return TextButton(
-          onPressed: cambiarNombre(),
-          child: datosPersonales('Apellidos', 'Garcia Otalora'));
+  Expanded botonCambiar() {
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            onPressed: subirImagen(),
+            child: const Text(
+              "Editar foto de perfil",
+              style: TextStyle(fontSize: 20, color: Color(0xff404040)),
+            ),
+          ),
+          const Icon(Icons.arrow_forward_ios),
+          const SizedBox(
+            width: 10,
+          )
+        ],
+      ),
+    );
   }
 
   TextButton botonNombre() {
     return TextButton(
-          onPressed: cambiarNombre(),
-          child: datosPersonales('Nombres', 'Juan Pablo'));
+        onPressed: cambiarNombre(),
+        child: datosPersonales('Nombres', 'Juan Pablo'));
+  }
+
+  TextButton botonApellido() {
+    return TextButton(
+        onPressed: cambiarApellido(),
+        child: datosPersonales('Apellidos', 'Garcia Otalora'));
+  }
+
+  TextButton botonTelefono() {
+    return TextButton(
+        onPressed: cambiarTelefono(),
+        child: otrosDatos('Numero de telefono', '304***6075'));
+  }
+
+  TextButton botonEmail() {
+    return TextButton(
+        onPressed: cambiarEmail(),
+        child: otrosDatos('Email', 'marco***@gmail.com'));
+  }
+
+  TextButton botonContrasena() {
+    return TextButton(
+        onPressed: cambiarContrasena(), child: otrosDatos('Contraseña', ''));
   }
 
   Row visibilidadCuenta() {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            '   Cuenta visible',
-            style: TextStyle(
-                color: colorTextSuperior,
-                fontSize: 20,
-                fontWeight: FontWeight.w600),
-          ),
-          Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.rotationX(3.14159),
-            child: GFToggle(
-              onChanged: (val) {},
-              value: true,
-              enabledThumbColor: Colors.white,
-              enabledTrackColor: colorPrincipal,
-              type: GFToggleType.ios,
-            ),
-          )
-        ],
-      );
-  }
-
-  Row otrosDatos(String tipo, dato) {
-    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '  $tipo',
-          style: const TextStyle(color: colorTextSuperior, fontSize: 20),
+        const Text(
+          '   Cuenta visible',
+          style: TextStyle(
+              color: colorTextSuperior,
+              fontSize: 20,
+              fontWeight: FontWeight.w600),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              dato,
-              style: const TextStyle(color: colorTextInferior, fontSize: 16),
-            ),
-            const Icon(Icons.arrow_forward_ios, color: Colors.black),
-          ],
-        ),
+        Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.rotationX(3.14159),
+          child: GFToggle(
+            onChanged: (val) {},
+            value: true,
+            enabledThumbColor: Colors.white,
+            enabledTrackColor: colorPrincipal,
+            type: GFToggleType.ios,
+          ),
+        )
       ],
     );
   }
@@ -165,66 +212,27 @@ class _InfoCuentaState extends State<InfoCuenta> {
     );
   }
 
-  Row fotoPerfil() {
+  Row otrosDatos(String tipo, dato) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(width: 10),
-        fotoActual(),
-        const SizedBox(width: 10),
-        botonCambiar(),
+        Text(
+          '  $tipo',
+          style: const TextStyle(color: colorTextSuperior, fontSize: 20),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              dato,
+              style: const TextStyle(color: colorTextInferior, fontSize: 16),
+            ),
+            const Icon(Icons.arrow_forward_ios, color: Colors.black),
+          ],
+        ),
       ],
     );
-  }
-
-  Expanded botonCambiar() {
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          TextButton(
-            onPressed: subirImagen(),
-            child: const Text(
-              "Editar foto de perfil",
-              style: TextStyle(fontSize: 20, color: Color(0xff404040)),
-            ),
-          ),
-          const Icon(Icons.arrow_forward_ios),
-          const SizedBox(
-            width: 10,
-          )
-        ],
-      ),
-    );
-  }
-
-  CircleAvatar fotoActual() {
-    return const CircleAvatar(
-      radius: 50,
-      backgroundImage: NetworkImage(
-        'https://cnnespanol.cnn.com/wp-content/uploads/2016/08/juan-gabriel-pleno.jpg?quality=100&strip=info',
-      ),
-    );
-  }
-
-  Stack barraSuperior_() {
-    return Stack(children: [
-      Container(
-        color: colorPrincipal,
-        height: 85,
-        width: 500,
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Row(children: [
-            volverBoton_(),
-            const Text(
-              "Configuración",
-              style: TextStyle(fontSize: 25, color: Colors.white),
-            )
-          ]),
-        ),
-      ),
-    ]);
   }
 
   TextButton volverBoton_() {
@@ -254,8 +262,36 @@ class _InfoCuentaState extends State<InfoCuenta> {
   }
 
   cambiarNombre() {
-    return () {
+    return () async {
+      if (FirebaseAuth.instance.currentUser != null) {
+        await actualizarNombreChazero(FirebaseAuth.instance.currentUser?.uid, xxxxxxxxx,s);
+      }
+      // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/progreso');
+    };
+  }
+
+  cambiarApellido() {
+    return () async {
+      if (FirebaseAuth.instance.currentUser != null) {
+        await actualizarApellidoChazero(FirebaseAuth.instance.currentUser?.uid, xxxxxxxx,a);
+      }
+    };
+  }
+
+  cambiarTelefono() {
+    return () async {
+      if (FirebaseAuth.instance.currentUser != null) {
+        await actualizarTelefonoChazero(FirebaseAuth.instance.currentUser?.uid, xxxxxxxxx);
+      }
+    };
+  }
+
+  cambiarEmail() {
+    return () async {
+      if (FirebaseAuth.instance.currentUser != null) {
+        await actualizarEmailChazero(FirebaseAuth.instance.currentUser?.uid, xxxxxxxx);
+      }
     };
   }
 
@@ -264,4 +300,6 @@ class _InfoCuentaState extends State<InfoCuenta> {
       Navigator.pushNamed(context, '/contrasena');
     };
   }
+
+
 }
