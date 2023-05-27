@@ -33,6 +33,7 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
           color: colorBackground,
           alignment: Alignment.center,

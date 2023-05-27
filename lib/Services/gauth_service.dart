@@ -33,7 +33,6 @@ class GAuthService {
         }
       });
     }
-    //ingresar en firebase
   }
 
 //NO FUNCIONA XD
@@ -112,15 +111,4 @@ class GAuthService {
   getEmail() {
     return FirebaseAuth.instance.currentUser!.email;
   }
-
-  //foto que tenga en google
-  getProfilePic() {
-    try {
-      return FirebaseAuth.instance.currentUser!.photoURL;
-    } catch (e) {
-      return "no hay usuario";
-    }
-  }
 }
-//foto de la cuenta
-//GoogleUserCircleAvatar.sizeDirective(_currentUser);
