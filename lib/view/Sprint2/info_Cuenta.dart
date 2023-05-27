@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:chazaunapp/Services/Sprint2/info_personal_services.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,43 +15,57 @@ const colorTextSuperior = Color(0xff2C2C2C);
 const colorTextInferior = Color(0xffA7A7A7);
 
 class _InfoCuentaState extends State<InfoCuenta> {
-  @override
-  final s1 = 'Hola';
+  late TextEditingController controllerCampo;
+  String campolleno = ' ';
+  final s1 = ' ';
   final s2 = 'Apellido';
+  @override
+  void initState() {
+    controllerCampo = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controllerCampo.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colorFondoField,
-      body: Column(children: [
-        barraSuperior_(),
-        const SizedBox(
-          height: 15,
-        ),
-        fotoPerfil(),
-        const SizedBox(
-          height: 10,
-        ),
-        botonNombre(),
-        const SizedBox(
-          height: 5,
-        ),
-        botonApellido(),
-        const SizedBox(
-          height: 5,
-        ),
-        botonTelefono(),
-        const SizedBox(
-          height: 5,
-        ),
-        botonEmail(),
-        const SizedBox(
-          height: 5,
-        ),
-        botonContrasena(),
-        const SizedBox(
-          height: 10,
-        ),
-        visibilidadCuenta()
-      ]),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          barraSuperior_(),
+          const SizedBox(
+            height: 15,
+          ),
+          fotoPerfil(),
+          const SizedBox(
+            height: 10,
+          ),
+          botonNombre(),
+          const SizedBox(
+            height: 5,
+          ),
+          botonApellido(),
+          const SizedBox(
+            height: 5,
+          ),
+          botonTelefono(),
+          const SizedBox(
+            height: 5,
+          ),
+          botonEmail(),
+          const SizedBox(
+            height: 5,
+          ),
+          botonContrasena(),
+          const SizedBox(
+            height: 10,
+          ),
+          visibilidadCuenta()
+        ]),
+      ),
     );
   }
 
@@ -125,7 +140,11 @@ class _InfoCuentaState extends State<InfoCuenta> {
 
   TextButton botonNombre() {
     return TextButton(
-        onPressed: cambiarNombre(),
+        onPressed: () async {
+          final name = await openDialog(cambiarEmail);
+          if (name == null || name.isEmpty) return;
+          setState(() => campolleno = name);
+        },
         child: datosPersonales('Nombres', 'Juan Pablo'));
   }
 
@@ -143,7 +162,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
 
   TextButton botonEmail() {
     return TextButton(
-        onPressed: cambiarEmail(),
+        onPressed: (){},//cambiarEmail(controllerCampo.text),
         child: otrosDatos('Email', 'marco***@gmail.com'));
   }
 
@@ -265,7 +284,8 @@ class _InfoCuentaState extends State<InfoCuenta> {
   cambiarNombre() {
     return () async {
       if (FirebaseAuth.instance.currentUser != null) {
-        await actualizarNombreChazero(FirebaseAuth.instance.currentUser?.uid, s1,s2);
+        await actualizarNombreChazero(
+            FirebaseAuth.instance.currentUser?.uid, s1, s2);
       }
       // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/progreso');
@@ -275,7 +295,8 @@ class _InfoCuentaState extends State<InfoCuenta> {
   cambiarApellido() {
     return () async {
       if (FirebaseAuth.instance.currentUser != null) {
-        await actualizarApellidoChazero(FirebaseAuth.instance.currentUser?.uid, s1,s2);
+        await actualizarApellidoChazero(
+            FirebaseAuth.instance.currentUser?.uid, s1, s2);
       }
     };
   }
@@ -283,17 +304,22 @@ class _InfoCuentaState extends State<InfoCuenta> {
   cambiarTelefono() {
     return () async {
       if (FirebaseAuth.instance.currentUser != null) {
-        await actualizarTelefonoChazero(FirebaseAuth.instance.currentUser?.uid, s1);
+        await actualizarTelefonoChazero(
+            FirebaseAuth.instance.currentUser?.uid, s1);
       }
     };
   }
 
-  cambiarEmail() {
-    return () async {
-      if (FirebaseAuth.instance.currentUser != null) {
-        await actualizarEmailChazero(FirebaseAuth.instance.currentUser?.uid, s1);
-      }
-    };
+  void cambiarEmail(String cambio) async {
+    print('Entre a cambio');
+    if (FirebaseAuth.instance.currentUser != null) {
+      await actualizarEmailChazero(
+          FirebaseAuth.instance.currentUser?.uid, cambio);
+          controllerCampo.text = ' ';
+      print(FirebaseAuth.instance.currentUser?.uid);
+      print('$cambio');
+
+    }
   }
 
   cambiarContrasena() {
@@ -302,5 +328,37 @@ class _InfoCuentaState extends State<InfoCuenta> {
     };
   }
 
-
+  Future<String?> openDialog(Function toExecute) => showDialog<String>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text(
+            'Actualizar datos',
+            style: TextStyle(fontSize: 10),
+          ),
+          content: TextField(
+              controller: controllerCampo,
+              autofocus: true,
+              decoration: const InputDecoration(hintText: 'Ingrese los datos')),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 20, bottom: 5),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colorPrincipal,
+                  minimumSize: const Size(100, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+                child: const Text("Actualizar",
+                    style: TextStyle(fontSize: 25, color: Colors.white)),
+                onPressed: () {
+                  toExecute(controllerCampo.text);
+                  Navigator.of(context).pop(controllerCampo.text);
+                },
+              ),
+            ),
+          ],
+        ),
+      );
 }
