@@ -35,9 +35,9 @@ Future<List> getPostulacionesPorChaza(String idChaza) async { //matriz 3D con li
 
 List<bool>trabajaDias(List todos){
   List<bool>trabaja = [];
-  trabaja.add(todos[1]['Dias']['Lunes'][0] != "");
-  trabaja.add(todos[1]['Dias']['Martes'][0] != "");
-  trabaja.add(todos[1]['Dias']['Miercoles'][0] != "");
+  trabaja.add(todos[1]['Dias']['Lunes'][0]!= "");
+  trabaja.add(todos[1]['Dias']['Martes'][0]!= "");
+  trabaja.add(todos[1]['Dias']['Miercoles'][0]!= "");
   trabaja.add(todos[1]['Dias']['Jueves'][0] != "");
   trabaja.add(todos[1]['Dias']['Viernes'][0] != "");
   trabaja.add(todos[1]['Dias']['Sabado'][0] != "");
