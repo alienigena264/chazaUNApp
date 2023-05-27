@@ -18,7 +18,6 @@ class _ContactanosState extends State<ContactanosView> {
   @override
   void initState() {
     super.initState();
-
     // Start listening to changes.
     preguntasController.addListener(preguntas);
   }
@@ -43,10 +42,12 @@ class _ContactanosState extends State<ContactanosView> {
               const Title(), //Banner azul
               Padding(
                 padding: const EdgeInsets.all(40),
-                child: TextField(
+                child: TextFormField(
                     maxLines: 10,
+                    keyboardType: TextInputType.text,
                     controller: preguntasController,
                     decoration: InputDecoration(
+                      hintText: 'Cuentanos como podemos ayudarte',
                       filled: true,
                       fillColor: colorFondoField,
                       border: const OutlineInputBorder(
@@ -59,18 +60,16 @@ class _ContactanosState extends State<ContactanosView> {
                     )),
               ),
               const Spacer(),
-              Container(
-                padding: const EdgeInsets.all(10.0),
-                child: const Expanded(
-                  child: Text(
-                    "Tu inquietud será respondida en un correo electrónico en menos de 10 días hábiles",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontFamily: "Inder",
-                    ),
-                    textAlign: TextAlign.center,
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Text(
+                  "Tu inquietud será respondida en un correo electrónico en menos de 10 días hábiles",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontFamily: "Inder",
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               Padding(
@@ -83,7 +82,7 @@ class _ContactanosState extends State<ContactanosView> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14.0)),
                     ),
-                    onPressed: () => {},
+                    onPressed: () => {enviarSolicitud()},
                     child: const Text(
                       "Enviar",
                       style: TextStyle(color: Colors.black, fontSize: 18),
@@ -98,7 +97,7 @@ preguntas() {
 }
 
 enviarSolicitud() {
-  final pregunta = preguntas as String;
+  final pregunta = preguntasController.text;
   if (pregunta.isNotEmpty) {
     enviarDatos(pregunta);
   }
