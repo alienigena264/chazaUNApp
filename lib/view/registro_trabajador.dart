@@ -32,9 +32,7 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    // This also removes the _printLatestValue listener.
-    phoneController.dispose();
+    phoneController.clear();
     super.dispose();
   }
 
@@ -50,9 +48,9 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
               const Title(), //Banner azul
               const Spacer(),
               const Padding(
-                padding: EdgeInsets.all(50.0),
+                padding: EdgeInsets.all(40.0),
                 child: Text(
-                  'Necesitamos tu número de contacto para que te puedan contactar',
+                  'Necesitamos tu número de teléfono para que te puedan contactar',
                   style: TextStyle(
                       color: Colors.black, // Establece el color del texto
                       fontSize: 20.0, // Establece el tamaño del texto
@@ -61,8 +59,9 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
                   textAlign: TextAlign.center,
                 ),
               ),
+
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(40.0),
                 child: TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: phoneController,
@@ -133,7 +132,7 @@ class _LoginButton extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
     return SignInButton(
-      Buttons.Google,
+      Buttons.GoogleDark,
       text: 'Ingresar con google unal',
       onPressed: () async {
         if (isChecked && phoneValidator_ == null) {
