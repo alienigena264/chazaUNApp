@@ -56,7 +56,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                           padding: const EdgeInsets.only(bottom: 20),
                           itemCount: snapshot.data
                               ?.length, // casi como un for que itera las veces de las filas de la matriz
-                          itemBuilder: (ontext, index) {
+                          itemBuilder: (context, index) {
                             return Column(
                               children: [
                                 SizedBox(

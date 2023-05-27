@@ -50,8 +50,29 @@ class _PersonalVistaState extends State<PersonalVista> {
           ),
           body: TabBarView(
             children: [
-              Text("A"
-
+              FutureBuilder(
+                future: getPersonalActivoPorchaza("0QmjUiDOy4viKrv3dzpF"),
+                builder: ((context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              child: Text(snapshot.data?[index]['nombres']),
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
               ),
               FutureBuilder(
                 future: getPostulacionesPorChaza("0QmjUiDOy4viKrv3dzpF"),
