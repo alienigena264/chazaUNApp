@@ -40,8 +40,10 @@ class _ContactanosState extends State<ContactanosView> {
             alignment: Alignment.center,
             child: Column(children: [
               const Title(), //Banner azul
+              const Spacer(),
               Padding(
-                padding: const EdgeInsets.all(40),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 40),
                 child: TextFormField(
                     maxLines: 10,
                     keyboardType: TextInputType.text,
@@ -60,8 +62,9 @@ class _ContactanosState extends State<ContactanosView> {
                     )),
               ),
               const Spacer(),
+              const Spacer(),
               const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                 child: Text(
                   "Tu inquietud será respondida en un correo electrónico en menos de 10 días hábiles",
                   style: TextStyle(
@@ -73,7 +76,8 @@ class _ContactanosState extends State<ContactanosView> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(30, 20, 30, 30),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colorChazero,
@@ -88,6 +92,7 @@ class _ContactanosState extends State<ContactanosView> {
                       style: TextStyle(color: Colors.black, fontSize: 18),
                     )),
               ),
+              const Spacer(),
             ])));
   }
 }
