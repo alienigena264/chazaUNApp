@@ -6,7 +6,6 @@ import 'package:getwidget/getwidget.dart';
 
 class InfoCuenta extends StatefulWidget {
   const InfoCuenta({super.key});
-
   @override
   State<InfoCuenta> createState() => _InfoCuentaState();
 }
@@ -16,6 +15,8 @@ const colorTextInferior = Color(0xffA7A7A7);
 
 class _InfoCuentaState extends State<InfoCuenta> {
   @override
+  final s1 = 'Hola';
+  final s2 = 'Apellido';
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colorFondoField,
@@ -264,7 +265,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
   cambiarNombre() {
     return () async {
       if (FirebaseAuth.instance.currentUser != null) {
-        await actualizarNombreChazero(FirebaseAuth.instance.currentUser?.uid, xxxxxxxxx,s);
+        await actualizarNombreChazero(FirebaseAuth.instance.currentUser?.uid, s1,s2);
       }
       // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/progreso');
@@ -274,7 +275,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
   cambiarApellido() {
     return () async {
       if (FirebaseAuth.instance.currentUser != null) {
-        await actualizarApellidoChazero(FirebaseAuth.instance.currentUser?.uid, xxxxxxxx,a);
+        await actualizarApellidoChazero(FirebaseAuth.instance.currentUser?.uid, s1,s2);
       }
     };
   }
@@ -282,7 +283,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
   cambiarTelefono() {
     return () async {
       if (FirebaseAuth.instance.currentUser != null) {
-        await actualizarTelefonoChazero(FirebaseAuth.instance.currentUser?.uid, xxxxxxxxx);
+        await actualizarTelefonoChazero(FirebaseAuth.instance.currentUser?.uid, s1);
       }
     };
   }
@@ -290,7 +291,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
   cambiarEmail() {
     return () async {
       if (FirebaseAuth.instance.currentUser != null) {
-        await actualizarEmailChazero(FirebaseAuth.instance.currentUser?.uid, xxxxxxxx);
+        await actualizarEmailChazero(FirebaseAuth.instance.currentUser?.uid, s1);
       }
     };
   }
