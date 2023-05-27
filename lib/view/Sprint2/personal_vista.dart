@@ -2,6 +2,7 @@ import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
 import 'package:chazaunapp/Services/services_mehu_personalcandiadtos_chazero.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
+
 class PersonalVista extends StatefulWidget {
   const PersonalVista({super.key});
 
@@ -10,11 +11,8 @@ class PersonalVista extends StatefulWidget {
 }
 
 class _PersonalVistaState extends State<PersonalVista> {
-import 'package:chazaunapp/view/colors.dart';
-import 'package:flutter/material.dart';
+  String chazaActual = "0QmjUiDOy4viKrv3dzpF";
 
-class PersonalVista extends StatelessWidget{
-  const PersonalVista({super.key});
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -65,7 +63,7 @@ class PersonalVista extends StatelessWidget{
           body: TabBarView(
             children: [
               FutureBuilder(
-                future: getPersonalActivoPorchaza("0QmjUiDOy4viKrv3dzpF"),
+                future: getPersonalActivoPorchaza(chazaActual),
                 builder: ((context, snapshot) {
                   if (snapshot.hasData){
                     return ListView.builder(
@@ -89,7 +87,7 @@ class PersonalVista extends StatelessWidget{
                 }),
               ),
               FutureBuilder(
-                future: getPostulacionesPorChaza("0QmjUiDOy4viKrv3dzpF"),
+                future: getPostulacionesPorChaza(chazaActual),
                 builder: ((context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
