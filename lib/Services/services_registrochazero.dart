@@ -4,9 +4,6 @@ FirebaseFirestore db = FirebaseFirestore.instance;
 CollectionReference collectionReferenceEmail = db.collection('Chazero');
 
 Future<bool> emailExists(String email) async {
-  //nos trae todos los documentos
-  //recorremos los documentos
-  // ignore: avoid_function_literals_in_foreach_calls
 
   final emailsExisting = await collectionReferenceEmail.where("correo", isEqualTo: email).get().then(
           (querySnapshot){
@@ -26,13 +23,13 @@ Future<bool> emailExists(String email) async {
 
 void crearChazero(String correo, String contrasena, String primerNombre,
   String segundoNombre, String primerApellido, String segundoApellido,
-    String numero){
+    String numero, String? uid){
 
   final data = {"correo": correo, "contraseña": contrasena,
     "primer_nombre": primerNombre, "segundo_nombre": segundoNombre,
     "primer_apellido": primerApellido, "segundo_apellido": segundoApellido,
     "numero": numero};
 
-  collectionReferenceEmail.add(data).then((documentSnapshot) =>
-      print("Added Data with ID: ${documentSnapshot.id}"));
+  // añade el chazero con el uid de fireauth a firestore
+  collectionReferenceEmail.doc(uid).set(data);
 }
