@@ -17,7 +17,7 @@ class _SelectorVistaState extends State<SelectorVista> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Stack(
-              children: const [
+              children: [
                 Text(
                   'Registrarse como:',
                   style: TextStyle(
@@ -40,11 +40,14 @@ class _SelectorVistaState extends State<SelectorVista> {
   }
 
   ElevatedButton trabajadorButton(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: colorTrabajador,
-        minimumSize: const Size(
-            316, 55), // double.infinity is the width and 30 is the height
+        minimumSize: Size(
+            screenWidth*0.77, screenHeight*0.066), // double.infinity is the width and 30 is the height
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14.0),
         ),
@@ -59,11 +62,14 @@ class _SelectorVistaState extends State<SelectorVista> {
   }
 
   ElevatedButton chazeroButton(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: colorChazero,
-        minimumSize: const Size(
-            316, 55), // double.infinity is the width and 30 is the height
+        minimumSize: Size(
+            screenWidth*0.77, screenHeight*0.066), // double.infinity is the width and 30 is the height
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14.0),
         ),
