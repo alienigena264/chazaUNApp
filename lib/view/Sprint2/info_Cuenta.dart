@@ -27,9 +27,11 @@ class _InfoCuentaState extends State<InfoCuenta> {
 
   @override
   void dispose() {
+    super.dispose();
     controllerCampo.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colorFondoField,
@@ -311,14 +313,11 @@ class _InfoCuentaState extends State<InfoCuenta> {
   }
 
   void cambiarEmail(String cambio) async {
-    print('Entre a cambio');
     if (FirebaseAuth.instance.currentUser != null) {
       await actualizarEmailChazero(
           FirebaseAuth.instance.currentUser?.uid, cambio);
+      //'omGWXQeNcJX7tdb6rCLD', cambio);
           controllerCampo.text = ' ';
-      print(FirebaseAuth.instance.currentUser?.uid);
-      print('$cambio');
-
     }
   }
 
