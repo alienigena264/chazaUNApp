@@ -3,8 +3,10 @@
 import 'package:chazaunapp/Controller/registro_controller.dart';
 import 'package:chazaunapp/Services/gauth_service.dart';
 import 'package:chazaunapp/view/inicio.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'colors.dart';
 
@@ -37,14 +39,21 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
           child: Column(
             children: [
               const Title(), //Banner azul
-              const Flexible(
-                  //espacio
-                  flex: 1,
-                  child: SizedBox(
-                    height: 230,
-                  )),
+              const Spacer(),
+              const Padding(
+                padding: EdgeInsets.all(50.0),
+                child: Text(
+                  'Necesitamos tu número de contacto para que te puedan contactar',
+                  style: TextStyle(
+                      color: Colors.black, // Establece el color del texto
+                      fontSize: 20.0, // Establece el tamaño del texto
+                      fontFamily: "Inder",
+                      fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.center,
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.all(50.0),
+                padding: const EdgeInsets.all(30.0),
                 child: TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: phoneController,
@@ -66,6 +75,7 @@ class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
               const LoginButton(),
               const Center(
                   child: AgreeCheck()), //checkbox de terminos y condiciones
+              const Spacer(),
             ],
           )),
     );
@@ -185,16 +195,52 @@ class _Checkbox extends State<AgreeCheck> {
                     isChecked = value!;
                   });
                 }),
-            const Expanded(
-                child: Text(
-              'Acepto los términos y condiciones.', // el texto que quieres mostrar
-              style: TextStyle(
-                  color: Colors.black, // Establece el color del texto
-                  fontSize: 12.0, // Establece el tamaño del texto
-                  fontFamily: "Inder",
-                  fontWeight: FontWeight.normal),
-              textAlign: TextAlign.center,
-            )),
+            Expanded(
+                child: RichText(
+                    text: TextSpan(children: [
+              const TextSpan(
+                text: 'Acepto los ', // el texto que quieres mostrar
+                style: TextStyle(
+                    color: Colors.black, // Establece el color del texto
+                    fontSize: 12.0, // Establece el tamaño del texto
+                    fontFamily: "Inder",
+                    fontWeight: FontWeight.normal),
+              ),
+              TextSpan(
+                  text: 'términos y condiciones',
+                  style: const TextStyle(
+                      color: colorPrincipal, // Establece el color del texto
+                      fontSize: 12.0, // Establece el tamaño del texto
+                      fontFamily: "Inder",
+                      fontWeight: FontWeight.normal),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () async {
+                      const String terminos =
+                          'https://doc-hosting.flycricket.io/chazaunapp-terms-of-use/61d6b708-bd87-4bb3-8392-cc8b9ab1fe48/terms';
+                      launchUrl(Uri.parse(terminos));
+                    }),
+              const TextSpan(
+                text: ' y nuestra ', // el texto que quieres mostrar
+                style: TextStyle(
+                    color: Colors.black, // Establece el color del texto
+                    fontSize: 12.0, // Establece el tamaño del texto
+                    fontFamily: "Inder",
+                    fontWeight: FontWeight.normal),
+              ),
+              TextSpan(
+                  text: 'política de privacidad.',
+                  style: const TextStyle(
+                      color: colorPrincipal, // Establece el color del texto
+                      fontSize: 12.0, // Establece el tamaño del texto
+                      fontFamily: "Inder",
+                      fontWeight: FontWeight.normal),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () async {
+                      const String politica =
+                          'https://doc-hosting.flycricket.io/chazaunapp-privacy-policy/f674154c-f1f3-4291-a55f-77743561a2b2/privacy';
+                      launchUrl(Uri.parse(politica));
+                    })
+            ]))),
           ],
         ));
   }
