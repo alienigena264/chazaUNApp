@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GAuthService {
-  //Ingresar por Google
-  ingresarGoogle() async {
+  //Ingresar por Google, bool para registrar o ingresar
+  ingresarGoogle(bool registro, String telefono) async {
     //Ya bloquea desde la consola de Google Cloud, pero esta mas bonito asi xD
     final gUser = await GoogleSignIn(hostedDomain: "unal.edu.co").signIn();
     final GoogleSignInAuthentication gAuth = await gUser!.authentication;
@@ -17,22 +17,34 @@ class GAuthService {
       accessToken: gAuth.accessToken,
       idToken: gAuth.idToken,
     );
-
-    registrarTrabajador(gUser, gAuth);
-    //ingresar en firebase
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    if (registro) {
+      registrarTrabajador(gUser, gAuth, telefono);
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } else {
+      FirebaseFirestore db = FirebaseFirestore.instance;
+      CollectionReference coleccion = db.collection('Trabajador');
+      String email = gUser.email;
+      await coleccion
+          .where("correo", isEqualTo: email)
+          .get()
+          .then((querySnapshot) async {
+        if (querySnapshot.docs.isNotEmpty) {
+          return await FirebaseAuth.instance.signInWithCredential(credential);
+        }
+      });
+    }
   }
 
 //NO FUNCIONA XD
-  registrarTrabajador(
-      GoogleSignInAccount gUser, GoogleSignInAuthentication gAuth) async {
+  registrarTrabajador(GoogleSignInAccount gUser,
+      GoogleSignInAuthentication gAuth, String telefono) async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     CollectionReference coleccion = db.collection('Trabajador');
     String email = gUser.email;
     Map<String, dynamic>? idMap = parseJwt(gAuth.idToken!);
     final String firstName = idMap!["given_name"];
     final String lastName = idMap["family_name"];
-    print("$firstName, $lastName");
+    final String? foto = gUser.photoUrl;
     await coleccion
         .where("correo", isEqualTo: email)
         .get()
@@ -43,10 +55,10 @@ class GAuthService {
           "nombres": firstName,
           "apellidos": lastName,
           "estado": true,
-          "telefono": "",
+          "telefono": telefono,
+          "foto": foto,
         };
-        coleccion.add(data).then((documentSnapshot) =>
-            print("Added Data with ID: ${documentSnapshot.id}"));
+        coleccion.add(data);
       }
     });
   }
@@ -89,7 +101,7 @@ class GAuthService {
   getNombreCompleto() {
     String? nombre = FirebaseAuth.instance.currentUser?.displayName;
     if (nombre == null) {
-      print('e');
+      //print('e');
     } else {
       return nombre;
     }
@@ -99,15 +111,4 @@ class GAuthService {
   getEmail() {
     return FirebaseAuth.instance.currentUser!.email;
   }
-
-  //foto que tenga en google
-  getProfilePic() {
-    try {
-      return FirebaseAuth.instance.currentUser!.photoURL;
-    } catch (e) {
-      return "no hay usuario";
-    }
-  }
 }
-//foto de la cuenta
-//GoogleUserCircleAvatar.sizeDirective(_currentUser);
