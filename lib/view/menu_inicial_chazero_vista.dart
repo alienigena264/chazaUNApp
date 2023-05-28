@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/Services/services_menuchazero.dart';
@@ -14,68 +15,81 @@ class MenuChazeroVista extends StatefulWidget {
 class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   int _currentIndex = 0;
   String idChazero =
-      "D5KI1DaVGA8e9toA0lCq"; //Id del chazero, cambiar para probar el otro chazero
+      "D5KI1DaVGA8e9toA0lCq";
+  //Id del chazero, cambiar para probar el otro chazero
   @override //Se supone que esa Id se tomará sola al hacer login
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          color: colorBackground,
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  barraSuperior_(),
-                ],
-              ),
-              SizedBox(
-                height: 690,
-                width: 410, // Tamaño fijo
-                child: FutureBuilder(
-                  future: getChazasporChazero(idChazero),
-                  builder: ((context, snapshot) {
-                    if (snapshot.hasData) {
-                      //Si la consulta devuelve algo o espera
-                      return ListView.builder(
-                        //Hace una lista de todas las filas que había en la matriz chazas
-                        shrinkWrap: true,
-                        itemExtent: 215,
-                        padding: const EdgeInsets.only(bottom: 20),
-                        itemCount: snapshot.data
-                            ?.length, // casi como un for que itera las veces de las filas de la matriz
-                        itemBuilder: (ontext, index) {
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: 200,
-                                child: infoChaza_(
-                                    // hace una card infochaza con los detalles de cada fila, osea cada chaza
-                                    snapshot.data?[index]['nombre'],
-                                    snapshot.data?[index]['ubicacion'],
-                                    snapshot.data?[index]['puntuacion'],
-                                    snapshot.data?[index]['paga'],
-                                    snapshot.data?[index]['imagen']),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              )
-                            ], //Espacio entre las cards
-                          );
-                        },
-                      );
-                    } else {
-                      return const Center(
-                        child:
-                            CircularProgressIndicator(), // Si la bd se tarda o no da nada
-                      );
-                    }
-                  }),
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
+    return WillPopScope(
+      // cuando el usuario presiona atras, lo deslogea en vez de sacarlo de la app
+      onWillPop: () async {
+        FirebaseAuth.instance.signOut();
+        return false;
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            color: colorBackground,
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    barraSuperior_(),
+                  ],
                 ),
-              ),
-              Stack(
-                children: [barraChazero(context)],
-              )
-            ],
+                const SizedBox(height: 20,),
+                SizedBox(
+                  //height: 690,
+                  height: screenHeight*0.655,//Esto es para juan
+                  width: screenWidth*0.87, // Tamaño fijo
+                  child: FutureBuilder(
+                    future: getChazasporChazero(idChazero),
+                    builder: ((context, snapshot) {
+                      if (snapshot.hasData) {
+                        //Si la consulta devuelve algo o espera
+                        return ListView.builder(
+                          //Hace una lista de todas las filas que había en la matriz chazas
+                          shrinkWrap: true,
+                          itemExtent: 215,
+                          padding: const EdgeInsets.only(bottom: 20),
+                          itemCount: snapshot.data
+                              ?.length, // casi como un for que itera las veces de las filas de la matriz
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                SizedBox(
+                                  height: screenHeight*0.235,
+                                  child: infoChaza_(
+                                      // hace una card infochaza con los detalles de cada fila, osea cada chaza
+                                      snapshot.data?[index]['nombre'],
+                                      snapshot.data?[index]['ubicacion'],
+                                      snapshot.data?[index]['puntuacion'],
+                                      snapshot.data?[index]['paga'],
+                                      snapshot.data?[index]['imagen']),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                )
+                              ], //Espacio entre las cards
+                            );
+                          },
+                        );
+                      } else {
+                        return const Center(
+                          child:
+                              CircularProgressIndicator(), // Si la bd se tarda o no da nada
+                        );
+                      }
+                    }),
+                  ),
+                ),
+                Stack(
+                  children: [barraChazero(context)],
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -83,8 +97,10 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   }
 
   SizedBox barraSuperior_() {
+    final screenSize = MediaQuery.of(context).size;
+    final screenHeight = screenSize.height;
     return SizedBox(
-        height: 200.0,
+        height: screenHeight*0.25,
         child: Container(
           decoration: const BoxDecoration(
             color: colorPrincipal,
@@ -109,49 +125,53 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         ));
   }
 
-  Card infoChaza_(String nombre, String ubicacion, String puntuacion,
+  Padding infoChaza_(String nombre, String ubicacion, String puntuacion,
       String pago, String imagen) {
-    return Card(
-      //Una columna que contiene rows y columnas de rows para conseguir el aspecto que habia en el mockup
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    nombre, // Nombre de la chaza
-                    style: const TextStyle(
-                        color: Color(0xff242424),
-                        fontSize: 22.0,
-                        fontFamily: "Inder",
-                        fontWeight: FontWeight.normal),
-                  ),
-                  rowUbicacion_(ubicacion),
-                  rowPuntuacion_(puntuacion),
-                ],
-              ),
-              columnFotoYPagoChaza_(imagen, pago),
-            ],
-          ), const Divider(
-            color: Colors.black54,
-            indent: 15,
-            endIndent: 15,
-
-            thickness: 1.5, // ajusta el grosor de la línea
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [botonHorarios(context), botonPersonal(context)],
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: Card(
+        //Una columna que contiene rows y columnas de rows para conseguir el aspecto que habia en el mockup
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      nombre, // Nombre de la chaza
+                      style: const TextStyle(
+                          color: Color(0xff242424),
+                          fontSize: 22.0,
+                          fontFamily: "Inder",
+                          fontWeight: FontWeight.normal),
+                    ),
+                    rowUbicacion_(ubicacion),
+                    rowPuntuacion_(puntuacion),
+                  ],
+                ),
+                columnFotoYPagoChaza_(imagen, pago),
+              ],
+            ),
+            const Divider(
+              color: Colors.black54,
+              indent: 15,
+              endIndent: 15,
+    
+              thickness: 1.5, // ajusta el grosor de la línea
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [botonHorarios(context), botonPersonal(context)],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -200,6 +220,8 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   }
 
   Column columnFotoYPagoChaza_(String imagen, String pago) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenHeight = screenSize.height;
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -213,7 +235,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
           child: Image(
             image: NetworkImage(imagen),
             //Parametro del enlace de la imagen de la chaza
-            height: 65.0,
+            height: screenHeight*0.068,
             // Tamaño
           ),
         ),
@@ -236,16 +258,19 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
 
   ElevatedButton botonHorarios(BuildContext context) {
     //Au no hace nada porque no tengo seguridad de si esa pantalla está disponible
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorChazero,
-          minimumSize: const Size(
-              132, 40), // double.infinity is the width and 30 is the height
+          minimumSize: Size(
+              screenWidth*0.3, screenHeight*0.045), // double.infinity is the width and 30 is the height
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-        onPressed: irEnProgreso(context),
+        onPressed: irEnProgreso(),
         child: const Text(
           "Horarios",
           style:
@@ -255,15 +280,19 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
 
   ElevatedButton botonPersonal(BuildContext context) {
     //Aun no hace nada porque no tengo seguridad de cual es esa pantalla y si está disponible
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorChazero,
-          minimumSize: const Size(132, 40),
+          minimumSize: Size(
+              screenWidth*0.3, screenHeight*0.045),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-        onPressed: irEnProgreso(context),
+        onPressed: pantallaPersonal(),
         child: const Text(
           "Personal",
           style:
@@ -298,12 +327,19 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
     setState(() {
       _currentIndex = index;
     });
-    irEnProgreso(context);
+    irEnProgreso();
   }
 
-  Function() irEnProgreso(BuildContext context) {
+  irEnProgreso() {
     return () {
-      Navigator.pushNamed(context, '/progreso');
+      Navigator.pushNamed(context, '/menu/configuracion/infoPersonal');
+    };
+  }
+
+   pantallaPersonal() {
+    return () {
+      print("prueba");
+      Navigator.pushNamed(context, '/menu/chazero/personal');
     };
   }
 }

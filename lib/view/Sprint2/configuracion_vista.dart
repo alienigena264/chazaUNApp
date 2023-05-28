@@ -1,6 +1,6 @@
 import 'package:chazaunapp/view/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 
 class ConfiguracionVista extends StatefulWidget {
   const ConfiguracionVista({super.key});
@@ -8,6 +8,8 @@ class ConfiguracionVista extends StatefulWidget {
   @override
   State<ConfiguracionVista> createState() => _ConfiguracionVistaState();
 }
+
+User? usuario = FirebaseAuth.instance.currentUser;
 
 class _ConfiguracionVistaState extends State<ConfiguracionVista> {
   @override
@@ -27,16 +29,22 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
           color: Color(0xffAEB4B7),
           thickness: 2,
         ),
-        opciones_(Icons.account_box, "Cuenta","Privacidad, Visibilidad, Editar Perfil", cuentaMove_()),
-        opciones_(Icons.notifications, "Notificaciones", "Perfil",notificacionesMove_()),
-        opciones_(Icons.help_outline_outlined,"Ayuda","Preguntas frecuentes, soporte, \n politica de privacidad",notificacionesMove_()),
-        const SizedBox(height: 30,),
+        opciones_(Icons.account_box, "Cuenta",
+            "Privacidad, Visibilidad, Editar Perfil", cuentaMove_()),
+        opciones_(Icons.notifications, "Notificaciones", "Perfil",
+            notificacionesMove_()),
+        opciones_(
+            Icons.help_outline_outlined,
+            "Ayuda",
+            "Preguntas frecuentes, soporte, \n politica de privacidad",
+            notificacionesMove_()),
+        const SizedBox(
+          height: 30,
+        ),
         cerrarSesionBoton_()
-        ]
-      ),
+      ]),
     );
   }
-
 
   Stack barraConfiguracion_() {
     return Stack(children: [
@@ -70,8 +78,11 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
   }
 
   volverInicio_() {
-    return () {//No modificar, esto directamente manda a la anterior ventana
-      Navigator.pop(context,);
+    return () {
+      //No modificar, esto directamente manda a la anterior ventana
+      Navigator.pop(
+        context,
+      );
     };
   }
 
@@ -175,17 +186,15 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
 
   ElevatedButton cerrarSesionBoton_() {
     return ElevatedButton(
-        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red.shade400)),
-          onPressed: cerrarSesion_(),
-          child: const Text(
-            "Cerrar sesión",
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-              fontWeight: FontWeight.bold
-            ),
-          )
-        );
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Colors.red.shade400)),
+        onPressed: cerrarSesion_(),
+        child: const Text(
+          "Cerrar sesión",
+          style: TextStyle(
+              fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+        ));
   }
 
   cerrarSesion_() {

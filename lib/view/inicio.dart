@@ -19,7 +19,7 @@ class _PaginaInicio extends State<PaginaInicio> {
           //cambios en el ingreso
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
-            //ingreso?
+            //se supone que esto bloquea que no sea null por lo que borre los if extra
             if (snapshot.hasData) {
               if (FirebaseAuth.instance.currentUser!.email!
                   .endsWith('unal.edu.co')) {
@@ -27,9 +27,8 @@ class _PaginaInicio extends State<PaginaInicio> {
               } else {
                 return const MenuChazeroVista();
               }
-            } else {
-              return const LoginVista();
             }
+            return const LoginVista();
           }),
     );
   }

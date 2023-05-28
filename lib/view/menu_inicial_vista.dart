@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
-import 'package:chazaunapp/Services/gauth_service.dart';
+import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
-import 'package:chazaunapp/view/menu_inicia_cards/image_card_content.dart';
-import 'package:chazaunapp/Models/menu_inicial_model.dart';
+import 'package:flutter/material.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
   const MenuInicialVistaView({super.key});
@@ -18,6 +15,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   String idChazero = "D5KI1DaVGA8e9toA0lCq";
   @override
   Widget build(BuildContext context) {
+    //para no tener que iniciar sesion cada vez que se oprima atras quite el Pop
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
