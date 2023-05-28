@@ -18,8 +18,8 @@ class GAuthService {
       idToken: gAuth.idToken,
     );
     if (registro) {
+      await FirebaseAuth.instance.signInWithCredential(credential);
       registrarTrabajador(gUser, gAuth, telefono);
-      return await FirebaseAuth.instance.signInWithCredential(credential);
     } else {
       FirebaseFirestore db = FirebaseFirestore.instance;
       CollectionReference coleccion = db.collection('Trabajador');
@@ -58,7 +58,7 @@ class GAuthService {
           "telefono": telefono,
           "foto": foto,
         };
-        coleccion.add(data);
+        coleccion.doc(FirebaseAuth.instance.currentUser?.uid).set(data);
       }
     });
   }
