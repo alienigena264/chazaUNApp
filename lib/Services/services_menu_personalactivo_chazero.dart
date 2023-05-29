@@ -22,6 +22,17 @@ Future<List> getPersonalActivoPorchaza(String idChaza) async {
     });
   }
   print (personal);
+
+  QuerySnapshot prueba = await db.collection("Horario")
+      .where("Tipo", isEqualTo: 0)
+      .where("IDChaza", isEqualTo: idChaza).get();
+
+  for (var doc in prueba.docs){
+
+  }
+
+
   return personal;
+  
 
 }
