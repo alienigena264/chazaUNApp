@@ -21,7 +21,8 @@ Future<List> getPersonalActivoPorchaza(String idChaza) async {
       personal.add(value.data());
     });
   }
-  print (personal);
+
   return personal;
+  
 
 }
