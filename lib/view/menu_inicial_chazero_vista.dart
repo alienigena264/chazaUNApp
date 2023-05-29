@@ -15,9 +15,12 @@ class MenuChazeroVista extends StatefulWidget {
 class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   int _currentIndex = 0;
   String idChazero =
-      "D5KI1DaVGA8e9toA0lCq"; //Id del chazero, cambiar para probar el otro chazero
+      "BwtFQwILS50xoKdWaBlZ"; //Id del chazero, cambiar para probar el otro chazero
   @override //Se supone que esa Id se tomará sola al hacer login
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
     return WillPopScope(
 
       // cuando el usuario presiona atras, lo deslogea en vez de sacarlo de la app
@@ -39,8 +42,8 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                 const SizedBox(height: 20,),
                 SizedBox(
                   //height: 690,
-                  height: 500,//Esto es para juan
-                  width: 410, // Tamaño fijo
+                  height: screenHeight*0.655,//Esto es para juan
+                  width: screenWidth*0.87, // Tamaño fijo
                   child: FutureBuilder(
                     future: getChazasporChazero(idChazero),
                     builder: ((context, snapshot) {
@@ -57,9 +60,9 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                             return Column(
                               children: [
                                 SizedBox(
-                                  height: 200,
+                                  height: screenHeight*0.235,
                                   child: infoChaza_(
-                                      // hace una card infochaza con los detalles de cada fila, osea cada chaza
+                                    // hace una card infochaza con los detalles de cada fila, osea cada chaza
                                       snapshot.data?[index]['nombre'],
                                       snapshot.data?[index]['ubicacion'],
                                       snapshot.data?[index]['puntuacion'],
@@ -76,7 +79,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                       } else {
                         return const Center(
                           child:
-                              CircularProgressIndicator(), // Si la bd se tarda o no da nada
+                          CircularProgressIndicator(), // Si la bd se tarda o no da nada
                         );
                       }
                     }),
@@ -94,8 +97,10 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   }
 
   SizedBox barraSuperior_() {
+    final screenSize = MediaQuery.of(context).size;
+    final screenHeight = screenSize.height;
     return SizedBox(
-        height: 200.0,
+        height: screenHeight*0.25,
         child: Container(
           decoration: const BoxDecoration(
             color: colorPrincipal,
@@ -157,7 +162,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
               color: Colors.black54,
               indent: 15,
               endIndent: 15,
-    
+
               thickness: 1.5, // ajusta el grosor de la línea
             ),
             Row(
@@ -215,6 +220,8 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   }
 
   Column columnFotoYPagoChaza_(String imagen, String pago) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenHeight = screenSize.height;
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -228,7 +235,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
           child: Image(
             image: NetworkImage(imagen),
             //Parametro del enlace de la imagen de la chaza
-            height: 65.0,
+            height: screenHeight*0.068,
             // Tamaño
           ),
         ),
@@ -251,11 +258,14 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
 
   ElevatedButton botonHorarios(BuildContext context) {
     //Au no hace nada porque no tengo seguridad de si esa pantalla está disponible
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorChazero,
-          minimumSize: const Size(
-              132, 40), // double.infinity is the width and 30 is the height
+          minimumSize: Size(
+              screenWidth*0.3, screenHeight*0.045), // double.infinity is the width and 30 is the height
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6.0),
           ),
@@ -264,16 +274,20 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         child: const Text(
           "Horarios",
           style:
-              TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+          TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
         ));
   }
 
   ElevatedButton botonPersonal(BuildContext context) {
     //Aun no hace nada porque no tengo seguridad de cual es esa pantalla y si está disponible
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorChazero,
-          minimumSize: const Size(132, 40),
+          minimumSize: Size(
+              screenWidth*0.3, screenHeight*0.045),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6.0),
           ),
@@ -282,7 +296,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         child: const Text(
           "Personal",
           style:
-              TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
+          TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Inder"),
         ));
   }
 
@@ -305,7 +319,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
       unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
       selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
       iconSize:
-          34, //Detalles del color del item seleccionado y la fuente de lo labels
+      34, //Detalles del color del item seleccionado y la fuente de lo labels
     );
   }
 
@@ -321,10 +335,8 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
       Navigator.pushNamed(context, '/menu/configuracion/infoPersonal');
     };
   }
-
-   pantallaPersonal() {
+  pantallaPersonal() {
     return () {
-      print("prueba");
       Navigator.pushNamed(context, '/menu/chazero/personal');
     };
   }
