@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
+import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
+import 'package:flutter/material.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
   const MenuInicialVistaView({super.key});
@@ -15,6 +15,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   String idChazero = "D5KI1DaVGA8e9toA0lCq";
   @override
   Widget build(BuildContext context) {
+    //para no tener que iniciar sesion cada vez que se oprima atras quite el Pop
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -70,21 +71,22 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               const SizedBox(
                 width: 55,
               ),
-              const Row(mainAxisAlignment: MainAxisAlignment.center, children: <
-                  Widget>[
-                Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Text(
-                      'Chazas', // el texto que quieres mostrar
-                      style: TextStyle(
-                          color: Colors.black, // Establece el color del texto
-                          fontSize: 30.0, // Establece el tamaño del texto
-                          fontFamily: "Inder",
-                          fontWeight: FontWeight.normal),
-                    )),
-              ]),
+              const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          'Chazas', // el texto que quieres mostrar
+                          style: TextStyle(
+                              color:
+                                  Colors.black, // Establece el color del texto
+                              fontSize: 30.0, // Establece el tamaño del texto
+                              fontFamily: "Inder",
+                              fontWeight: FontWeight.normal),
+                        )),
+                  ]),
               SizedBox(
-
                 height: 500,
                 width: 410, // Tamaño fijo
                 child: FutureBuilder(
@@ -130,7 +132,6 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     }
                   }),
                 ),
-
               )
             ],
           ),
@@ -325,10 +326,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     color: Color(0xff919191), size: 16.0),
                 Text(
                   ubicacion,
-                  style: const TextStyle(
-                      fontFamily: "Inder",
-                      color: Colors.black
-                  ),
+                  style:
+                      const TextStyle(fontFamily: "Inder", color: Colors.black),
                 ),
               ]),
           Text(
@@ -375,10 +374,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         child: Text(
           tag,
-          style: const TextStyle(
-              fontFamily: "Inder",
-              color: Colors.white
-          ),
+          style: const TextStyle(fontFamily: "Inder", color: Colors.white),
         ),
       ),
     );
