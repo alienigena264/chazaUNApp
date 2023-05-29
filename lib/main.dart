@@ -9,7 +9,6 @@ import 'package:chazaunapp/view/codigo_vista.dart';
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
-import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
 import 'package:chazaunapp/view/recuperar_contrasena_vista.dart';
 import 'package:chazaunapp/view/registro_chazero.dart';
 import 'package:chazaunapp/view/registro_trabajador.dart';
