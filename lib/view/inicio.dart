@@ -21,11 +21,13 @@ class _PaginaInicio extends State<PaginaInicio> {
           builder: (context, snapshot) {
             //se supone que esto bloquea que no sea null por lo que borre los if extra
             if (snapshot.hasData) {
-              if (FirebaseAuth.instance.currentUser!.email!
-                  .endsWith('unal.edu.co')) {
-                return const MenuInicialVistaView();
-              } else {
+              // si no se ha registrado con google ->
+              if (FirebaseAuth.instance.currentUser!.providerData
+                  .where((element) => element.providerId == 'google.com')
+                  .isEmpty) {
                 return const MenuChazeroVista();
+              } else {
+                return const MenuInicialVistaView();
               }
             }
             return const LoginVista();
