@@ -1,11 +1,11 @@
 // ignore: file_names
-import 'dart:math';
 
-import 'package:chazaunapp/Services/Sprint2/info_personal_services.dart';
+import 'package:chazaunapp/Services/Sprint2/select_image.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
+import 'dart:io';
 
 import '../../Services/Sprint2/info_personal_trabajador_services.dart';
 
@@ -21,14 +21,14 @@ const colorTextInferior = Color(0xffA7A7A7);
 class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
   late TextEditingController controllerCampo;
   String campolleno = ' ';
-  final s1 = '';
-  final s2 = '';
   String nombre = '';
   String contrasena = '';
   String apellido = '';
   String telefono = '';
   String telefonoOculto = '';
   String email = '';
+  String foto = '';
+  String uploades = '';
   String emailOculto = '';
   List<dynamic> resultado = [];
   @override
@@ -52,11 +52,11 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
         resultado = await traerInfoGeneralTrabajo(uid);
 
         setState(() {
-          nombre = resultado[4] + ' ' + resultado[6];
-          apellido = resultado[3] + ' ' + resultado[5];
-          contrasena = resultado[0];
-          telefono = resultado[2];
+          apellido = resultado[0];
           email = resultado[1];
+          foto = resultado[2];
+          nombre = resultado[3];
+          telefono = resultado[4];
           telefonoOculto = telefono.replaceRange(3, 6, '***');
           emailOculto = email.replaceRange(3, 8, '******');
         }); // Actualizar el estado para mostrar los datos en el widget
@@ -67,6 +67,8 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
     }
   }
 
+  //Con esta variable haremos el proceso de las imagenes
+  File? imageToUpload;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,10 +149,10 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
   }
 
   CircleAvatar fotoActual() {
-    return const CircleAvatar(
+    return CircleAvatar(
       radius: 50,
       backgroundImage: NetworkImage(
-        'https://cnnespanol.cnn.com/wp-content/uploads/2016/08/juan-gabriel-pleno.jpg?quality=100&strip=info',
+        foto,
       ),
     );
   }
@@ -161,7 +163,17 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: subirImagen(),
+            onPressed: () async {
+              final imagen = await getImage();
+              if (imagen?.path == null) {
+                return;
+              }
+              uploades = await uploadImage(File(imagen!.path));
+              cambiarDatos(4);
+              setState(() {
+                imageToUpload = File(imagen.path);
+              });
+            },
             child: const Text(
               "Editar foto de perfil",
               style: TextStyle(fontSize: 20, color: Color(0xff404040)),
@@ -178,26 +190,28 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
 
   TextButton botonNombre() {
     return TextButton(
-        onPressed:  () async {
-          final name = await openDialog(cambiarDatos,0);
+        onPressed: () async {
+          final name = await openDialog(cambiarDatos, 0);
           if (name == null || name.isEmpty) return;
           setState(() => campolleno = name);
-        }, child: datosPersonales('Nombres', nombre));
+        },
+        child: datosPersonales('Nombres', nombre));
   }
 
   TextButton botonApellido() {
     return TextButton(
-        onPressed:  () async {
-          final name = await openDialog(cambiarDatos,1);
+        onPressed: () async {
+          final name = await openDialog(cambiarDatos, 1);
           if (name == null || name.isEmpty) return;
           setState(() => campolleno = name);
-        }, child: datosPersonales('Apellidos', apellido));
+        },
+        child: datosPersonales('Apellidos', apellido));
   }
 
   TextButton botonTelefono() {
     return TextButton(
         onPressed: () async {
-          final name = await openDialog(cambiarDatos,2);
+          final name = await openDialog(cambiarDatos, 2);
           if (name == null || name.isEmpty) return;
           setState(() => campolleno = name);
         },
@@ -206,10 +220,10 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
 
   TextButton botonEmail() {
     return TextButton(
-        onPressed: () async {
-          final name = await openDialog(cambiarDatos,3);
-          if (name == null || name.isEmpty) return;
-          setState(() => campolleno = name);
+        onPressed: (){
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('No es posible editar esta información, consulte TyC'))
+          );
         }, //cambiarDatos(controllerCampo.text),
         child: otrosDatos('Email', emailOculto));
   }
@@ -322,39 +336,26 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
     };
   }
 
-  subirImagen() {
-    return () {
-      Navigator.pushNamed(context, '/progreso');
-    };
-  }
-
   void cambiarDatos(int variablCambiar) async {
-    if (variablCambiar == 0){
+    if (variablCambiar == 0) {
       nombre = controllerCampo.text;
-    }else if(variablCambiar==1){
+    } else if (variablCambiar == 1) {
       apellido = controllerCampo.text;
-    }else if(variablCambiar==2){
+    } else if (variablCambiar == 2) {
       telefono = controllerCampo.text;
-    }else if(variablCambiar ==3){
+    } else if (variablCambiar == 3) {
       email = controllerCampo.text;
+    }else if(variablCambiar == 4){
+      foto = uploades;
     }
     if (FirebaseAuth.instance.currentUser != null) {
-      await actualizarDatosTrabajador(
-          FirebaseAuth.instance.currentUser?.uid,
-          email,
-          contrasena,
-          telefono,
-          apellido.split(' ')[0],
-          nombre.split(' ')[0],
-          apellido.split(' ')[1],
-          nombre.split(' ')[1]);
+      await actualizarDatosTrabajador(FirebaseAuth.instance.currentUser?.uid,
+          apellido, email, foto, nombre, telefono);
       controllerCampo.text = '';
     }
   }
 
-  Future<String?> openDialog(
-    Function toExecute,int cambiarVariable
-  ) =>
+  Future<String?> openDialog(Function toExecute, int cambiarVariable) =>
       showDialog<String>(
         context: context,
         builder: (context) => AlertDialog(

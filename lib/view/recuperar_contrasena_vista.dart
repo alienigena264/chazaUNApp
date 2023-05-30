@@ -71,7 +71,7 @@ class _ContrasenaVistaState extends State<ContrasenaVista>{
             mostrarMensaje(emailTextController.text);
 
           } on FirebaseAuthException {
-            print(emailTextController.text);
+            //print(emailTextController.text);
           }
         },
         style: ElevatedButton.styleFrom(

@@ -11,13 +11,11 @@ Future<List<dynamic>> traerInfoGeneralTrabajo(String? uid) async {
 
     if (docSnapshot.exists) {
       // Si el documento existe, agrega los campos a la lista
-      info.add(docSnapshot.get('contraseña'));
+      info.add(docSnapshot.get('apellidos'));
       info.add(docSnapshot.get('correo'));
-      info.add(docSnapshot.get('numero'));
-      info.add(docSnapshot.get('primer_apellido'));
-      info.add(docSnapshot.get('primer_nombre'));
-      info.add(docSnapshot.get('segundo_apellido'));
-      info.add(docSnapshot.get('segundo_nombre'));
+      info.add(docSnapshot.get('foto'));
+      info.add(docSnapshot.get('nombres'));
+      info.add(docSnapshot.get('telefono'));
     } else {}
   } catch (e) {
     // ignore: avoid_print
@@ -26,15 +24,13 @@ Future<List<dynamic>> traerInfoGeneralTrabajo(String? uid) async {
   return info;
 }
 
-Future<void> actualizarDatosTrabajador(String? uid, correoActual, contrasena, telefono,
-    pApellido, pNombre, sApellido, sNombre) async {
-  await db.collection('Chazero').doc(uid).set({
-    'contraseña': contrasena,
+Future<void> actualizarDatosTrabajador(
+    String? uid, apellidos, correoActual, foto, nombres, telefono) async {
+  await db.collection('Trabajador').doc(uid).set({
+    'apellidos': apellidos,
     'correo': correoActual,
-    'numero': telefono,
-    'primer_apellido': pApellido,
-    'primer_nombre': pNombre,
-    'segundo_apellido': sApellido,
-    'segundo_nombre': sNombre
+    'foto': foto,
+    'nombres': nombres,
+    'telefono': telefono
   });
 }

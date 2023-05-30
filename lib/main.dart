@@ -1,4 +1,5 @@
 import 'package:chazaunapp/en_progreso.dart';
+import 'package:chazaunapp/view/Sprint2/configuracion_trabajador_vista.dart';
 import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
 import 'package:chazaunapp/view/Sprint2/contactanos_vista.dart';
 import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         '/menu/trabajador/perfil': (context) => const PerfilTrabajadorVista(),
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),
         '/menu/configuracion': (context) => const ConfiguracionVista(),
+        '/menu/configuracionTrabajo': (context) => const ConfiguracionTrabajoVista(),
         '/progreso': (context) => const EnProgreso(),
         '/menu/configuracion/contactanos': (context) => const ContactanosView(),
         '/menu/configuracion/infoPersonalChazero': (context) => const InfoCuenta(),
