@@ -1,9 +1,9 @@
 import 'package:chazaunapp/view/colors.dart';
+import 'package:chazaunapp/view/inicio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../Services/Sprint2/info_personal_services.dart';
-import '../inicio.dart';
 
 class ConfiguracionVista extends StatefulWidget {
   const ConfiguracionVista({super.key});
