@@ -2,6 +2,7 @@ import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
 import 'package:chazaunapp/Services/services_mehu_personalcandiadtos_chazero.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
+import 'ver_mas_postulados.dart';
 
 class PersonalVista extends StatefulWidget {
   const PersonalVista({super.key});
@@ -161,7 +162,7 @@ class _PersonalVistaState extends State<PersonalVista> {
   }
 
   ElevatedButton botonVermas(BuildContext context) {
-    //Au no hace nada porque no tengo seguridad de si esa pantalla está disponible
+    //Aun no hace nada porque no tengo seguridad de si esa pantalla está disponible
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
@@ -174,7 +175,15 @@ class _PersonalVistaState extends State<PersonalVista> {
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          //al presionar hace
+          
+          Navigator.of(context).push(MaterialPageRoute<Null>(
+        builder: (BuildContext context){
+          return new MyApp();
+        }
+      ));
+        },
         child: const Text(
           "Ver mas",
           style:
