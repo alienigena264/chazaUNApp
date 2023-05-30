@@ -1,9 +1,20 @@
+// ignore_for_file: avoid_print
+
+import 'package:chazaunapp/Controller/registro_controller.dart';
+import 'package:chazaunapp/Services/gauth_service.dart';
+import 'package:chazaunapp/view/inicio.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'colors.dart';
 
 //Titulo del banner
 const String _title = 'Registro';
-bool isChecked = false; //Aceptar terminos y condiciones
+//Verificación de los terminos y condiciones
+bool isChecked = false;
+//Cuenta de google
 
 class RegistroTrabajadorView extends StatefulWidget {
   const RegistroTrabajadorView({super.key});
@@ -14,18 +25,65 @@ class RegistroTrabajadorView extends StatefulWidget {
 
 class _RegistroTrabajadorState extends State<RegistroTrabajadorView> {
   @override
+  void initState() {
+    super.initState();
+    phoneController.addListener(phoneValidator);
+  }
+
+  @override
+  void dispose() {
+    phoneController.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
-          color: const Color(0xffF6F6F6),
+          color: colorBackground,
+          alignment: Alignment.center,
           child: Column(
-            children: const [
-              Title(),
-              SizedBox(
-                height: 250,
+            children: [
+              const Title(), //Banner azul
+              const Spacer(),
+              const Padding(
+                padding: EdgeInsets.all(40.0),
+                child: Text(
+                  'Necesitamos tu número de teléfono para que te puedan contactar',
+                  style: TextStyle(
+                      color: Colors.black, // Establece el color del texto
+                      fontSize: 20.0, // Establece el tamaño del texto
+                      fontFamily: "Inder",
+                      fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              LoginButton(),
-              AgreeCheck()
+
+              Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: phoneController,
+                  validator: (val) {
+                    return phoneValidator_;
+                  },
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: colorFondoField,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      labelText: "Teléfono",
+                      labelStyle: TextStyle(color: Colors.grey.shade700),
+                      suffixIcon: const Icon(Icons.phone)),
+                ),
+              ),
+              const LoginButton(),
+              const Center(
+                  child: AgreeCheck()), //checkbox de terminos y condiciones
+              const Spacer(),
             ],
           )),
     );
@@ -41,8 +99,7 @@ class Title extends StatelessWidget {
       height: 186.0,
       child: Container(
         decoration: const BoxDecoration(
-          color: Color(
-              0xff00B5C0), // Establece el color de fondo del contenedor con el texto
+          color: colorPrincipal,
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(50.0),
           ),
@@ -54,7 +111,7 @@ class Title extends StatelessWidget {
               _title, // el texto que quieres mostrar
               style: TextStyle(
                   color: Colors.white, // Establece el color del texto
-                  fontSize: 55.0, // Establece el tamaño del texto
+                  fontSize: 60.0, // Establece el tamaño del texto
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
             ),
@@ -67,7 +124,6 @@ class Title extends StatelessWidget {
 
 class LoginButton extends StatefulWidget {
   const LoginButton({super.key});
-
   @override
   State<LoginButton> createState() => _LoginButton();
 }
@@ -78,11 +134,38 @@ class _LoginButton extends State<LoginButton> {
     return SignInButton(
       Buttons.GoogleDark,
       text: 'Ingresar con google unal',
-      onPressed: () {},
+      onPressed: () async {
+        if (isChecked && phoneValidator_ == null) {
+          try {
+            await GAuthService().ingresarGoogle(true, phoneController.text);
+            await goMenu();
+          } catch (e) {
+            print('ingresa con cuenta unal');
+          }
+        } else {
+          print('No ha aceptado');
+        }
+      },
+    );
+  }
+
+  //async para esperar el ingreso
+  goMenu() async {
+    //Vuelve al inicio y borra lo anterior(login, registro y trabajador) para que no se pueda regresar al registro una vez ingresado,
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const PaginaInicio(),
+      ),
+      //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
+      (_) => false,
     );
   }
 }
 
+//TERMINOS Y CONDICIONES
+//https://doc-hosting.flycricket.io/chazaunapp-terms-of-use/61d6b708-bd87-4bb3-8392-cc8b9ab1fe48/terms
+//https://doc-hosting.flycricket.io/chazaunapp-privacy-policy/f674154c-f1f3-4291-a55f-77743561a2b2/privacy
 class AgreeCheck extends StatefulWidget {
   const AgreeCheck({super.key});
 
@@ -100,21 +183,19 @@ class _Checkbox extends State<AgreeCheck> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
+        return colorTrabajador;
       }
-      return Colors.red;
+      return colorPrincipal;
     }
 
-    return Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 0.0,
-        ),
+    return SizedBox(
+        width: 250.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+          children: [
             Checkbox(
-                checkColor: Colors.white,
+                checkColor: colorBackground,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 value: isChecked,
                 onChanged: (bool? value) {
@@ -122,15 +203,52 @@ class _Checkbox extends State<AgreeCheck> {
                     isChecked = value!;
                   });
                 }),
-            const Expanded(
-                child: Text(
-              'Acepto los términos y condiciones.', // el texto que quieres mostrar
-              style: TextStyle(
-                  color: Colors.black, // Establece el color del texto
-                  fontSize: 14.0, // Establece el tamaño del texto
-                  fontFamily: "Inder",
-                  fontWeight: FontWeight.normal),
-            )),
+            Expanded(
+                child: RichText(
+                    text: TextSpan(children: [
+              const TextSpan(
+                text: 'Acepto los ', // el texto que quieres mostrar
+                style: TextStyle(
+                    color: Colors.black, // Establece el color del texto
+                    fontSize: 12.0, // Establece el tamaño del texto
+                    fontFamily: "Inder",
+                    fontWeight: FontWeight.normal),
+              ),
+              TextSpan(
+                  text: 'términos y condiciones',
+                  style: const TextStyle(
+                      color: colorPrincipal, // Establece el color del texto
+                      fontSize: 12.0, // Establece el tamaño del texto
+                      fontFamily: "Inder",
+                      fontWeight: FontWeight.normal),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () async {
+                      const String terminos =
+                          'https://doc-hosting.flycricket.io/chazaunapp-terms-of-use/61d6b708-bd87-4bb3-8392-cc8b9ab1fe48/terms';
+                      launchUrl(Uri.parse(terminos));
+                    }),
+              const TextSpan(
+                text: ' y nuestra ', // el texto que quieres mostrar
+                style: TextStyle(
+                    color: Colors.black, // Establece el color del texto
+                    fontSize: 12.0, // Establece el tamaño del texto
+                    fontFamily: "Inder",
+                    fontWeight: FontWeight.normal),
+              ),
+              TextSpan(
+                  text: 'política de privacidad.',
+                  style: const TextStyle(
+                      color: colorPrincipal, // Establece el color del texto
+                      fontSize: 12.0, // Establece el tamaño del texto
+                      fontFamily: "Inder",
+                      fontWeight: FontWeight.normal),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () async {
+                      const String politica =
+                          'https://doc-hosting.flycricket.io/chazaunapp-privacy-policy/f674154c-f1f3-4291-a55f-77743561a2b2/privacy';
+                      launchUrl(Uri.parse(politica));
+                    })
+            ]))),
           ],
         ));
   }
