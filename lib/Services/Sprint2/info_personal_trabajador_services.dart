@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
-Future<List<dynamic>> traerInfoGeneral(String? uid) async {
+Future<List<dynamic>> traerInfoGeneralTrabajo(String? uid) async {
   List<dynamic> info = [];
   try {
     // Obtén una referencia a la colección y documento específicos
-    CollectionReference collectionRef = db.collection('Chazero');
+    CollectionReference collectionRef = db.collection('Trabajador');
     DocumentSnapshot docSnapshot = await collectionRef.doc(uid).get();
 
     if (docSnapshot.exists) {
@@ -26,7 +26,7 @@ Future<List<dynamic>> traerInfoGeneral(String? uid) async {
   return info;
 }
 
-Future<void> actualizarDatos(String? uid, correoActual, contrasena, telefono,
+Future<void> actualizarDatosTrabajador(String? uid, correoActual, contrasena, telefono,
     pApellido, pNombre, sApellido, sNombre) async {
   await db.collection('Chazero').doc(uid).set({
     'contraseña': contrasena,

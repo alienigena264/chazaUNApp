@@ -7,16 +7,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
-class InfoCuenta extends StatefulWidget {
-  const InfoCuenta({super.key});
+import '../../Services/Sprint2/info_personal_trabajador_services.dart';
+
+class InfoCuentaTrabajador extends StatefulWidget {
+  const InfoCuentaTrabajador({super.key});
   @override
-  State<InfoCuenta> createState() => _InfoCuentaState();
+  State<InfoCuentaTrabajador> createState() => _InfoCuentaTrabajadorState();
 }
 
 const colorTextSuperior = Color(0xff2C2C2C);
 const colorTextInferior = Color(0xffA7A7A7);
 
-class _InfoCuentaState extends State<InfoCuenta> {
+class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
   late TextEditingController controllerCampo;
   String campolleno = ' ';
   final s1 = '';
@@ -47,7 +49,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         String uid = user.uid;
-        resultado = await traerInfoGeneral(uid);
+        resultado = await traerInfoGeneralTrabajo(uid);
 
         setState(() {
           nombre = resultado[4] + ' ' + resultado[6];
@@ -337,7 +339,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
       email = controllerCampo.text;
     }
     if (FirebaseAuth.instance.currentUser != null) {
-      await actualizarDatos(
+      await actualizarDatosTrabajador(
           FirebaseAuth.instance.currentUser?.uid,
           email,
           contrasena,
