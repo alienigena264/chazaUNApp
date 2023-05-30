@@ -1,4 +1,5 @@
 import 'package:chazaunapp/view/colors.dart';
+import 'package:chazaunapp/view/inicio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -195,7 +196,8 @@ class _ConfiguracionTrabajoVistaState extends State<ConfiguracionTrabajoVista> {
 
   cuentaMove_() {
     return () {
-      Navigator.pushNamed(context, '/menu/configuracion/infoPersonalTrabajador');
+      Navigator.pushNamed(
+          context, '/menu/configuracion/infoPersonalTrabajador');
     };
   }
 
@@ -226,18 +228,22 @@ class _ConfiguracionTrabajoVistaState extends State<ConfiguracionTrabajoVista> {
 
   cerrarSesion_() {
     return () {
-      Navigator.pushNamed(context, '/');
+      FirebaseAuth.instance.signOut();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const PaginaInicio(),
+        ),
+        //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
+        (_) => false,
+      );
     };
   }
-  
-  
+
   CircleAvatar fotoActual(String urlFoto) {
     return CircleAvatar(
       radius: 50,
-      backgroundImage: NetworkImage(
-        urlFoto
-      ),
+      backgroundImage: NetworkImage(urlFoto),
     );
   }
-
 }

@@ -18,7 +18,7 @@ class _BotonGoogle extends State<BotonGoogle> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => GAuthService().ingresarGoogle(false, ""),
+        onTap: () => GAuthService().ingresarGoogle(false, "", context),
         child: Column(mainAxisSize: MainAxisSize.max, children: [
           const SizedBox(
             height: 10,
