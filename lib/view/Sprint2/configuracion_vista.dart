@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../Services/Sprint2/info_personal_services.dart';
+import '../inicio.dart';
 
 class ConfiguracionVista extends StatefulWidget {
   const ConfiguracionVista({super.key});
@@ -14,7 +15,7 @@ class ConfiguracionVista extends StatefulWidget {
 User? usuario = FirebaseAuth.instance.currentUser;
 
 class _ConfiguracionVistaState extends State<ConfiguracionVista> {
-    late TextEditingController controllerCampo;
+  late TextEditingController controllerCampo;
   String nombre = '';
   String apellido = '';
   List<dynamic> resultado = [];
@@ -22,9 +23,8 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
   void initState() {
     super.initState();
     obtenerInfoPersonal();
-
   }
-  
+
   Future<void> obtenerInfoPersonal() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
@@ -42,7 +42,7 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
       print('Error al obtener la información personal: $e');
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,14 +124,13 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
           width: 10,
         ),
         Container(
-          width: 65.0,
-          height: 65.0,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.grey.shade300,
-          ),
-          child:fotoActual()
-        ),
+            width: 65.0,
+            height: 65.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey.shade300,
+            ),
+            child: fotoActual()),
         const SizedBox(
           width: 10,
         ),
@@ -226,10 +225,18 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
 
   cerrarSesion_() {
     return () {
-      Navigator.pushNamed(context, '/');
+      FirebaseAuth.instance.signOut();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const PaginaInicio(),
+        ),
+        //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
+        (_) => false,
+      );
     };
   }
-  
+
   CircleAvatar fotoActual() {
     return const CircleAvatar(
       radius: 50,

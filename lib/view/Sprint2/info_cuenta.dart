@@ -62,8 +62,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
       print('Error al obtener la información personal: $e');
     }
   }
-  
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,14 +152,13 @@ class _InfoCuentaState extends State<InfoCuenta> {
   }
 
   Expanded botonCambiar() {
-    return Expanded(
+    return const Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children:const  [
+        children: [
           TextButton(
-            
-            onPressed:null,
-            child:  Text(
+            onPressed: null,
+            child: Text(
               "Informacion Personal",
               style: TextStyle(fontSize: 20, color: Color(0xff404040)),
             ),
@@ -175,26 +173,28 @@ class _InfoCuentaState extends State<InfoCuenta> {
 
   TextButton botonNombre() {
     return TextButton(
-        onPressed:  () async {
-          final name = await openDialog(cambiarDatos,0);
+        onPressed: () async {
+          final name = await openDialog(cambiarDatos, 0);
           if (name == null || name.isEmpty) return;
           setState(() => campolleno = name);
-        }, child: datosPersonales('Nombres', nombre));
+        },
+        child: datosPersonales('Nombres', nombre));
   }
 
   TextButton botonApellido() {
     return TextButton(
-        onPressed:  () async {
-          final name = await openDialog(cambiarDatos,1);
+        onPressed: () async {
+          final name = await openDialog(cambiarDatos, 1);
           if (name == null || name.isEmpty) return;
           setState(() => campolleno = name);
-        }, child: datosPersonales('Apellidos', apellido));
+        },
+        child: datosPersonales('Apellidos', apellido));
   }
 
   TextButton botonTelefono() {
     return TextButton(
         onPressed: () async {
-          final name = await openDialog(cambiarDatos,2);
+          final name = await openDialog(cambiarDatos, 2);
           if (name == null || name.isEmpty) return;
           setState(() => campolleno = name);
         },
@@ -203,10 +203,9 @@ class _InfoCuentaState extends State<InfoCuenta> {
 
   TextButton botonEmail() {
     return TextButton(
-        onPressed: (){
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Para cambiar este campo contacta con soporte'))
-          );
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Para cambiar este campo contacta con soporte')));
         }, //cambiarDatos(controllerCampo.text),
         child: otrosDatos('Email', emailOculto));
   }
@@ -299,7 +298,6 @@ class _InfoCuentaState extends State<InfoCuenta> {
     );
   }
 
-
   _enProgreso() {
     return () {
       Navigator.pushNamed(context, '/progreso');
@@ -326,15 +324,14 @@ class _InfoCuentaState extends State<InfoCuenta> {
     };
   }
 
-
   void cambiarDatos(int variablCambiar) async {
-    if (variablCambiar == 0){
+    if (variablCambiar == 0) {
       nombre = controllerCampo.text;
-    }else if(variablCambiar==1){
+    } else if (variablCambiar == 1) {
       apellido = controllerCampo.text;
-    }else if(variablCambiar==2){
+    } else if (variablCambiar == 2) {
       telefono = controllerCampo.text;
-    }else if(variablCambiar ==3){
+    } else if (variablCambiar == 3) {
       email = controllerCampo.text;
     }
     if (FirebaseAuth.instance.currentUser != null) {
@@ -351,9 +348,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
     }
   }
 
-  Future<String?> openDialog(
-    Function toExecute,int cambiarVariable
-  ) =>
+  Future<String?> openDialog(Function toExecute, int cambiarVariable) =>
       showDialog<String>(
         context: context,
         builder: (context) => AlertDialog(
@@ -364,7 +359,8 @@ class _InfoCuentaState extends State<InfoCuenta> {
           content: TextField(
               controller: controllerCampo,
               autofocus: true,
-              decoration: const InputDecoration(hintText: 'Ingrese los nuevos datos')),
+              decoration:
+                  const InputDecoration(hintText: 'Ingrese los nuevos datos')),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 20, bottom: 5),
