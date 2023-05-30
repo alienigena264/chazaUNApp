@@ -13,7 +13,6 @@ Future<List<dynamic>> traerInfoGeneralTrabajo(String? uid) async {
       // Si el documento existe, agrega los campos a la lista
       info.add(docSnapshot.get('apellidos'));
       info.add(docSnapshot.get('correo'));
-      info.add(docSnapshot.get('numero'));
       info.add(docSnapshot.get('foto'));
       info.add(docSnapshot.get('nombres'));
       info.add(docSnapshot.get('telefono'));

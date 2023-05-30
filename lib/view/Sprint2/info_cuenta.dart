@@ -1,6 +1,4 @@
 // ignore: file_names
-import 'dart:math';
-
 import 'package:chazaunapp/Services/Sprint2/info_personal_services.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,7 +62,8 @@ class _InfoCuentaState extends State<InfoCuenta> {
       print('Error al obtener la información personal: $e');
     }
   }
-
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,7 +158,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: subirImagen(),
+            onPressed:_enProgreso,
             child: const Text(
               "Editar foto de perfil",
               style: TextStyle(fontSize: 20, color: Color(0xff404040)),
@@ -300,6 +299,13 @@ class _InfoCuentaState extends State<InfoCuenta> {
     );
   }
 
+
+  _enProgreso() {
+    return () {
+      Navigator.pushNamed(context, '/progreso');
+    };
+  }
+
   TextButton volverBoton_() {
     return TextButton(
       onPressed: volverInicio_(),
@@ -320,11 +326,6 @@ class _InfoCuentaState extends State<InfoCuenta> {
     };
   }
 
-  subirImagen() {
-    return () {
-      Navigator.pushNamed(context, '/progreso');
-    };
-  }
 
   void cambiarDatos(int variablCambiar) async {
     if (variablCambiar == 0){

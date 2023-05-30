@@ -126,7 +126,7 @@ class _PersonalVistaState extends State<PersonalVista> {
             children: [
               Text(
                 nombres,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black, fontFamily: "Inder", fontSize: 23),
               ),
               ClipRRect(
@@ -154,7 +154,7 @@ class _PersonalVistaState extends State<PersonalVista> {
             ],
           ),
           botonVermas(context),
-          Divider(thickness: 1.5,color: Colors.black,)
+          const Divider(thickness: 1.5,color: Colors.black,)
         ],
       )),
     );
@@ -199,7 +199,7 @@ class _PersonalVistaState extends State<PersonalVista> {
       child: Center(
         child: Text(
           letra, // Letra adentro del círculo
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black, // Color de la letra
             fontSize: 17,
             fontFamily: "Inder",
