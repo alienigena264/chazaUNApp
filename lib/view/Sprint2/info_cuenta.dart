@@ -67,7 +67,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colorFondoField,
+      backgroundColor: colorBackground,
       body: SingleChildScrollView(
         child: Column(children: [
           barraSuperior_(),
@@ -156,16 +156,16 @@ class _InfoCuentaState extends State<InfoCuenta> {
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
+        children:const  [
           TextButton(
-            onPressed:_enProgreso,
-            child: const Text(
-              "Editar foto de perfil",
+            
+            onPressed:null,
+            child:  Text(
+              "Informacion Personal",
               style: TextStyle(fontSize: 20, color: Color(0xff404040)),
             ),
           ),
-          const Icon(Icons.arrow_forward_ios),
-          const SizedBox(
+          SizedBox(
             width: 10,
           )
         ],
@@ -203,10 +203,10 @@ class _InfoCuentaState extends State<InfoCuenta> {
 
   TextButton botonEmail() {
     return TextButton(
-        onPressed: () async {
-          final name = await openDialog(cambiarDatos,3);
-          if (name == null || name.isEmpty) return;
-          setState(() => campolleno = name);
+        onPressed: (){
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Para cambiar este campo contacta con soporte'))
+          );
         }, //cambiarDatos(controllerCampo.text),
         child: otrosDatos('Email', emailOculto));
   }
@@ -359,12 +359,12 @@ class _InfoCuentaState extends State<InfoCuenta> {
         builder: (context) => AlertDialog(
           title: const Text(
             'Actualizar datos',
-            style: TextStyle(fontSize: 10),
+            style: TextStyle(fontSize: 25),
           ),
           content: TextField(
               controller: controllerCampo,
               autofocus: true,
-              decoration: const InputDecoration(hintText: 'Ingrese los datos')),
+              decoration: const InputDecoration(hintText: 'Ingrese los nuevos datos')),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 20, bottom: 5),

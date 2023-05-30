@@ -220,10 +220,10 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
 
   TextButton botonEmail() {
     return TextButton(
-        onPressed: () async {
-          final name = await openDialog(cambiarDatos, 3);
-          if (name == null || name.isEmpty) return;
-          setState(() => campolleno = name);
+        onPressed: (){
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('No es posible editar esta información, consulte TyC'))
+          );
         }, //cambiarDatos(controllerCampo.text),
         child: otrosDatos('Email', emailOculto));
   }
