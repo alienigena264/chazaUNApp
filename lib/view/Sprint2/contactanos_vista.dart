@@ -26,7 +26,7 @@ class _ContactanosState extends State<ContactanosView> {
   void dispose() {
     // Clean up the controller when the widget is removed from the widget tree.
     // This also removes the _printLatestValue listener.
-    preguntasController.dispose();
+    preguntasController.clear();
     super.dispose();
   }
 
