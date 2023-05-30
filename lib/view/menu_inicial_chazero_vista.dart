@@ -332,7 +332,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
 
   irEnProgreso() {
     return () {
-      Navigator.pushNamed(context, '/menu/configuracion/infoPersonalChazero');
+      Navigator.pushNamed(context, '/menu/configuracion');
     };
   }
   pantallaPersonal() {
