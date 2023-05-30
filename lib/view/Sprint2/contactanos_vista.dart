@@ -19,7 +19,6 @@ class _ContactanosState extends State<ContactanosView> {
   void initState() {
     super.initState();
     // Start listening to changes.
-    preguntasController.addListener(preguntas);
   }
 
   @override
@@ -95,16 +94,53 @@ class _ContactanosState extends State<ContactanosView> {
               const Spacer(),
             ])));
   }
-}
 
-preguntas() {
-  preguntas_ = preguntasController.text;
-}
+  void errorPrompt() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            "Mensaje vacío",
+            style: TextStyle(fontSize: 25, color: colorPrincipal),
+          ),
+          content: const Text(
+              "Por favor escriba su sugerencia, duda, queja o comentario.",
+              style: TextStyle(fontSize: 18)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 20, bottom: 5),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colorPrincipal,
+                  minimumSize: const Size(100, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+                child: const Text("Cerrar",
+                    style: TextStyle(fontSize: 28, color: Colors.white)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-enviarSolicitud() {
-  final pregunta = preguntasController.text;
-  if (pregunta.isNotEmpty) {
-    enviarDatos(pregunta);
+  enviarSolicitud() {
+    final pregunta = preguntasController.text;
+    if (pregunta.isNotEmpty) {
+      enviarDatos(pregunta);
+    } else {
+      errorPrompt();
+    }
   }
 }
 

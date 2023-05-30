@@ -352,6 +352,8 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
                 telefonoController.text,
                 FirebaseAuth.instance.currentUser?.uid);
 
+            FirebaseAuth.instance.currentUser?.updateDisplayName(
+                '${primerNombreController.text} ${segundoNombreController.text}');
             // comentar este if para no hacer la verificacion
             if (context.mounted) {
               Navigator.push(
