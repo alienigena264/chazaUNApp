@@ -2,8 +2,11 @@ import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:chazaunapp/Services/Sprint2/ver_mas_activos_services.dart';
+import 'personal_vista.dart';
 
 const String _title = 'Personal';
+const String id = 'FBDa7KnxssWwF2z7vTSh2nFSre12';
 
 class VerMasActivos extends StatefulWidget {
   const VerMasActivos({super.key});
@@ -61,6 +64,10 @@ class _VerMasActivosState extends State<VerMasActivos> {
               const SizedBox(
                 height: 5,
               ),
+              correo(),
+              const SizedBox(
+                height: 5,
+              ),
               const Center(
                 child: Text(
                   'Horario',
@@ -77,7 +84,12 @@ class _VerMasActivosState extends State<VerMasActivos> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        // Lógica del botón "Volver"
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  PersonalVista()), // Navega a PersonalVista
+                        );
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -133,36 +145,121 @@ Widget avatar() {
   );
 }
 
-Text nombre() {
-  return const Text(
-    'Sergio Ivan',
-    style: TextStyle(
-        color: Colors.black, // Establece el color del texto
-        fontSize: 20.0, // Establece el tamaño del texto
-        fontFamily: "Inder",
-        fontWeight: FontWeight.normal),
+Widget nombre() {
+  return FutureBuilder<String>(
+    future:
+        getNombreFromFirestore(id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        // Muestra un indicador de carga mientras se obtiene el nombre desde Firebase
+        return CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        // Muestra un mensaje de error si ocurre un error al obtener el nombre
+        return Text('Error al obtener el nombre');
+      } else {
+        // Muestra el nombre obtenido desde Firebase
+        return Text(
+          snapshot.data ?? 'Nombre no encontrado',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+            fontFamily: "Inder",
+            fontWeight: FontWeight.normal,
+          ),
+        );
+      }
+    },
   );
 }
 
-Text apellido() {
-  return const Text(
-    'Motta Doncel',
-    style: TextStyle(
-        color: Colors.black, // Establece el color del texto
-        fontSize: 20.0, // Establece el tamaño del texto
-        fontFamily: "Inder",
-        fontWeight: FontWeight.normal),
+Widget apellido() {
+  return FutureBuilder<String>(
+    future: getApellidosFromFirestore(
+        id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        // Muestra un indicador de carga mientras se obtienen los apellidos desde Firebase
+        return CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        // Muestra un mensaje de error si ocurre un error al obtener los apellidos
+        print(
+            'Error al obtener los apellidos desde Firebase: ${snapshot.error}');
+        return Text('Error al obtener los apellidos');
+      } else {
+        // Muestra los apellidos obtenidos desde Firebase
+        final apellidos = snapshot.data ?? 'Apellidos no encontrados';
+        print('Apellidos recibidos desde Firebase: $apellidos');
+        return Text(
+          apellidos,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+            fontFamily: "Inder",
+            fontWeight: FontWeight.normal,
+          ),
+        );
+      }
+    },
   );
 }
 
-Text telefono() {
-  return const Text(
-    '32345201125',
-    style: TextStyle(
-        color: Colors.black, // Establece el color del texto
-        fontSize: 20.0, // Establece el tamaño del texto
-        fontFamily: "Inder",
-        fontWeight: FontWeight.normal),
+Widget telefono() {
+  return FutureBuilder<String>(
+    future: getTelefonoFromFirestore(
+        id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        // Muestra un indicador de carga mientras se obtiene el teléfono desde Firebase
+        return CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        // Muestra un mensaje de error si ocurre un error al obtener el teléfono
+        print('Error al obtener el teléfono desde Firebase: ${snapshot.error}');
+        return Text('Error al obtener el teléfono');
+      } else {
+        // Muestra el teléfono obtenido desde Firebase
+        final telefono = snapshot.data ?? 'Teléfono no encontrado';
+        print('Teléfono recibido desde Firebase: $telefono');
+        return Text(
+          telefono,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+            fontFamily: "Inder",
+            fontWeight: FontWeight.normal,
+          ),
+        );
+      }
+    },
+  );
+}
+
+Widget correo() {
+  return FutureBuilder<String>(
+    future:
+        getCorreoFromFirestore(id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        // Muestra un indicador de carga mientras se obtiene el teléfono desde Firebase
+        return CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        // Muestra un mensaje de error si ocurre un error al obtener el teléfono
+        print('Error al obtener el teléfono desde Firebase: ${snapshot.error}');
+        return Text('Error al obtener el teléfono');
+      } else {
+        // Muestra el teléfono obtenido desde Firebase
+        final telefono = snapshot.data ?? 'Teléfono no encontrado';
+        print('Teléfono recibido desde Firebase: $telefono');
+        return Text(
+          telefono,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+            fontFamily: "Inder",
+            fontWeight: FontWeight.normal,
+          ),
+        );
+      }
+    },
   );
 }
 
