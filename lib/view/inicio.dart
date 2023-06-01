@@ -25,7 +25,7 @@ class _PaginaInicio extends State<PaginaInicio> {
               if (FirebaseAuth.instance.currentUser!.providerData
                   .where((element) => element.providerId == 'google.com')
                   .isEmpty) {
-                return const MenuChazeroVista();
+                return MenuChazeroVista(FirebaseAuth.instance.currentUser?.uid.toString().trim());
               } else {
                 return const MenuInicialVistaView();
               }
