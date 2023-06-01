@@ -71,7 +71,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               const SizedBox(
                 width: 55,
               ),
-              const Row(
+              Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Padding(
@@ -389,7 +389,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
 
   Function() _enProgreso(BuildContext context) {
     return () {
-      Navigator.pushNamed(context, '/progreso');
+      Navigator.pushNamed(context, '/menu/configuracionTrabajo');
     };
   }
 }

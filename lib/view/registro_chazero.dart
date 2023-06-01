@@ -367,6 +367,8 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
                 telefonoController.text,
                 FirebaseAuth.instance.currentUser?.uid);
 
+            FirebaseAuth.instance.currentUser?.updateDisplayName(
+                '${primerNombreController.text} ${segundoNombreController.text}');
             // comentar este if para no hacer la verificacion
             if (context.mounted) {
               Navigator.push(
@@ -518,7 +520,7 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) => const MenuChazeroVista(),
+        builder: (BuildContext context) => MenuChazeroVista(FirebaseAuth.instance.currentUser?.uid.toString().trim()),
       ),
       //Esta funcion es para decidir hasta donde hacer pop, ej: ModalRoute.withName('/'));, como está ahí borra todoo
       (_) => false,

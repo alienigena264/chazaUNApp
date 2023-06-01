@@ -4,6 +4,8 @@ import 'package:chazaunapp/Services/services_contactanos.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
+import '../../Components/error_prompt.dart';
+
 const String _title = 'Contáctanos';
 String? preguntas_;
 
@@ -19,14 +21,13 @@ class _ContactanosState extends State<ContactanosView> {
   void initState() {
     super.initState();
     // Start listening to changes.
-    preguntasController.addListener(preguntas);
   }
 
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the widget tree.
     // This also removes the _printLatestValue listener.
-    preguntasController.dispose();
+    preguntasController.clear();
     super.dispose();
   }
 
@@ -95,16 +96,15 @@ class _ContactanosState extends State<ContactanosView> {
               const Spacer(),
             ])));
   }
-}
 
-preguntas() {
-  preguntas_ = preguntasController.text;
-}
-
-enviarSolicitud() {
-  final pregunta = preguntasController.text;
-  if (pregunta.isNotEmpty) {
-    enviarDatos(pregunta);
+  enviarSolicitud() {
+    final pregunta = preguntasController.text;
+    if (pregunta.isNotEmpty) {
+      enviarDatos(pregunta);
+    } else {
+      errorPrompt(context, 'Mensaje vacío',
+          'Por favor escriba su sugerencia, duda, queja o comentario');
+    }
   }
 }
 

@@ -3,21 +3,22 @@ import 'package:chazaunapp/view/inicio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../Services/Sprint2/info_personal_services.dart';
+import '../../Services/Sprint2/info_personal_trabajador_services.dart';
 
-class ConfiguracionVista extends StatefulWidget {
-  const ConfiguracionVista({super.key});
+class ConfiguracionTrabajoVista extends StatefulWidget {
+  const ConfiguracionTrabajoVista({super.key});
 
   @override
-  State<ConfiguracionVista> createState() => _ConfiguracionVistaState();
+  State<ConfiguracionTrabajoVista> createState() =>
+      _ConfiguracionTrabajoVistaState();
 }
 
 User? usuario = FirebaseAuth.instance.currentUser;
 
-class _ConfiguracionVistaState extends State<ConfiguracionVista> {
-  late TextEditingController controllerCampo;
+class _ConfiguracionTrabajoVistaState extends State<ConfiguracionTrabajoVista> {
   String nombre = '';
   String apellido = '';
+  String foto = '';
   List<dynamic> resultado = [];
   @override
   void initState() {
@@ -30,11 +31,11 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         String uid = user.uid;
-        resultado = await traerInfoGeneral(uid);
-
+        resultado = await traerInfoGeneralTrabajo(uid);
         setState(() {
-          nombre = resultado[4];
-          apellido = resultado[3];
+          apellido = resultado[0];
+          foto = resultado[2];
+          nombre = resultado[3];
         }); // Actualizar el estado para mostrar los datos en el widget
       }
     } catch (e) {
@@ -124,17 +125,18 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
           width: 10,
         ),
         Container(
-            width: 65.0,
-            height: 65.0,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.grey.shade300,
-            ),
-            child: fotoActual()),
+          width: 65.0,
+          height: 65.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.grey.shade300,
+          ),
+          child: fotoActual(foto),
+        ),
         const SizedBox(
           width: 10,
         ),
-        nombreTxt_('$nombre $apellido')
+        nombreTxt_('${nombre.split(' ').first} ${apellido.split(' ').first}')
       ],
     );
   }
@@ -142,7 +144,7 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
   Text nombreTxt_(String nombre) {
     return Text(
       nombre,
-      style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+      style: const TextStyle(fontSize: 30),
     );
   }
 
@@ -194,7 +196,8 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
 
   cuentaMove_() {
     return () {
-      Navigator.pushNamed(context, '/menu/configuracion/infoPersonalChazero');
+      Navigator.pushNamed(
+          context, '/menu/configuracion/infoPersonalTrabajador');
     };
   }
 
@@ -237,12 +240,10 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
     };
   }
 
-  CircleAvatar fotoActual() {
-    return const CircleAvatar(
+  CircleAvatar fotoActual(String urlFoto) {
+    return CircleAvatar(
       radius: 50,
-      backgroundImage: NetworkImage(
-        'https://cnnespanol.cnn.com/wp-content/uploads/2016/08/juan-gabriel-pleno.jpg?quality=100&strip=info',
-      ),
+      backgroundImage: NetworkImage(urlFoto),
     );
   }
 }
