@@ -35,7 +35,7 @@ Future<List> getPersonalActivoPorChaza(String idChaza) async {
   return resultadosTotales;
 }
 
-List<bool>trabajaDias(List todos){
+List<bool>trabajaDiasActivo(List todos){
   List<bool>trabaja = [];
   trabaja.add(todos[1]['Dias']['Lunes'][0]!= "");
   trabaja.add(todos[1]['Dias']['Martes'][0]!= "");

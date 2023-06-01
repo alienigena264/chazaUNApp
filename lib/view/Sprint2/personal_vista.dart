@@ -76,7 +76,7 @@ class _PersonalVistaState extends State<PersonalVista> {
                             infoPostulacion_(
                             snapshot.data![index][0]['nombres'],
                             snapshot.data![index][0]['foto'],
-                            trabajaDiasPostulado(snapshot.data![index]))
+                            trabajaDiasActivo(snapshot.data![index]))
                           ],
                         );
                       },
