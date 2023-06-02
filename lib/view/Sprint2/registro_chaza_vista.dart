@@ -177,7 +177,7 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
 
   SizedBox barraSuperior_() {
     final screenSize = MediaQuery.of(context).size;
-    final screenHeight = screenSize.height;
+    final screenHeight = screenSize.height*0.25;
     return SizedBox(
       height: screenHeight,
       child: Container(
