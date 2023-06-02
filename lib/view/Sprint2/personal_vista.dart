@@ -6,19 +6,17 @@ import 'package:flutter/material.dart';
 import 'ver_mas_postulados.dart';
 
 class PersonalVista extends StatefulWidget {
-  final String? idchaza;
-
-  const PersonalVista(this.idchaza, {super.key});
+  const PersonalVista({super.key});
 
   @override
   State<PersonalVista> createState() => _PersonalVistaState();
 }
 
 class _PersonalVistaState extends State<PersonalVista> {
-  String chazaActual = "";
+  String chazaActual = "0QmjUiDOy4viKrv3dzpF";
+
   @override
   Widget build(BuildContext context) {
-    String chazaActual = ModalRoute.of(context)?.settings.arguments as String;
     return DefaultTabController(
         length: 2,
         child: Scaffold(

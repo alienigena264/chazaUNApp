@@ -7,7 +7,7 @@ import 'package:chazaunapp/view/Sprint2/info_cuenta_trabajador.dart';
 import 'package:chazaunapp/view/Sprint2/perfil_chazero_vista.dart';
 import 'package:chazaunapp/view/Sprint2/perfil_trabajador_vista.dart';
 import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
-import 'package:chazaunapp/view/codigo_vista.dart';
+import 'package:chazaunapp/view/Sprint2/registro_chaza_vista.dart';
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
@@ -44,14 +44,14 @@ class MyApp extends StatelessWidget {
       title: 'ChazaUNApp',
       initialRoute: '/',
       routes: {
-        '/': (context) => const PaginaInicio(),
+        '/': (context) => const RegistrarChaza(),
         '/contrasena': (context) => const ContrasenaVista(),
         '/registro/selector': (context) => const SelectorVista(),
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),
         '/registro/chazero': (context) => const RegistroChazeroVista(),
-        '/registro/chazero/codigo': (context) => const CodigoVista(),
         '/menu/chazero': (context) => const MenuChazeroVista(""),
-        '/menu/chazero/personal': (context) => const PersonalVista(""),
+        '/menu/chazero/personal': (context) => const PersonalVista(),
+        '/menu/chazero/registrar/chaza': (context) => const PaginaInicio(),
         '/menu/trabajador': (context) => const MenuInicialVistaView(),
         '/menu/trabajador/perfil': (context) => const PerfilTrabajadorVista(),
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),

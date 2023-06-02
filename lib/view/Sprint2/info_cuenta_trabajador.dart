@@ -229,7 +229,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
   }
 
   TextButton botonContrasena() {
-    return TextButton(onPressed: () {}, child: otrosDatos('Contraseña', ''));
+    return TextButton(onPressed: () {Navigator.pushNamed(context, '/contrasena');}, child: otrosDatos('Contraseña', ''));
   }
 
   Row visibilidadCuenta() {

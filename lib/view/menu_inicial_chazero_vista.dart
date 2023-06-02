@@ -15,7 +15,7 @@ class MenuChazeroVista extends StatefulWidget {
 }
 
 class _MenuChazeroVistaState extends State<MenuChazeroVista> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   int _currentIndex = 0;
   String idChazero = ""; //Id del chazero, cambiar para probar el otro chazero
 

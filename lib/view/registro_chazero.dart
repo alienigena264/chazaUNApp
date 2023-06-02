@@ -40,7 +40,6 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     emailController.addListener(emailValidator);
