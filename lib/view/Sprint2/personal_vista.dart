@@ -6,17 +6,19 @@ import 'package:flutter/material.dart';
 import 'ver_mas_postulados.dart';
 
 class PersonalVista extends StatefulWidget {
-  const PersonalVista({super.key});
+  final String? idchaza;
+
+  const PersonalVista(this.idchaza, {super.key});
 
   @override
   State<PersonalVista> createState() => _PersonalVistaState();
 }
 
 class _PersonalVistaState extends State<PersonalVista> {
-  String chazaActual = "0QmjUiDOy4viKrv3dzpF";
-
+  String chazaActual = "";
   @override
   Widget build(BuildContext context) {
+    String chazaActual = ModalRoute.of(context)?.settings.arguments as String;
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -51,7 +53,7 @@ class _PersonalVistaState extends State<PersonalVista> {
           body: TabBarView(
             children: [
               FutureBuilder(
-                future: getPersonalActivoPorchaza(chazaActual),
+                future: getPersonalActivoPorChaza(chazaActual),
                 builder: ((context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
@@ -59,10 +61,10 @@ class _PersonalVistaState extends State<PersonalVista> {
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            SizedBox(
-                              height: 200,
-                              child: Text(snapshot.data?[index]['nombres']),
-                            )
+                            infoPostulacion_(
+                            snapshot.data![index][0]['nombres'],
+                            snapshot.data![index][0]['foto'],
+                            trabajaDiasActivo(snapshot.data![index]))
                           ],
                         );
                       },
@@ -87,7 +89,7 @@ class _PersonalVistaState extends State<PersonalVista> {
                                   snapshot.data![index][0]['uid'],
                                   snapshot.data![index][0]['nombres'],
                                   snapshot.data![index][0]['foto'],
-                                  trabajaDias(snapshot.data![index]))
+                                  trabajaDiasPostulado(snapshot.data![index]))
                             ],
                           );
                         });
@@ -153,8 +155,10 @@ class _PersonalVistaState extends State<PersonalVista> {
     );
   }
 
+
   ElevatedButton botonVermas(BuildContext context, String uid) {
-    //Aun no hace nada porque no tengo seguridad de si esa pantalla está disponible
+    //Ya anda bien
+
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;

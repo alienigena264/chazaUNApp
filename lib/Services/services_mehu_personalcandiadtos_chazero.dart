@@ -42,7 +42,7 @@ Future<List> getPostulacionesPorChaza(String idChaza) async {
 //snapshot.data![0][1]['Dias']['Lunes'][1].toString()
 //snapshot.data![0][0]['correo'].toString()
 
-List<bool> trabajaDias(List todos) {
+List<bool> trabajaDiasPostulado(List todos) {
   List<bool> trabaja = [];
   trabaja.add(todos[1]['Dias']['Lunes'][0] != "");
   trabaja.add(todos[1]['Dias']['Martes'][0] != "");
