@@ -1,6 +1,6 @@
 //Titulo del banner
 import 'package:chazaunapp/Controller/contactanos_controller.dart';
-import 'package:chazaunapp/Services/services_contactanos.dart';
+import 'package:chazaunapp/Services/Sprint2/services_contactanos.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
