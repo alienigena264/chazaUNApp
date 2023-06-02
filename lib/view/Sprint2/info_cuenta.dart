@@ -152,10 +152,10 @@ class _InfoCuentaState extends State<InfoCuenta> {
   }
 
   Expanded botonCambiar() {
-    return Expanded(
+    return const Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: const [
+        children: [
           TextButton(
             onPressed: null,
             child: Text(
@@ -211,7 +211,11 @@ class _InfoCuentaState extends State<InfoCuenta> {
   }
 
   TextButton botonContrasena() {
-    return TextButton(onPressed: () {Navigator.pushNamed(context, '/contrasena');}, child: otrosDatos('Contraseña', ''));
+    return TextButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/contrasena');
+        },
+        child: otrosDatos('Contraseña', ''));
   }
 
   Row visibilidadCuenta() {

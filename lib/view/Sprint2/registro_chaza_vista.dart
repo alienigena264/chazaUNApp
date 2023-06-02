@@ -66,10 +66,11 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
         ),
-        onPressed: (){},
+        onPressed: () {},
         child: const Text(
           "Registrar",
-          style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
         ));
   }
 
@@ -154,7 +155,7 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
             height: 130,
           ),
         ),
-        Positioned(
+        const Positioned(
           top: 5,
           left: 0,
           width: 160,
@@ -162,7 +163,7 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
+            children: [
               Icon(
                 Icons.add_a_photo,
                 size: 45,
