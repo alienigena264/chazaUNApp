@@ -65,7 +65,7 @@ class _PersonalVistaState extends State<PersonalVista> {
           body: TabBarView(
             children: [
               FutureBuilder(
-                future: getPersonalActivoPorchaza(chazaActual),
+                future: getPersonalActivoPorChaza(chazaActual),
                 builder: ((context, snapshot) {
                   if (snapshot.hasData){
                     return ListView.builder(
@@ -73,10 +73,10 @@ class _PersonalVistaState extends State<PersonalVista> {
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            SizedBox(
-                              height: 200,
-                              child: Text(snapshot.data?[index]['nombres']),
-                            )
+                            infoPostulacion_(
+                            snapshot.data![index][0]['nombres'],
+                            snapshot.data![index][0]['foto'],
+                            trabajaDiasActivo(snapshot.data![index]))
                           ],
                         );
                       },
@@ -100,7 +100,7 @@ class _PersonalVistaState extends State<PersonalVista> {
                               infoPostulacion_(
                                   snapshot.data![index][0]['nombres'],
                                   snapshot.data![index][0]['foto'],
-                                  trabajaDias(snapshot.data![index]))
+                                  trabajaDiasPostulado(snapshot.data![index]))
                             ],
                           );
                         });
@@ -161,6 +161,7 @@ class _PersonalVistaState extends State<PersonalVista> {
       )),
     );
   }
+
 
   ElevatedButton botonVermas(BuildContext context) {
     //Au no hace nada porque no tengo seguridad de si esa pantalla está disponible
