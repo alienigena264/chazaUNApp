@@ -2,6 +2,10 @@ import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
 import 'package:chazaunapp/Services/services_mehu_personalcandiadtos_chazero.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
+=======
+import 'ver_mas_postulados.dart';
+>>>>>>> Stashed changes
 
 class PersonalVista extends StatefulWidget {
   const PersonalVista({super.key});
@@ -11,7 +15,12 @@ class PersonalVista extends StatefulWidget {
 }
 
 class _PersonalVistaState extends State<PersonalVista> {
+<<<<<<< Updated upstream
   String chazaActual = "0QmjUiDOy4viKrv3dzpF";
+=======
+  //String chazaActual = "0QmjUiDOy4viKrv3dzpF";
+var chazaActual = "0QmjUiDOy4viKrv3dzpF";
+>>>>>>> Stashed changes
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +61,11 @@ class _PersonalVistaState extends State<PersonalVista> {
               title: const Text("Personal"),
               titleTextStyle: const TextStyle(
                 color:  Colors.white,
+<<<<<<< Updated upstream
                 fontSize: 60.0
+=======
+                fontSize: 60.0                                    
+>>>>>>> Stashed changes
               ),
               toolbarHeight: 175,
               centerTitle: true,
@@ -126,7 +139,11 @@ class _PersonalVistaState extends State<PersonalVista> {
             children: [
               Text(
                 nombres,
+<<<<<<< Updated upstream
                 style: const TextStyle(
+=======
+                style: TextStyle(
+>>>>>>> Stashed changes
                     color: Colors.black, fontFamily: "Inder", fontSize: 23),
               ),
               ClipRRect(
@@ -154,14 +171,22 @@ class _PersonalVistaState extends State<PersonalVista> {
             ],
           ),
           botonVermas(context),
+<<<<<<< Updated upstream
           const Divider(thickness: 1.5,color: Colors.black,)
+=======
+          Divider(thickness: 1.5,color: Colors.black,)
+>>>>>>> Stashed changes
         ],
       )),
     );
   }
 
   ElevatedButton botonVermas(BuildContext context) {
+<<<<<<< Updated upstream
     //Au no hace nada porque no tengo seguridad de si esa pantalla está disponible
+=======
+    //Aun no hace nada porque no tengo seguridad de si esa pantalla está disponible
+>>>>>>> Stashed changes
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
@@ -174,7 +199,27 @@ class _PersonalVistaState extends State<PersonalVista> {
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
+<<<<<<< Updated upstream
         onPressed: () {},
+=======
+        onPressed: () {
+          //al presionar hace
+          /*Navigator.pushNamed(
+            context, 
+            'lib\view\Sprint2\ver_mas_postulados.dart',
+            arguments:
+            chazaActual
+            );
+*/
+          
+          Navigator.of(context).push(MaterialPageRoute<Null>(
+          builder: (BuildContext context){
+          return new MyApp();  
+        }
+        ));
+        
+        },
+>>>>>>> Stashed changes
         child: const Text(
           "Ver mas",
           style:
@@ -199,7 +244,11 @@ class _PersonalVistaState extends State<PersonalVista> {
       child: Center(
         child: Text(
           letra, // Letra adentro del círculo
+<<<<<<< Updated upstream
           style: const TextStyle(
+=======
+          style: TextStyle(
+>>>>>>> Stashed changes
             color: Colors.black, // Color de la letra
             fontSize: 17,
             fontFamily: "Inder",
