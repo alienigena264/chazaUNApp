@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -200,7 +201,7 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
 
   notificacionesMove_() {
     return () {
-      Navigator.pushNamed(context, '/progreso');
+      AppSettings.openNotificationSettings();
     };
   }
 
