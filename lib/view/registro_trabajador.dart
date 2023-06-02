@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:chazaunapp/Controller/registro_controller.dart';
 import 'package:chazaunapp/Services/gauth_service.dart';
 import 'package:chazaunapp/view/inicio.dart';
@@ -14,7 +12,11 @@ import 'colors.dart';
 const String _title = 'Registro';
 //Verificación de los terminos y condiciones
 bool isChecked = false;
-//Cuenta de google
+//TERMINOS Y CONDICIONES
+const terminos =
+    'https://doc-hosting.flycricket.io/chazaunapp-terms-of-use/61d6b708-bd87-4bb3-8392-cc8b9ab1fe48/terms';
+const policy =
+    'https://doc-hosting.flycricket.io/chazaunapp-privacy-policy/f674154c-f1f3-4291-a55f-77743561a2b2/privacy';
 
 class RegistroTrabajadorView extends StatefulWidget {
   const RegistroTrabajadorView({super.key});
@@ -135,16 +137,31 @@ class _LoginButton extends State<LoginButton> {
       Buttons.GoogleDark,
       text: 'Ingresar con google unal',
       onPressed: () async {
-        if (isChecked && phoneValidator_ == null) {
+        if (!isChecked) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Por favor acepta nuestros términos y condiciones.'),
+            duration: Duration(seconds: 2),
+          ));
+        } else if (!isValid) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              'Ingresa tu número de telefono.',
+            ),
+            duration: Duration(seconds: 2),
+          ));
+        } else {
           try {
             await GAuthService()
                 .ingresarGoogle(true, phoneController.text, context);
             await goMenu();
           } catch (e) {
-            print('ingresa con cuenta unal');
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text(
+                'Hubo un error, intenta más tarde.',
+              ),
+              backgroundColor: Colors.red,
+            ));
           }
-        } else {
-          print('No ha aceptado');
         }
       },
     );
@@ -164,9 +181,6 @@ class _LoginButton extends State<LoginButton> {
   }
 }
 
-//TERMINOS Y CONDICIONES
-//https://doc-hosting.flycricket.io/chazaunapp-terms-of-use/61d6b708-bd87-4bb3-8392-cc8b9ab1fe48/terms
-//https://doc-hosting.flycricket.io/chazaunapp-privacy-policy/f674154c-f1f3-4291-a55f-77743561a2b2/privacy
 class AgreeCheck extends StatefulWidget {
   const AgreeCheck({super.key});
 
@@ -224,8 +238,6 @@ class _Checkbox extends State<AgreeCheck> {
                       fontWeight: FontWeight.normal),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () async {
-                      const String terminos =
-                          'https://doc-hosting.flycricket.io/chazaunapp-terms-of-use/61d6b708-bd87-4bb3-8392-cc8b9ab1fe48/terms';
                       launchUrl(Uri.parse(terminos));
                     }),
               const TextSpan(
@@ -245,9 +257,7 @@ class _Checkbox extends State<AgreeCheck> {
                       fontWeight: FontWeight.normal),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () async {
-                      const String politica =
-                          'https://doc-hosting.flycricket.io/chazaunapp-privacy-policy/f674154c-f1f3-4291-a55f-77743561a2b2/privacy';
-                      launchUrl(Uri.parse(politica));
+                      launchUrl(Uri.parse(policy));
                     })
             ]))),
           ],
