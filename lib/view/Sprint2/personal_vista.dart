@@ -2,10 +2,9 @@ import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
 import 'package:chazaunapp/Services/services_mehu_personalcandiadtos_chazero.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
-=======
+
 import 'ver_mas_postulados.dart';
->>>>>>> Stashed changes
+
 
 class PersonalVista extends StatefulWidget {
   const PersonalVista({super.key});
@@ -15,12 +14,9 @@ class PersonalVista extends StatefulWidget {
 }
 
 class _PersonalVistaState extends State<PersonalVista> {
-<<<<<<< Updated upstream
+
   String chazaActual = "0QmjUiDOy4viKrv3dzpF";
-=======
-  //String chazaActual = "0QmjUiDOy4viKrv3dzpF";
-var chazaActual = "0QmjUiDOy4viKrv3dzpF";
->>>>>>> Stashed changes
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +57,9 @@ var chazaActual = "0QmjUiDOy4viKrv3dzpF";
               title: const Text("Personal"),
               titleTextStyle: const TextStyle(
                 color:  Colors.white,
-<<<<<<< Updated upstream
-                fontSize: 60.0
-=======
+
                 fontSize: 60.0                                    
->>>>>>> Stashed changes
+
               ),
               toolbarHeight: 175,
               centerTitle: true,
@@ -139,11 +133,7 @@ var chazaActual = "0QmjUiDOy4viKrv3dzpF";
             children: [
               Text(
                 nombres,
-<<<<<<< Updated upstream
                 style: const TextStyle(
-=======
-                style: TextStyle(
->>>>>>> Stashed changes
                     color: Colors.black, fontFamily: "Inder", fontSize: 23),
               ),
               ClipRRect(
@@ -171,22 +161,14 @@ var chazaActual = "0QmjUiDOy4viKrv3dzpF";
             ],
           ),
           botonVermas(context),
-<<<<<<< Updated upstream
           const Divider(thickness: 1.5,color: Colors.black,)
-=======
-          Divider(thickness: 1.5,color: Colors.black,)
->>>>>>> Stashed changes
         ],
       )),
     );
   }
 
   ElevatedButton botonVermas(BuildContext context) {
-<<<<<<< Updated upstream
-    //Au no hace nada porque no tengo seguridad de si esa pantalla está disponible
-=======
     //Aun no hace nada porque no tengo seguridad de si esa pantalla está disponible
->>>>>>> Stashed changes
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
@@ -199,9 +181,6 @@ var chazaActual = "0QmjUiDOy4viKrv3dzpF";
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-<<<<<<< Updated upstream
-        onPressed: () {},
-=======
         onPressed: () {
           //al presionar hace
           /*Navigator.pushNamed(
@@ -219,7 +198,6 @@ var chazaActual = "0QmjUiDOy4viKrv3dzpF";
         ));
         
         },
->>>>>>> Stashed changes
         child: const Text(
           "Ver mas",
           style:
@@ -244,11 +222,7 @@ var chazaActual = "0QmjUiDOy4viKrv3dzpF";
       child: Center(
         child: Text(
           letra, // Letra adentro del círculo
-<<<<<<< Updated upstream
           style: const TextStyle(
-=======
-          style: TextStyle(
->>>>>>> Stashed changes
             color: Colors.black, // Color de la letra
             fontSize: 17,
             fontFamily: "Inder",
