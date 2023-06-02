@@ -46,6 +46,7 @@ dependencies:
   flutter_email_sender: ^5.2.0
   image_picker: ^0.8.7+5
   firebase_storage: ^11.2.1
+  app_settings: ^4.2.0
 
 dev_dependencies:
   flutter_test:

@@ -30,7 +30,16 @@ class GAuthService {
           .get()
           .then((querySnapshot) async {
         if (querySnapshot.docs.isNotEmpty) {
-          return await FirebaseAuth.instance.signInWithCredential(credential);
+          try {
+            return await FirebaseAuth.instance.signInWithCredential(credential);
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text(
+                'Hubo un error, intenta más tarde.',
+              ),
+              backgroundColor: Colors.red,
+            ));
+          }
         } else {
           errorPrompt(context, 'No se encontro el usuario',
               'Por favor registrese primero');
