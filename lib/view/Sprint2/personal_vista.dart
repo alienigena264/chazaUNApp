@@ -1,5 +1,5 @@
-import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
 import 'package:chazaunapp/Services/services_mehu_personalcandiadtos_chazero.dart';
+import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -62,9 +62,10 @@ class _PersonalVistaState extends State<PersonalVista> {
                         return Column(
                           children: [
                             infoPostulacion_(
-                            snapshot.data![index][0]['nombres'],
-                            snapshot.data![index][0]['foto'],
-                            trabajaDiasActivo(snapshot.data![index]))
+                                snapshot.data![index][0]['uid'],
+                                snapshot.data![index][0]['nombres'],
+                                snapshot.data![index][0]['foto'],
+                                trabajaDiasActivo(snapshot.data![index]))
                           ],
                         );
                       },
@@ -155,7 +156,6 @@ class _PersonalVistaState extends State<PersonalVista> {
     );
   }
 
-
   ElevatedButton botonVermas(BuildContext context, String uid) {
     //Ya anda bien
 
@@ -182,8 +182,8 @@ class _PersonalVistaState extends State<PersonalVista> {
 */
 
           Navigator.of(context)
-              .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-            return new ver_mas_postulados(uid);
+              .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+            return ver_mas_postulados(uid);
           }));
         },
         child: const Text(

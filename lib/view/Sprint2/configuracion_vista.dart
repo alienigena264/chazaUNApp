@@ -199,9 +199,7 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
   }
 
   notificacionesMove_() {
-    return () {
-      Navigator.pushNamed(context, '/progreso');
-    };
+    return () {};
   }
 
   ayudaMove_() {

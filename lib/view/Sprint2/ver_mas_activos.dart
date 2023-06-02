@@ -1,9 +1,5 @@
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-const String _title = 'Personal';
 
 class VerMasActivos extends StatefulWidget {
   const VerMasActivos({super.key});
@@ -42,7 +38,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
       ),
       body: SingleChildScrollView(
         child: Container(
-            margin: EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               avatar(),
@@ -83,7 +79,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
                         backgroundColor:
                             MaterialStateProperty.all<Color>(colorChazero),
                       ),
-                      child: Text('Volver'),
+                      child: const Text('Volver'),
                     ),
                   ),
                   const SizedBox(
@@ -98,7 +94,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.red),
                     ),
-                    child: Text('Despedir'),
+                    child: const Text('Despedir'),
                   )),
                 ],
               ),
@@ -125,11 +121,11 @@ class _VerMasActivosState extends State<VerMasActivos> {
 }
 
 Widget avatar() {
-  return Container(
+  return const SizedBox(
     width: 150,
     height: 150,
-    child: const CircleAvatar(
-        backgroundImage: AssetImage('assets/imagenes/chef.png')),
+    child:
+        CircleAvatar(backgroundImage: AssetImage('assets/imagenes/chef.png')),
   );
 }
 
@@ -179,16 +175,16 @@ Column buildDiasSemana() {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       buildDia('Lunes'),
-      SizedBox(
+      const SizedBox(
           height: 16), // Agrega espacio vertical entre los días de la semana
       buildDia('Martes'),
-      SizedBox(height: 16),
+      const SizedBox(height: 16),
       buildDia('Miércoles'),
-      SizedBox(height: 16),
+      const SizedBox(height: 16),
       buildDia('Jueves'),
-      SizedBox(height: 16),
+      const SizedBox(height: 16),
       buildDia('Viernes'),
-      SizedBox(height: 16),
+      const SizedBox(height: 16),
       buildDia('Sábado'),
     ],
   );
@@ -198,15 +194,15 @@ Widget buildDia(String nombreDia) {
   String palabras = palabrasRelacionadas[nombreDia] ?? '';
 
   return Container(
-    margin: EdgeInsets.only(
+    margin: const EdgeInsets.only(
         bottom: 8), // Agrega espacio inferior entre cada día de la semana
     child: Row(
       children: [
         Text(
           '$nombreDia:',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        SizedBox(
+        const SizedBox(
             width:
                 16), // Agrega espacio horizontal entre el día de la semana y las palabras relacionadas
         Expanded(
