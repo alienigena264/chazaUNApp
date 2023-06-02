@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         '/registro/chazero': (context) => const RegistroChazeroVista(),
         '/menu/chazero': (context) => const MenuChazeroVista(""),
         '/menu/chazero/personal': (context) => const PersonalVista(),
-        '/menu/chazero/registrar/chaza': (context) => const PaginaInicio(),
+        '/menu/chazero/registrar/chaza': (context) => const RegistrarChaza(),
         '/menu/trabajador': (context) => const MenuInicialVistaView(),
         '/menu/trabajador/perfil': (context) => const PerfilTrabajadorVista(),
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),

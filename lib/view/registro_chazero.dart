@@ -94,8 +94,10 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
   }
 
   SizedBox barraSuperior_() {
+    final screenSize = MediaQuery.of(context).size;
+    final screenHeight = screenSize.height;
     return SizedBox(
-      height: 186.0,
+      height: screenHeight,
       child: Container(
         decoration: const BoxDecoration(
           color:
