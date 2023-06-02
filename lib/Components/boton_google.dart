@@ -25,7 +25,7 @@ class _BotonGoogle extends State<BotonGoogle> {
           ),
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+              children: const [
                 Expanded(
                     child: Divider(
                   indent: 40,
