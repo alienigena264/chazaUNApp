@@ -152,7 +152,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
   }
 
   Expanded botonCambiar() {
-    return const Expanded(
+    return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: const [
@@ -296,12 +296,6 @@ class _InfoCuentaState extends State<InfoCuenta> {
         ),
       ],
     );
-  }
-
-  _enProgreso() {
-    return () {
-      Navigator.pushNamed(context, '/progreso');
-    };
   }
 
   TextButton volverBoton_() {
