@@ -71,21 +71,18 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               const SizedBox(
                 width: 55,
               ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text(
-                          'Chazas', // el texto que quieres mostrar
-                          style: TextStyle(
-                              color:
-                                  Colors.black, // Establece el color del texto
-                              fontSize: 30.0, // Establece el tamaño del texto
-                              fontFamily: "Inder",
-                              fontWeight: FontWeight.normal),
-                        )),
-                  ]),
+              const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Text(
+                      'Chazas', // el texto que quieres mostrar
+                      style: TextStyle(
+                          color: Colors.black, // Establece el color del texto
+                          fontSize: 30.0, // Establece el tamaño del texto
+                          fontFamily: "Inder",
+                          fontWeight: FontWeight.normal),
+                    )),
+              ]),
               SizedBox(
                 height: 500,
                 width: 410, // Tamaño fijo

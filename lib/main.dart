@@ -7,7 +7,6 @@ import 'package:chazaunapp/view/Sprint2/info_cuenta_trabajador.dart';
 import 'package:chazaunapp/view/Sprint2/perfil_chazero_vista.dart';
 import 'package:chazaunapp/view/Sprint2/perfil_trabajador_vista.dart';
 import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
-import 'package:chazaunapp/view/Sprint2/registro_chaza_vista.dart';
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
       title: 'ChazaUNApp',
       initialRoute: '/',
       routes: {
-        '/': (context) => const RegistrarChaza(),
+        '/': (context) => const PaginaInicio(),
         '/contrasena': (context) => const ContrasenaVista(),
         '/registro/selector': (context) => const SelectorVista(),
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),
@@ -56,11 +55,14 @@ class MyApp extends StatelessWidget {
         '/menu/trabajador/perfil': (context) => const PerfilTrabajadorVista(),
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),
         '/menu/configuracion': (context) => const ConfiguracionVista(),
-        '/menu/configuracionTrabajo': (context) => const ConfiguracionTrabajoVista(),
+        '/menu/configuracionTrabajo': (context) =>
+            const ConfiguracionTrabajoVista(),
         '/progreso': (context) => const EnProgreso(),
         '/menu/configuracion/contactanos': (context) => const ContactanosView(),
-        '/menu/configuracion/infoPersonalChazero': (context) => const InfoCuenta(),
-        '/menu/configuracion/infoPersonalTrabajador': (context) => const InfoCuentaTrabajador()
+        '/menu/configuracion/infoPersonalChazero': (context) =>
+            const InfoCuenta(),
+        '/menu/configuracion/infoPersonalTrabajador': (context) =>
+            const InfoCuentaTrabajador()
       },
     );
   }

@@ -1,9 +1,8 @@
 import 'package:chazaunapp/Services/services_mehu_personalcandiadtos_chazero.dart';
 import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
+import 'package:chazaunapp/view/Sprint2/ver_mas_postulados.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
-
-import 'ver_mas_postulados.dart';
 
 class PersonalVista extends StatefulWidget {
   const PersonalVista({super.key});
@@ -181,7 +180,7 @@ class _PersonalVistaState extends State<PersonalVista> {
 
           Navigator.of(context)
               .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-            return ver_mas_postulados(uid);
+            return VerMasPostulados(uid);
           }));
         },
         child: const Text(
