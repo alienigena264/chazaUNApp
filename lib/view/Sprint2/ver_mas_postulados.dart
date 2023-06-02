@@ -12,14 +12,13 @@ class ver_mas_postulados extends StatelessWidget {
   final uid;
   const ver_mas_postulados(this.uid, {super.key});
   getinfo(uid) async {
-    List trabajador=[];
+    List trabajador = [];
     FirebaseFirestore db = FirebaseFirestore.instance;
     CollectionReference coleccion = db.collection('Trabajador');
     QuerySnapshot trabajador_lista =
         await coleccion.where("uid", isEqualTo: uid).get();
     for (var id in trabajador_lista.docs) {
       trabajador.add(id.data());
-    
     }
     return trabajador;
   }
@@ -27,7 +26,16 @@ class ver_mas_postulados extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Personal'), shadowColor: colorPrincipal),
+        appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(175),
+            child: AppBar(
+              title: const Text("Personal"),
+              titleTextStyle:
+                  const TextStyle(color: Colors.white, fontSize: 60.0),
+              toolbarHeight: 175,
+              centerTitle: true,
+              backgroundColor: colorPrincipal,
+            )),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(20.0),
           child: Column(
@@ -48,15 +56,16 @@ class ver_mas_postulados extends StatelessWidget {
                 color: colorFondoField,
               ),
               FutureBuilder(
-                future: getinfo(uid),
-                builder:((context, snapshot){
-                  if (snapshot.hasData){
-                    var a = snapshot.data['nombres'];
-                  }
-                  else {return const Text('ola q ase');}
-                }
-                )
-                  ),
+                  future: getinfo(uid),
+                  builder: ((context, snapshot) {
+                    if (snapshot.hasData) {
+                      var a = snapshot.data?.toString();
+                      Text('hola');
+                      return const Text('');
+                    } else {
+                      return const Text('ola q ase');
+                    }
+                  })),
               Row(
                 children: [
                   Text(
