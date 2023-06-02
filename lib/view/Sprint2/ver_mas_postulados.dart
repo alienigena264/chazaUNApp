@@ -7,17 +7,15 @@ import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
 
 
 
-void main() {
-  runApp(MyApp());
-  
-}
 
-class MyApp extends StatelessWidget {
+
+class ver_mas_postulados extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Personal',
       color: colorPrincipal,
+      
       home: ProfilePage(),
     );
   }
@@ -30,6 +28,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Personal'),
+        shadowColor: colorPrincipal
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20.0),

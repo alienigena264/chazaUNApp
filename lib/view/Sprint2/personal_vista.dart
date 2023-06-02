@@ -193,7 +193,7 @@ class _PersonalVistaState extends State<PersonalVista> {
           
           Navigator.of(context).push(MaterialPageRoute<Null>(
           builder: (BuildContext context){
-          return new MyApp();  
+          return new ver_mas_postulados();  
         }
         ));
         
