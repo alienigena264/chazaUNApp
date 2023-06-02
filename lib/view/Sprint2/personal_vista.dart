@@ -1,24 +1,21 @@
 import 'package:chazaunapp/Services/services_mehu_personalcandiadtos_chazero.dart';
 import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
+import 'package:chazaunapp/view/Sprint2/ver_mas_postulados.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'ver_mas_postulados.dart';
-
 class PersonalVista extends StatefulWidget {
-  final String? idchaza;
-
-  const PersonalVista(this.idchaza, {super.key});
+  const PersonalVista({super.key});
 
   @override
   State<PersonalVista> createState() => _PersonalVistaState();
 }
 
 class _PersonalVistaState extends State<PersonalVista> {
-  String chazaActual = "";
+  String chazaActual = "0QmjUiDOy4viKrv3dzpF";
+
   @override
   Widget build(BuildContext context) {
-    String chazaActual = ModalRoute.of(context)?.settings.arguments as String;
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -183,7 +180,7 @@ class _PersonalVistaState extends State<PersonalVista> {
 
           Navigator.of(context)
               .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-            return ver_mas_postulados(uid);
+            return VerMasPostulados(uid);
           }));
         },
         child: const Text(

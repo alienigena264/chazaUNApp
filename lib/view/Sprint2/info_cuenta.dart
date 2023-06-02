@@ -211,7 +211,11 @@ class _InfoCuentaState extends State<InfoCuenta> {
   }
 
   TextButton botonContrasena() {
-    return TextButton(onPressed: () {}, child: otrosDatos('Contraseña', ''));
+    return TextButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/contrasena');
+        },
+        child: otrosDatos('Contraseña', ''));
   }
 
   Row visibilidadCuenta() {
@@ -296,12 +300,6 @@ class _InfoCuentaState extends State<InfoCuenta> {
         ),
       ],
     );
-  }
-
-  _enProgreso() {
-    return () {
-      Navigator.pushNamed(context, '/progreso');
-    };
   }
 
   TextButton volverBoton_() {

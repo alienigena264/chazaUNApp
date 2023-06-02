@@ -40,7 +40,6 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     emailController.addListener(emailValidator);
@@ -95,8 +94,10 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
   }
 
   SizedBox barraSuperior_() {
+    final screenSize = MediaQuery.of(context).size;
+    final screenHeight = screenSize.height*0.25;
     return SizedBox(
-      height: 186.0,
+      height: screenHeight,
       child: Container(
         decoration: const BoxDecoration(
           color:

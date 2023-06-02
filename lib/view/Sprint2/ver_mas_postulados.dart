@@ -1,27 +1,10 @@
-import 'dart:async';
-import 'package:chazaunapp/Models/menu_inicial_model.dart';
+import 'package:chazaunapp/Services/Sprint2/ver_mas_postulados_services.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:chazaunapp/Services/services_mehu_personalcandiadtos_chazero.dart';
-import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
-import 'package:chazaunapp/Services/gauth_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-class ver_mas_postulados extends StatelessWidget {
-  final uid;
-  const ver_mas_postulados(this.uid, {super.key});
-  getinfo(uid) async {
-    List trabajador = [];
-    FirebaseFirestore db = FirebaseFirestore.instance;
-    CollectionReference coleccion = db.collection('Trabajador');
-    QuerySnapshot trabajador_lista =
-        await coleccion.where("uid", isEqualTo: uid).get();
-    for (var id in trabajador_lista.docs) {
-      trabajador.add(id.data());
-    }
-    return trabajador;
-  }
+class VerMasPostulados extends StatelessWidget {
+  final String uid;
+  const VerMasPostulados(this.uid, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +16,16 @@ class ver_mas_postulados extends StatelessWidget {
               titleTextStyle:
                   const TextStyle(color: Colors.white, fontSize: 60.0),
               toolbarHeight: 175,
+              scrolledUnderElevation: 2000,
               centerTitle: true,
               backgroundColor: colorPrincipal,
             )),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
+              const Center(
                 child: CircleAvatar(
                   backgroundColor: colorFondoField,
                   radius: 50,
@@ -59,14 +43,13 @@ class ver_mas_postulados extends StatelessWidget {
                   future: getinfo(uid),
                   builder: ((context, snapshot) {
                     if (snapshot.hasData) {
-                      var a = snapshot.data?.toString();
-                      Text('hola');
-                      return const Text('');
+                      String a = snapshot.data!['apellidos'];
+                      return Text('$a funciona');
                     } else {
                       return const Text('ola q ase');
                     }
                   })),
-              Row(
+              const Row(
                 children: [
                   Text(
                     'Nombres:',
@@ -78,8 +61,8 @@ class ver_mas_postulados extends StatelessWidget {
                   Expanded(child: Text('Juan Alberto')),
                 ],
               ),
-              SizedBox(height: 16.0),
-              Row(
+              const SizedBox(height: 16.0),
+              const Row(
                 children: [
                   Text(
                     'Apellidos:',
@@ -91,8 +74,8 @@ class ver_mas_postulados extends StatelessWidget {
                   Expanded(child: Text('Aguilera Valadez')),
                 ],
               ),
-              SizedBox(height: 16.0),
-              Row(
+              const SizedBox(height: 16.0),
+              const Row(
                 children: [
                   Text(
                     'Telefono:',
@@ -104,9 +87,9 @@ class ver_mas_postulados extends StatelessWidget {
                   Expanded(child: Text('3224615885')),
                 ],
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
 
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
 
               //Text(chazaActual),
               /*
@@ -125,44 +108,44 @@ class ver_mas_postulados extends StatelessWidget {
                 endIndent: 0,
                 color: colorFondoField,
               ),
-              SizedBox(height: 20.0),
-              Text('Horarios disponibles:'),
-              SizedBox(height: 10.0),
-              Text('Lunes'),
-              Text('09:00-10:30, 16:00-18:00'),
-              SizedBox(height: 10.0),
-              Text('Martes'),
-              Text('09:00-10:30'),
-              SizedBox(height: 10.0),
-              Text('Miércoles'),
-              Text('09:00-10:30, 16:00-18:00'),
-              SizedBox(height: 10.0),
-              Text('Jueves'),
-              Text('No Disponible'),
-              SizedBox(height: 10.0),
-              Text('Viernes'),
-              Text('09:00-10:30, 16:00-18:00'),
-              SizedBox(height: 10.0),
-              Text('Sábado'),
-              Text('09:00-10:30, 16:00-18:00'),
-              SizedBox(height: 40.0),
+              const SizedBox(height: 20.0),
+              const Text('Horarios disponibles:'),
+              const SizedBox(height: 10.0),
+              const Text('Lunes'),
+              const Text('09:00-10:30, 16:00-18:00'),
+              const SizedBox(height: 10.0),
+              const Text('Martes'),
+              const Text('09:00-10:30'),
+              const SizedBox(height: 10.0),
+              const Text('Miércoles'),
+              const Text('09:00-10:30, 16:00-18:00'),
+              const SizedBox(height: 10.0),
+              const Text('Jueves'),
+              const Text('No Disponible'),
+              const SizedBox(height: 10.0),
+              const Text('Viernes'),
+              const Text('09:00-10:30, 16:00-18:00'),
+              const SizedBox(height: 10.0),
+              const Text('Sábado'),
+              const Text('09:00-10:30, 16:00-18:00'),
+              const SizedBox(height: 40.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
                       onPressed: () {},
-                      //color: Colors.green,
-                      child: Text('Contratar'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
-                      )),
+                      ),
+                      //color: Colors.green,
+                      child: const Text('Contratar')),
                   ElevatedButton(
                       onPressed: () {},
-                      //color: Colors.red,
-                      child: Text('Rechazar'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
-                      )),
+                      ),
+                      //color: Colors.red,
+                      child: const Text('Rechazar')),
                 ],
               ),
             ],
