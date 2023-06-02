@@ -7,6 +7,7 @@ import 'package:chazaunapp/view/Sprint2/info_cuenta_trabajador.dart';
 import 'package:chazaunapp/view/Sprint2/perfil_chazero_vista.dart';
 import 'package:chazaunapp/view/Sprint2/perfil_trabajador_vista.dart';
 import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
+import 'package:chazaunapp/view/Sprint2/registro_chaza_vista.dart';
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
