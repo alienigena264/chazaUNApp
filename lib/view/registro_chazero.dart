@@ -413,7 +413,6 @@ class _RegistroChazeroVistaState extends State<RegistroChazeroVista> {
     minimo 8 caracteres
     (?=.*?[!@#\$&*~]) carac
      */
-    RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
     RegExp regexMinus = RegExp(r'[A-Z]');
     RegExp regexMayus = RegExp(r'[a-z]');
     RegExp regexNumeros = RegExp(r'[0-9]');

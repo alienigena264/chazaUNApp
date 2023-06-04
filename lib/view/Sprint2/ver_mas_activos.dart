@@ -9,7 +9,6 @@ class VerMasActivos extends StatefulWidget {
 }
 
 class _VerMasActivosState extends State<VerMasActivos> {
-  int click = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,18 +22,6 @@ class _VerMasActivosState extends State<VerMasActivos> {
               fontWeight: FontWeight.normal),
         ),
         backgroundColor: colorPrincipal,
-        leading: Container(
-            padding: const EdgeInsets.all(10),
-            child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    click += 1;
-                  });
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                ),
-                color: colorBackground)),
       ),
       body: SingleChildScrollView(
         child: Container(
