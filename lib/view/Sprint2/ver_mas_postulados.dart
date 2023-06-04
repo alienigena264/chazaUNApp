@@ -8,9 +8,6 @@ class VerMasPostulados extends StatelessWidget {
   const VerMasPostulados(this.uid, this.cid, {super.key});
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final screenHeight = screenSize.height * 0.25;
-
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(175),
@@ -108,8 +105,9 @@ class VerMasPostulados extends StatelessWidget {
                             const Text(
                               'Horarios disponibles:',
                               style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             const SizedBox(height: 25.0),
                             Row(
                               children: [
@@ -197,4 +195,3 @@ class VerMasPostulados extends StatelessWidget {
                 }))));
   }
 }
-*/
