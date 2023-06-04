@@ -21,6 +21,14 @@ class VerMasPostulados extends StatelessWidget {
               scrolledUnderElevation: 2000,
               centerTitle: true,
               backgroundColor: colorPrincipal,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                padding: const EdgeInsets.only(bottom: 60),
+                icon: const Icon(Icons.arrow_back),
+                iconSize: 40,
+              ),
             )),
         body: SingleChildScrollView(
             padding: const EdgeInsets.all(20.0),

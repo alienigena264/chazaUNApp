@@ -15,11 +15,11 @@ Future<List> getPersonalActivoPorChaza(String idChaza) async {
       .where('IDChaza', isEqualTo: idChaza)
       .get();
   for (var doc in querypostulaciones.docs) {
-    dynamic Trabajador = doc.get('IDTrabajador');
+    dynamic trabajador = doc.get('IDTrabajador');
     trabajadores
-        .add(Trabajador); //Mete en una lista los ids de todos los postulados
-    dynamic Horario = doc.get('IDHorario');
-    horarios.add(Horario); //Mete en una lista los ids de todos los horarios
+        .add(trabajador); //Mete en una lista los ids de todos los postulados
+    dynamic horario = doc.get('IDHorario');
+    horarios.add(horario); //Mete en una lista los ids de todos los horarios
   }
   for (int i = 0; i < trabajadores.length; i++) {
     DocumentSnapshot<Map<String, dynamic>> infotrabajador = await db
@@ -33,7 +33,7 @@ Future<List> getPersonalActivoPorChaza(String idChaza) async {
     datosTrabajadorHorario.add(infohorario
         .data()); //Mete en la misma lista los detalles de cada horario
     resultadosTotales.add(
-        datosTrabajadorHorario); //Mete pareja Trabajador-horario en la lista final
+        datosTrabajadorHorario); //Mete pareja trabajador-horario en la lista final
     datosTrabajadorHorario = []; //Reinicia la lista
   }
   Future.delayed(const Duration(milliseconds: 800));
