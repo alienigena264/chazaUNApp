@@ -169,15 +169,6 @@ class _PersonalVistaState extends State<PersonalVista> {
           ),
         ),
         onPressed: () {
-          //al presionar hace
-          /*Navigator.pushNamed(
-            context, 
-            'lib\view\Sprint2\ver_mas_postulados.dart',
-            arguments:
-            chazaActual
-            );
-*/
-
           Navigator.of(context)
               .push(MaterialPageRoute<void>(builder: (BuildContext context) {
             return VerMasPostulados(uid);
