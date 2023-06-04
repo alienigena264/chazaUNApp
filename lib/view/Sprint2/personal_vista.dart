@@ -17,7 +17,7 @@ class _PersonalVistaState extends State<PersonalVista> {
 
   @override
   Widget build(BuildContext context) {
-    chazaActual = ModalRoute.of(context)?.settings.arguments as String;
+    String chazaActual = ModalRoute.of(context)?.settings.arguments as String;
     final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
     return DefaultTabController(
