@@ -42,7 +42,7 @@ class _PersonalVistaState extends State<PersonalVista> {
               indicatorSize: TabBarIndicatorSize.label,
             ),
             title: const Padding(
-              padding: EdgeInsets.only(top:40),
+              padding: EdgeInsets.only(top: 40),
               child: Text("Personal"),
             ),
             titleTextStyle:
@@ -75,8 +75,7 @@ class _PersonalVistaState extends State<PersonalVista> {
                                 snapshot.data![index][0]['nombres'],
                                 snapshot.data![index][0]['foto'],
                                 trabajaDiasActivo(snapshot.data![index]),
-                                0
-                            )
+                                0)
                           ],
                         );
                       },
@@ -102,8 +101,7 @@ class _PersonalVistaState extends State<PersonalVista> {
                                   snapshot.data![index][0]['nombres'],
                                   snapshot.data![index][0]['foto'],
                                   trabajaDiasPostulado(snapshot.data![index]),
-                                  1
-                              )
+                                  1)
                             ],
                           );
                         });
@@ -185,12 +183,26 @@ class _PersonalVistaState extends State<PersonalVista> {
           ),
         ),
         onPressed: () {
+          //al presionar hace
+          /*Navigator.pushNamed(
+            context,
+            'lib\view\Sprint2\ver_mas_postulados.dart',
+            arguments:
+            chazaActual
+            );
+*/
 
-          Navigator.of(context)
-              .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-            return VerMasPostulados(uid);
-          }));
-
+          if (tipo == 0) {
+            Navigator.of(context)
+                .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+              return const VerMasActivos();
+            }));
+          } else {
+            Navigator.of(context)
+                .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+              return VerMasPostulados(uid, chazaActual);
+            }));
+          }
         },
         child: const Text(
           "Ver mas",

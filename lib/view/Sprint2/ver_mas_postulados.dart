@@ -4,20 +4,18 @@ import 'package:flutter/material.dart';
 
 class VerMasPostulados extends StatelessWidget {
   final String uid;
-  const VerMasPostulados(this.uid, {super.key});
+  final String cid; //chaza id
+  const VerMasPostulados(this.uid, this.cid, {super.key});
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final screenHeight = screenSize.height * 0.25;
-    
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(screenHeight),
+            preferredSize: const Size.fromHeight(175),
             child: AppBar(
               title: const Text("Personal"),
               titleTextStyle:
                   const TextStyle(color: Colors.white, fontSize: 60.0),
-              toolbarHeight: screenHeight,
+              toolbarHeight: 175,
               scrolledUnderElevation: 2000,
               centerTitle: true,
               backgroundColor: colorPrincipal,
@@ -33,7 +31,7 @@ class VerMasPostulados extends StatelessWidget {
         body: SingleChildScrollView(
             padding: const EdgeInsets.all(20.0),
             child: FutureBuilder(
-                future: getinfo(uid),
+                future: getinfo(uid, cid),
                 builder: ((context, snapshot) {
                   if (snapshot.hasData) {
                     return (Column(children: [
@@ -107,8 +105,9 @@ class VerMasPostulados extends StatelessWidget {
                             const Text(
                               'Horarios disponibles:',
                               style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             const SizedBox(height: 25.0),
                             Row(
                               children: [
@@ -196,4 +195,3 @@ class VerMasPostulados extends StatelessWidget {
                 }))));
   }
 }
-
