@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 class VerMasPostulados extends StatelessWidget {
   final String uid;
-  const VerMasPostulados(this.uid, {super.key});
+  final String cid; //chaza id
+  const VerMasPostulados(this.uid, this.cid, {super.key});
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: screenSize.height * 0.25 as Size,
+            preferredSize: const Size.fromHeight(175),
             child: AppBar(
               title: const Text("Personal"),
               titleTextStyle:
@@ -31,7 +31,7 @@ class VerMasPostulados extends StatelessWidget {
         body: SingleChildScrollView(
             padding: const EdgeInsets.all(20.0),
             child: FutureBuilder(
-                future: getinfo(uid),
+                future: getinfo(uid, cid),
                 builder: ((context, snapshot) {
                   if (snapshot.hasData) {
                     return (Column(children: [
