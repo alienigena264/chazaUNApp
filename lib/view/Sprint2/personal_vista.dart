@@ -185,26 +185,11 @@ class _PersonalVistaState extends State<PersonalVista> {
           ),
         ),
         onPressed: () {
-          //al presionar hace
-          /*Navigator.pushNamed(
-            context, 
-            'lib\view\Sprint2\ver_mas_postulados.dart',
-            arguments:
-            chazaActual
-            );
-*/
 
-          if (tipo == 0) {
-            Navigator.of(context)
-                .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-              return const VerMasActivos();
-            }));
-          } else {
-            Navigator.of(context)
-                .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-              return VerMasPostulados(uid);
-            }));
-          }
+          Navigator.of(context)
+              .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+            return VerMasPostulados(uid);
+          }));
 
         },
         child: const Text(
