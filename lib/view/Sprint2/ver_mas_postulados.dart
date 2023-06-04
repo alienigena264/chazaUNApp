@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 class VerMasPostulados extends StatelessWidget {
   final String uid;
   const VerMasPostulados(this.uid, {super.key});
-
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(175),
+            preferredSize: screenSize.height * 0.25 as Size,
             child: AppBar(
               title: const Text("Personal"),
               titleTextStyle:
@@ -21,138 +21,65 @@ class VerMasPostulados extends StatelessWidget {
               backgroundColor: colorPrincipal,
             )),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Center(
-                child: CircleAvatar(
-                  backgroundColor: colorFondoField,
-                  radius: 50,
-                  backgroundImage: AssetImage('assets/imagenes/chef2.png'),
-                ),
-              ),
-              const Divider(
-                height: 20,
-                thickness: 5,
-                indent: 20,
-                endIndent: 0,
-                color: colorFondoField,
-              ),
-              FutureBuilder(
-                  future: getinfo(uid),
-                  builder: ((context, snapshot) {
-                    if (snapshot.hasData) {
-                      String a = snapshot.data!['apellidos'];
-                      return Text('$a funciona');
-                    } else {
-                      return const Text('ola q ase');
-                    }
-                  })),
-              const Row(
-                children: [
-                  Text(
-                    'Nombres:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 100.0),
-                  Expanded(child: Text('Juan Alberto')),
-                ],
-              ),
-              const SizedBox(height: 16.0),
-              const Row(
-                children: [
-                  Text(
-                    'Apellidos:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 100.0),
-                  Expanded(child: Text('Aguilera Valadez')),
-                ],
-              ),
-              const SizedBox(height: 16.0),
-              const Row(
-                children: [
-                  Text(
-                    'Telefono:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 100.0),
-                  Expanded(child: Text('3224615885')),
-                ],
-              ),
-              const SizedBox(height: 16.0),
-
-              const SizedBox(height: 20.0),
-
-              //Text(chazaActual),
-              /*
-            Text('Juan Alberto'),
-            SizedBox(height: 10.0),
-            Text('Apellidos'),
-            Text('Aguilera Valadez'),
-            SizedBox(height: 10.0),
-            Text('Telefono'),
-            Text('3224615885'),
-            */
-              const Divider(
-                height: 20,
-                thickness: 5,
-                indent: 20,
-                endIndent: 0,
-                color: colorFondoField,
-              ),
-              const SizedBox(height: 20.0),
-              const Text('Horarios disponibles:'),
-              const SizedBox(height: 10.0),
-              const Text('Lunes'),
-              const Text('09:00-10:30, 16:00-18:00'),
-              const SizedBox(height: 10.0),
-              const Text('Martes'),
-              const Text('09:00-10:30'),
-              const SizedBox(height: 10.0),
-              const Text('Miércoles'),
-              const Text('09:00-10:30, 16:00-18:00'),
-              const SizedBox(height: 10.0),
-              const Text('Jueves'),
-              const Text('No Disponible'),
-              const SizedBox(height: 10.0),
-              const Text('Viernes'),
-              const Text('09:00-10:30, 16:00-18:00'),
-              const SizedBox(height: 10.0),
-              const Text('Sábado'),
-              const Text('09:00-10:30, 16:00-18:00'),
-              const SizedBox(height: 40.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                      ),
-                      //color: Colors.green,
-                      child: const Text('Contratar')),
-                  ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                      ),
-                      //color: Colors.red,
-                      child: const Text('Rechazar')),
-                ],
-              ),
-            ],
-          ),
-        ));
+            padding: const EdgeInsets.all(20.0),
+            child: FutureBuilder(
+                future: getinfo(uid),
+                builder: ((context, snapshot) {
+                  if (snapshot.hasData) {
+                    return (Column(children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: CircleAvatar(
+                                  backgroundColor: colorFondoField,
+                                  radius: 50,
+                                  backgroundImage:
+                                      NetworkImage(snapshot.data?['foto'])),
+                            ),
+                            const Divider(
+                              height: 20,
+                              thickness: 5,
+                              indent: 20,
+                              endIndent: 0,
+                              color: colorFondoField,
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  'Nombres:',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 100.0),
+                                Expanded(
+                                    child: Text(snapshot.data?['nombres'])),
+                              ],
+                            ),
+                            const SizedBox(height: 16.0),
+                            Row(
+                              children: [
+                                const Text(
+                                  'Apellidos:',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 100.0),
+                                Expanded(
+                                    child: Text(snapshot.data?['apellidos'])),
+                              ],
+                            ),
+                          ])
+                    ]));
+                  } else {
+                    return const Text('idk');
+                  }
+                }))));
   }
 
+  //return const Text('Ocurrio un');
   BottomNavigationBar barraChazero(BuildContext context) {
     //La barra de opciones inferior
     return BottomNavigationBar(
