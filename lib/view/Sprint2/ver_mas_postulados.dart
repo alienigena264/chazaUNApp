@@ -49,8 +49,8 @@ class VerMasPostulados extends StatelessWidget {
                       return const Text('ola q ase');
                     }
                   })),
-              const Row(
-                children: [
+              Row(
+                children: const [
                   Text(
                     'Nombres:',
                     style: TextStyle(
@@ -62,8 +62,8 @@ class VerMasPostulados extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16.0),
-              const Row(
-                children: [
+               Row(
+                children: const [
                   Text(
                     'Apellidos:',
                     style: TextStyle(
@@ -75,8 +75,8 @@ class VerMasPostulados extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16.0),
-              const Row(
-                children: [
+              Row(
+                children: const [
                   Text(
                     'Telefono:',
                     style: TextStyle(
