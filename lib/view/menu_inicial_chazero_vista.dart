@@ -1,6 +1,5 @@
 import 'package:chazaunapp/Services/services_menuchazero.dart';
 import 'package:chazaunapp/view/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 //Pruebita pull request
@@ -31,77 +30,70 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
-    return WillPopScope(
-      // cuando el usuario presiona atras, lo deslogea en vez de sacarlo de la app
-      onWillPop: () async {
-        FirebaseAuth.instance.signOut();
-        return false;
-      },
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            color: colorBackground,
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    barraSuperior_(),
-                  ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          color: colorBackground,
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  barraSuperior_(),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                //height: 690,
+                height: screenHeight * 0.655, //Esto es para juan
+                width: screenWidth * 0.87, // Tamaño fijo
+                child: FutureBuilder(
+                  future: getChazasporChazero(idChazero),
+                  builder: ((context, snapshot) {
+                    if (snapshot.hasData) {
+                      //Si la consulta devuelve algo o espera
+                      return ListView.builder(
+                        //Hace una lista de todas las filas que había en la matriz chazas
+                        shrinkWrap: true,
+                        itemExtent: 215,
+                        padding: const EdgeInsets.only(bottom: 20),
+                        itemCount: snapshot.data
+                            ?.length, // casi como un for que itera las veces de las filas de la matriz
+                        itemBuilder: (ontext, index) {
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: screenHeight * 0.235,
+                                child: infoChaza_(
+                                    // hace una card infochaza con los detalles de cada fila, osea cada chaza
+                                    snapshot.data?[index]['nombre'],
+                                    snapshot.data?[index]['ubicacion'],
+                                    snapshot.data?[index]['puntuacion'],
+                                    snapshot.data?[index]['paga'],
+                                    snapshot.data?[index]['imagen'],
+                                    snapshot.data?[index]['id']),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              )
+                            ], //Espacio entre las cards
+                          );
+                        },
+                      );
+                    } else {
+                      return const Center(
+                        child:
+                            CircularProgressIndicator(), // Si la bd se tarda o no da nada
+                      );
+                    }
+                  }),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  //height: 690,
-                  height: screenHeight * 0.655, //Esto es para juan
-                  width: screenWidth * 0.87, // Tamaño fijo
-                  child: FutureBuilder(
-                    future: getChazasporChazero(idChazero),
-                    builder: ((context, snapshot) {
-                      if (snapshot.hasData) {
-                        //Si la consulta devuelve algo o espera
-                        return ListView.builder(
-                          //Hace una lista de todas las filas que había en la matriz chazas
-                          shrinkWrap: true,
-                          itemExtent: 215,
-                          padding: const EdgeInsets.only(bottom: 20),
-                          itemCount: snapshot.data
-                              ?.length, // casi como un for que itera las veces de las filas de la matriz
-                          itemBuilder: (ontext, index) {
-                            return Column(
-                              children: [
-                                SizedBox(
-                                  height: screenHeight * 0.235,
-                                  child: infoChaza_(
-                                      // hace una card infochaza con los detalles de cada fila, osea cada chaza
-                                      snapshot.data?[index]['nombre'],
-                                      snapshot.data?[index]['ubicacion'],
-                                      snapshot.data?[index]['puntuacion'],
-                                      snapshot.data?[index]['paga'],
-                                      snapshot.data?[index]['imagen'],
-                                      snapshot.data?[index]['id']),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                )
-                              ], //Espacio entre las cards
-                            );
-                          },
-                        );
-                      } else {
-                        return const Center(
-                          child:
-                              CircularProgressIndicator(), // Si la bd se tarda o no da nada
-                        );
-                      }
-                    }),
-                  ),
-                ),
-                Stack(
-                  children: [barraChazero(context)],
-                )
-              ],
-            ),
+              ),
+              Stack(
+                children: [barraChazero(context)],
+              )
+            ],
           ),
         ),
       ),

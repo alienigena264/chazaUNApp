@@ -5,6 +5,7 @@ Future<Map<String, dynamic>> getinfo(uid, cid) async {
   CollectionReference coleccionTrabajador = db.collection('Trabajador');
   CollectionReference coleccionRelacion = db.collection('Postulaciones');
   CollectionReference coleccionHorario = db.collection('Horario');
+  //Para encontrar el horario
   DocumentSnapshot trabajadorSnapshot =
       await coleccionTrabajador.doc(uid).get();
   var horarioID = await coleccionRelacion
@@ -16,8 +17,11 @@ Future<Map<String, dynamic>> getinfo(uid, cid) async {
   DocumentSnapshot horarioSnapshot =
       await coleccionHorario.doc(idHorario).get();
   var datosHorario = horarioSnapshot.data() as Map<String, dynamic>;
-  datosHorario.remove('Tipo');
+  //guarda directamente los dias y las horas,
+  //LAS HORAS SON UNA LISTA DINAMICA
+  datosHorario = datosHorario['Dias'] as Map<String, dynamic>;
   var datosTrabajador = trabajadorSnapshot.data() as Map<String, dynamic>;
+  //los añade a los datos del trabajador con los demas datos
   datosTrabajador.addAll(datosHorario);
   return datosTrabajador;
 }
