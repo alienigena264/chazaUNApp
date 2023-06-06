@@ -297,7 +297,7 @@ accionRegistrar() async {
             "Registro Exitoso",
             style: TextStyle(fontSize: 35, color: colorPrincipal),
           ),
-          content: const Text("Tu chaza se ha añadido a tu cuenta",
+          content: const Text("Tu chaza se ha añadido a tu cuenta, Talvez debas reiniciar la app para verla en el inicio",
               style: TextStyle(fontSize: 25)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
@@ -316,6 +316,7 @@ accionRegistrar() async {
                 child: const Text("Cerrar",
                     style: TextStyle(fontSize: 25, color: Colors.white)),
                 onPressed: () {
+                  Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
               ),
