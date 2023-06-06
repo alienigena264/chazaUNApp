@@ -16,8 +16,8 @@ class MenuChazeroVista extends StatefulWidget {
 
 class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   final TextEditingController _controller = TextEditingController();
-  int _currentIndex = 0;
   String idChazero = ""; //Id del chazero, cambiar para probar el otro chazero
+
 
   @override
   void initState() {
@@ -91,9 +91,6 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                   }),
                 ),
               ),
-              Stack(
-                children: [barraChazero(context)],
-              )
             ],
           ),
         ),
@@ -285,7 +282,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-        onPressed: irEnProgreso(),
+        onPressed: _enProgreso(context),
         child: const Text(
           "Horarios",
           style:
@@ -314,39 +311,9 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         ));
   }
 
-  BottomNavigationBar barraChazero(BuildContext context) {
-    //La barra de opciones inferior
-    return BottomNavigationBar(
-      currentIndex: _currentIndex,
-      onTap: _onItemTapped,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-        //Icono home
-        BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined), label: 'Ajustes')
-      ],
-      backgroundColor: Colors.white,
-      selectedItemColor: colorPrincipal,
-      unselectedItemColor: const Color(0xff909090),
-      unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
-      selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
-      iconSize:
-          34, //Detalles del color del item seleccionado y la fuente de lo labels
-    );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    irEnProgreso();
-  }
-
-  irEnProgreso() {
+  Function() _enProgreso(BuildContext context) {
     return () {
-      Navigator.pushNamed(context, '/menu/configuracion');
+      Navigator.pushNamed(context, '/menu/configuracionTrabajo');
     };
   }
 
@@ -357,36 +324,3 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   }
 }
 
-//Ejemplo para ver si funciona una card por chaza
-/*
-List<List<String>> chazas = [
-  [
-    "Sex-Chaza",
-    "Frente a humanas",
-    "3.5",
-    "12000",
-    "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg"
-  ],
-  [
-    "Los perros del calvo HP",
-    "Junto al FEM",
-    "5.0",
-    "8000",
-    "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg"
-  ],
-  [
-    "Calcas a 800",
-    "La playita",
-    "5.0",
-    "5800",
-    "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg"
-  ],
-  [
-    "Buho-Chaza",
-    "Entrada de la 26",
-    "3.9",
-    "2500",
-    "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg"
-  ]
-];
-*/
