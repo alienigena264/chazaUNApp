@@ -149,8 +149,8 @@ class VerMasPostulados extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 82.0),
                                 Expanded(
-                                    child: Text(
-                                        snapshot.data!['Miercoles'].toString())),
+                                    child: Text(snapshot.data!['Miercoles']
+                                        .toString())),
                               ],
                             ),
                             const SizedBox(height: 25.0),
