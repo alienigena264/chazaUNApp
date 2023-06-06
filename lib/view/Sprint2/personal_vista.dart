@@ -1,5 +1,7 @@
-import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
 import 'package:chazaunapp/Services/services_mehu_personalcandiadtos_chazero.dart';
+import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
+import 'package:chazaunapp/view/Sprint2/ver_mas_activos.dart';
+import 'package:chazaunapp/view/Sprint2/ver_mas_postulados.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -11,70 +13,69 @@ class PersonalVista extends StatefulWidget {
 }
 
 class _PersonalVistaState extends State<PersonalVista> {
-  String chazaActual = "0QmjUiDOy4viKrv3dzpF";
+  String chazaActual = "";
 
   @override
   Widget build(BuildContext context) {
+    chazaActual = ModalRoute.of(context)?.settings.arguments as String;
+    final screenSize = MediaQuery.of(context).size;
+    final screenHeight = screenSize.height;
     return DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(175),
-            child: AppBar(
-              bottom: const TabBar(
-                  tabs: [
-                    Tab(
-                      text: "Activos",
-                    ),
-                    Tab(
-                      text: "Candidatos"
-                    )
-                  ],
-                unselectedLabelColor: Colors.black87,
-                unselectedLabelStyle: TextStyle(
-                  fontSize: 24.0,
-                  fontFamily: "Inder"
+          appBar: AppBar(
+            bottom: const TabBar(
+              tabs: [
+                Tab(
+                  text: "Activos",
                 ),
-                labelColor: Colors.white,
-                labelStyle: TextStyle(
-                  fontSize: 24.0,
-                  fontFamily: "Inder"
-                ),
-                indicator: UnderlineTabIndicator(
-                  borderSide: BorderSide(
-                    color: Colors.white,
-                    width: 3
-                  ),
-                  insets: EdgeInsets.only(bottom: 5)
-                ),
-                indicatorSize: TabBarIndicatorSize.label,
-              ),
-              title: const Text("Personal"),
-              titleTextStyle: const TextStyle(
-                color:  Colors.white,
-                fontSize: 60.0
-              ),
-              toolbarHeight: 175,
-              centerTitle: true,
-              backgroundColor: colorPrincipal,
-
+                Tab(text: "Candidatos")
+              ],
+              unselectedLabelColor: Colors.black87,
+              unselectedLabelStyle:
+                  TextStyle(fontSize: 24.0, fontFamily: "Inder"),
+              labelColor: Colors.white,
+              labelStyle: TextStyle(fontSize: 24.0, fontFamily: "Inder"),
+              indicator: UnderlineTabIndicator(
+                  borderSide: BorderSide(color: Colors.white, width: 3),
+                  insets: EdgeInsets.only(bottom: 5)),
+              indicatorSize: TabBarIndicatorSize.label,
+            ),
+            title: const Padding(
+              padding: EdgeInsets.only(top: 40),
+              child: Text("Personal"),
+            ),
+            titleTextStyle:
+                const TextStyle(color: Colors.white, fontSize: 60.0),
+            toolbarHeight: screenHeight * 0.165,
+            centerTitle: true,
+            backgroundColor: colorPrincipal,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              padding: const EdgeInsets.only(bottom: 60),
+              icon: const Icon(Icons.arrow_back),
+              iconSize: 40,
             ),
           ),
           body: TabBarView(
             children: [
               FutureBuilder(
-                future: getPersonalActivoPorchaza(chazaActual),
+                future: getPersonalActivoPorChaza(chazaActual),
                 builder: ((context, snapshot) {
-                  if (snapshot.hasData){
+                  if (snapshot.hasData) {
                     return ListView.builder(
                       itemCount: snapshot.data?.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            SizedBox(
-                              height: 200,
-                              child: Text(snapshot.data?[index]['nombres']),
-                            )
+                            infoPostulacion_(
+                                snapshot.data![index][0]['uid'],
+                                snapshot.data![index][0]['nombres'],
+                                snapshot.data![index][0]['foto'],
+                                trabajaDiasActivo(snapshot.data![index]),
+                                0)
                           ],
                         );
                       },
@@ -96,9 +97,11 @@ class _PersonalVistaState extends State<PersonalVista> {
                           return Column(
                             children: [
                               infoPostulacion_(
+                                  snapshot.data![index][0]['uid'],
                                   snapshot.data![index][0]['nombres'],
                                   snapshot.data![index][0]['foto'],
-                                  trabajaDias(snapshot.data![index]))
+                                  trabajaDiasPostulado(snapshot.data![index]),
+                                  1)
                             ],
                           );
                         });
@@ -114,7 +117,8 @@ class _PersonalVistaState extends State<PersonalVista> {
         ));
   }
 
-  Padding infoPostulacion_(String nombres, String foto, List<bool> dias) {
+  Padding infoPostulacion_(
+      String uid, String nombres, String foto, List<bool> dias, int tipo) {
     return Padding(
       padding: const EdgeInsets.only(left: 27, right: 27),
       child: Card(
@@ -126,7 +130,7 @@ class _PersonalVistaState extends State<PersonalVista> {
             children: [
               Text(
                 nombres,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black, fontFamily: "Inder", fontSize: 23),
               ),
               ClipRRect(
@@ -153,15 +157,19 @@ class _PersonalVistaState extends State<PersonalVista> {
               diaIcono(dias[5], 'S')
             ],
           ),
-          botonVermas(context),
-          Divider(thickness: 1.5,color: Colors.black,)
+          botonVermas(context, uid, tipo),
+          const Divider(
+            thickness: 1.5,
+            color: Colors.black,
+          )
         ],
       )),
     );
   }
 
-  ElevatedButton botonVermas(BuildContext context) {
-    //Au no hace nada porque no tengo seguridad de si esa pantalla está disponible
+  ElevatedButton botonVermas(BuildContext context, String uid, int tipo) {
+    //Ya anda bien
+
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
@@ -174,7 +182,28 @@ class _PersonalVistaState extends State<PersonalVista> {
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          //al presionar hace
+          /*Navigator.pushNamed(
+            context,
+            'lib\view\Sprint2\ver_mas_postulados.dart',
+            arguments:
+            chazaActual
+            );
+*/
+
+          if (tipo == 0) {
+            Navigator.of(context)
+                .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+              return const VerMasActivos();
+            }));
+          } else {
+            Navigator.of(context)
+                .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+              return VerMasPostulados(uid, chazaActual);
+            }));
+          }
+        },
         child: const Text(
           "Ver mas",
           style:
@@ -199,7 +228,7 @@ class _PersonalVistaState extends State<PersonalVista> {
       child: Center(
         child: Text(
           letra, // Letra adentro del círculo
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black, // Color de la letra
             fontSize: 17,
             fontFamily: "Inder",

@@ -31,21 +31,10 @@ class _VerMasActivosState extends State<VerMasActivos> {
               fontWeight: FontWeight.normal),
         ),
         backgroundColor: colorPrincipal,
-        leading: Container(
-            padding: const EdgeInsets.all(10),
-            child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    click += 1;
-                  });
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                ),
-                color: colorBackground)),
       ),
       body: SingleChildScrollView(
         child: Container(
+            margin: const EdgeInsets.all(16),
             margin: const EdgeInsets.all(16),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -113,6 +102,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
                             MaterialStateProperty.all<Color>(colorChazero),
                       ),
                       child: const Text('Volver'),
+                      child: const Text('Volver'),
                     ),
                   ),
                   const SizedBox(
@@ -131,6 +121,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.red),
                     ),
+                    child: const Text('Despedir'),
                     child: const Text('Despedir'),
                   )),
                 ],

@@ -2,28 +2,39 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
-Future<void> actualizarNombreChazero(
-    String? uid, primerNombre, segundoNombre) async {
-  await db
-      .collection('Chazero')
-      .doc(uid)
-      .set({'primer_nombre': primerNombre, 'segundo_nombre': segundoNombre});
+Future<List<dynamic>> traerInfoGeneral(String? uid) async {
+  List<dynamic> info = [];
+  try {
+    // Obtén una referencia a la colección y documento específicos
+    CollectionReference collectionRef = db.collection('Chazero');
+    DocumentSnapshot docSnapshot = await collectionRef.doc(uid).get();
+
+    if (docSnapshot.exists) {
+      // Si el documento existe, agrega los campos a la lista
+      info.add(docSnapshot.get('contraseña'));
+      info.add(docSnapshot.get('correo'));
+      info.add(docSnapshot.get('numero'));
+      info.add(docSnapshot.get('primer_apellido'));
+      info.add(docSnapshot.get('primer_nombre'));
+      info.add(docSnapshot.get('segundo_apellido'));
+      info.add(docSnapshot.get('segundo_nombre'));
+    } else {}
+  } catch (e) {
+    // ignore: avoid_print
+    print('Error al obtener el documento: $e');
+  }
+  return info;
 }
 
-Future<void> actualizarApellidoChazero(
-    String? uid, primerApellido, segundoApellido) async {
-  await db.collection('Chazero').doc(uid).set(
-      {'primer_apellido': primerApellido, 'segundo_apellido': segundoApellido});
-}
-
-Future<void> actualizarTelefonoChazero(
-    String? uid, numeroActual) async {
-  await db.collection('Chazero').doc(uid).set(
-      {'numero': numeroActual,});
-}
-
-Future<void> actualizarEmailChazero(
-    String? uid, correoActual) async {
-  await db.collection('Chazero').doc(uid).set(
-      {'correo': correoActual,});
+Future<void> actualizarDatos(String? uid, correoActual, contrasena, telefono,
+    pApellido, pNombre, sApellido, sNombre) async {
+  await db.collection('Chazero').doc(uid).set({
+    'contraseña': contrasena,
+    'correo': correoActual,
+    'numero': telefono,
+    'primer_apellido': pApellido,
+    'primer_nombre': pNombre,
+    'segundo_apellido': sApellido,
+    'segundo_nombre': sNombre
+  });
 }

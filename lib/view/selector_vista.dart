@@ -16,8 +16,8 @@ class _SelectorVistaState extends State<SelectorVista> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Stack(
-              children: [
+             Stack(
+              children: const [
                 Text(
                   'Registrarse como:',
                   style: TextStyle(
@@ -47,7 +47,9 @@ class _SelectorVistaState extends State<SelectorVista> {
       style: ElevatedButton.styleFrom(
         backgroundColor: colorTrabajador,
         minimumSize: Size(
-            screenWidth*0.77, screenHeight*0.066), // double.infinity is the width and 30 is the height
+            screenWidth * 0.77,
+            screenHeight *
+                0.066), // double.infinity is the width and 30 is the height
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14.0),
         ),
@@ -69,7 +71,9 @@ class _SelectorVistaState extends State<SelectorVista> {
       style: ElevatedButton.styleFrom(
         backgroundColor: colorChazero,
         minimumSize: Size(
-            screenWidth*0.77, screenHeight*0.066), // double.infinity is the width and 30 is the height
+            screenWidth * 0.77,
+            screenHeight *
+                0.066), // double.infinity is the width and 30 is the height
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14.0),
         ),

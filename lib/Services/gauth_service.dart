@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:chazaunapp/Components/error_prompt.dart';
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class GAuthService {
   //Ingresar por Google, bool para registrar o ingresar
-  ingresarGoogle(bool registro, String telefono) async {
+  ingresarGoogle(bool registro, String telefono, BuildContext context) async {
     //Ya bloquea desde la consola de Google Cloud, pero esta mas bonito asi xD
     final gUser = await GoogleSignIn(hostedDomain: "unal.edu.co").signIn();
     final GoogleSignInAuthentication gAuth = await gUser!.authentication;
@@ -29,13 +30,24 @@ class GAuthService {
           .get()
           .then((querySnapshot) async {
         if (querySnapshot.docs.isNotEmpty) {
-          return await FirebaseAuth.instance.signInWithCredential(credential);
+          try {
+            return await FirebaseAuth.instance.signInWithCredential(credential);
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text(
+                'Hubo un error, intenta más tarde.',
+              ),
+              backgroundColor: Colors.red,
+            ));
+          }
+        } else {
+          errorPrompt(context, 'No se encontro el usuario',
+              'Por favor registrese primero');
         }
       });
     }
   }
 
-//NO FUNCIONA XD
   registrarTrabajador(GoogleSignInAccount gUser,
       GoogleSignInAuthentication gAuth, String telefono) async {
     FirebaseFirestore db = FirebaseFirestore.instance;
