@@ -120,8 +120,12 @@ class _VerMasActivosState extends State<VerMasActivos> {
                           16), // Agrega un espacio horizontal entre los botones
                   Expanded(
                       child: ElevatedButton(
-                    onPressed: () {
-                      // Lógica del botón "Despedir"
+                    onPressed: () async {
+                      String idHorario = await fetchIDHorarioEliminar(id);
+                      if (idHorario.isNotEmpty) {
+                        eliminarDocumentoRelacionTrabajadores(id);
+                        eliminarDocumentoHorario(idHorario);
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor:
