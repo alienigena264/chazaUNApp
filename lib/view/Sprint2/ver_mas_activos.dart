@@ -1,5 +1,10 @@
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:chazaunapp/Services/Sprint2/ver_mas_activos_services.dart';
+import 'personal_vista.dart';
+
+const String _title = 'Personal';
+const String id = 'oKnw05Cp9BZ6huQAvJTjW9X4XB62';
 
 class VerMasActivos extends StatefulWidget {
   const VerMasActivos({super.key});
@@ -9,6 +14,10 @@ class VerMasActivos extends StatefulWidget {
 }
 
 class _VerMasActivosState extends State<VerMasActivos> {
+  List<String> horasSemana = [];
+
+  int click = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,19 +37,37 @@ class _VerMasActivosState extends State<VerMasActivos> {
             margin: const EdgeInsets.all(16),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              avatar(),
-              const SizedBox(
-                height: 25,
+              Center(child: avatar()),
+              const SizedBox(height: 25),
+              Row(
+                children: [
+                  Text('Nombres:         ',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(width: 10),
+                  Expanded(child: nombre()),
+                ],
               ),
-              nombre(),
-              const SizedBox(
-                height: 5,
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  Text('Apellidos:         ',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(width: 10),
+                  Expanded(child: apellido()),
+                ],
               ),
-              apellido(),
-              const SizedBox(
-                height: 5,
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  Text('Teléfono:          ',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(width: 10),
+                  Expanded(child: telefono()),
+                ],
               ),
-              telefono(),
+              const SizedBox(height: 5),
+              const SizedBox(height: 5),
+              linea(),
               const SizedBox(
                 height: 5,
               ),
@@ -50,6 +77,8 @@ class _VerMasActivosState extends State<VerMasActivos> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
+              const SizedBox(height: 5),
+              linea(),
               const SizedBox(
                 height: 10,
               ),
@@ -60,7 +89,12 @@ class _VerMasActivosState extends State<VerMasActivos> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        // Lógica del botón "Volver"
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  PersonalVista()), // Navega a PersonalVista
+                        );
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -74,8 +108,12 @@ class _VerMasActivosState extends State<VerMasActivos> {
                           16), // Agrega un espacio horizontal entre los botones
                   Expanded(
                       child: ElevatedButton(
-                    onPressed: () {
-                      // Lógica del botón "Despedir"
+                    onPressed: () async {
+                      String idHorario = await fetchIDHorarioEliminar(id);
+                      if (idHorario.isNotEmpty) {
+                        eliminarDocumentoRelacionTrabajadores(id);
+                        eliminarDocumentoHorario(idHorario);
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor:
@@ -108,90 +146,206 @@ class _VerMasActivosState extends State<VerMasActivos> {
 }
 
 Widget avatar() {
-  return const SizedBox(
-    width: 150,
-    height: 150,
-    child:
-        CircleAvatar(backgroundImage: AssetImage('assets/imagenes/chef.png')),
+  return FutureBuilder<String?>(
+    future: getFotoUrlFromFirestore(
+        id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        // Muestra un indicador de carga mientras se obtiene la URL de la foto desde Firebase
+        return CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        // Muestra un mensaje de error si ocurre un error al obtener la URL de la foto
+        print(
+            'Error al obtener la URL de la foto desde Firebase: ${snapshot.error}');
+        return Text('Error al obtener la foto');
+      } else {
+        // Obtiene la URL de la foto desde Firebase
+        final fotoUrl = snapshot.data;
+        print('URL de la foto recibida desde Firebase: $fotoUrl');
+        return SizedBox(
+          width: 150,
+          height: 150,
+          child: CircleAvatar(
+            backgroundImage: fotoUrl != null ? NetworkImage(fotoUrl) : null,
+          ),
+        );
+      }
+    },
   );
 }
 
-Text nombre() {
-  return const Text(
-    'Sergio Ivan',
-    style: TextStyle(
-        color: Colors.black, // Establece el color del texto
-        fontSize: 20.0, // Establece el tamaño del texto
-        fontFamily: "Inder",
-        fontWeight: FontWeight.normal),
+Widget linea() {
+  return const Divider(
+    color: Colors.grey,
+    height:
+        20, // Ajusta el espacio vertical entre la línea y los campos de texto
+    thickness: 1, // Ajusta el grosor de la línea
+    indent: 16, // Ajusta la distancia horizontal desde el borde izquierdo
+    endIndent: 16, // Ajusta la distancia horizontal desde el borde derecho
   );
 }
 
-Text apellido() {
-  return const Text(
-    'Motta Doncel',
-    style: TextStyle(
-        color: Colors.black, // Establece el color del texto
-        fontSize: 20.0, // Establece el tamaño del texto
-        fontFamily: "Inder",
-        fontWeight: FontWeight.normal),
+Widget nombre() {
+  return FutureBuilder<String>(
+    future:
+        getNombreFromFirestore(id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        // Muestra un indicador de carga mientras se obtiene el nombre desde Firebase
+        return CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        // Muestra un mensaje de error si ocurre un error al obtener el nombre
+        return Text('Error al obtener el nombre');
+      } else {
+        // Muestra el nombre obtenido desde Firebase
+        return Text(
+          snapshot.data ?? 'Nombre no encontrado',
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+            fontFamily: "Inder",
+            fontWeight: FontWeight.normal,
+          ),
+        );
+      }
+    },
   );
 }
 
-Text telefono() {
-  return const Text(
-    '32345201125',
-    style: TextStyle(
-        color: Colors.black, // Establece el color del texto
-        fontSize: 20.0, // Establece el tamaño del texto
-        fontFamily: "Inder",
-        fontWeight: FontWeight.normal),
+Widget apellido() {
+  return FutureBuilder<String>(
+    future: getApellidosFromFirestore(
+        id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        // Muestra un indicador de carga mientras se obtienen los apellidos desde Firebase
+        return const CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        // Muestra un mensaje de error si ocurre un error al obtener los apellidos
+        print(
+            'Error al obtener los apellidos desde Firebase: ${snapshot.error}');
+        return Text('Error al obtener los apellidos');
+      } else {
+        // Muestra los apellidos obtenidos desde Firebase
+        final apellidos = snapshot.data ?? 'Apellidos no encontrados';
+        print('Apellidos recibidos desde Firebase: $apellidos');
+        return Text(
+          apellidos,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+            fontFamily: "Inder",
+            fontWeight: FontWeight.normal,
+          ),
+        );
+      }
+    },
+  );
+}
+
+Widget telefono() {
+  return FutureBuilder<String>(
+    future: getTelefonoFromFirestore(
+        id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        // Muestra un indicador de carga mientras se obtiene el teléfono desde Firebase
+        return CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        // Muestra un mensaje de error si ocurre un error al obtener el teléfono
+        print('Error al obtener el teléfono desde Firebase: ${snapshot.error}');
+        return Text('Error al obtener el teléfono');
+      } else {
+        // Muestra el teléfono obtenido desde Firebase
+        final telefono = snapshot.data ?? 'Teléfono no encontrado';
+        print('Teléfono recibido desde Firebase: $telefono');
+        return Text(
+          telefono,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+            fontFamily: "Inder",
+            fontWeight: FontWeight.normal,
+          ),
+        );
+      }
+    },
   );
 }
 
 Map<String, String> palabrasRelacionadas = {
-  'Lunes': '09:00-10:30,   16:00-18:00',
-  'Martes': '09:00-10:30',
-  'Miércoles': '09:00-10:30,   16:00-18:00',
-  'Jueves': 'No Disponible',
-  'Viernes': '09:00-10:30,   16:00-18:00',
-  'Sábado': '09:00-10:30,   16:00-18:00',
+  'Lunes:       ': '09:00-10:30,   16:00-18:00',
+  'Martes:     ': '09:00-10:30',
+  'Miércoles:': '09:00-10:30,   16:00-18:00',
+  'Jueves:     ': 'No Disponible',
+  'Viernes:    ': '09:00-10:30,   16:00-18:00',
+  'Sábado:    ': '09:00-10:30,   16:00-18:00',
 };
-Column buildDiasSemana() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      buildDia('Lunes'),
-      const SizedBox(
-          height: 16), // Agrega espacio vertical entre los días de la semana
-      buildDia('Martes'),
-      const SizedBox(height: 16),
-      buildDia('Miércoles'),
-      const SizedBox(height: 16),
-      buildDia('Jueves'),
-      const SizedBox(height: 16),
-      buildDia('Viernes'),
-      const SizedBox(height: 16),
-      buildDia('Sábado'),
-    ],
+
+Widget buildDiasSemana() {
+  return Container(
+    child: FutureBuilder<List<String>>(
+      future: fetchIDHorario(id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Muestra un indicador de carga mientras se obtienen las horas desde Firebase
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          // Muestra un mensaje de error si ocurre un error al obtener las horas
+          print('Error al obtener las horas desde Firebase: ${snapshot.error}');
+          return Text('Error al obtener las horas');
+        } else {
+          // Muestra las horas obtenidas desde Firebase
+          final horasSemana = snapshot.data ?? [];
+          print(
+              'horasSemana: $horasSemana'); // Agrega este print para verificar el contenido
+          final horasSemanaList = List<List<String>>.from(
+              horasSemana.map((horas) => horas.split(',')));
+          return buildColumnDiasSemana(horasSemanaList);
+        }
+      },
+    ),
   );
 }
 
-Widget buildDia(String nombreDia) {
-  String palabras = palabrasRelacionadas[nombreDia] ?? '';
+Column buildColumnDiasSemana(List<List<String>> horasSemana) {
+  List<String> dias = [
+    'Lunes       ',
+    'Martes     ',
+    'Miércoles',
+    'Jueves     ',
+    'Viernes    ',
+    'Sábado    '
+  ];
+  List<Widget> columnChildren = [];
+
+  for (int i = 0; i < dias.length; i++) {
+    String dia = dias[i];
+    List<String> horas =
+        (horasSemana.length > i) ? horasSemana[i] : ['No disponible'];
+
+    columnChildren.add(buildDia('$dia:       ', horas));
+    columnChildren.add(SizedBox(height: 16));
+  }
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: columnChildren,
+  );
+}
+
+Widget buildDia(String nombreDia, List<String> horas) {
+  String palabras = horas.join(', ');
 
   return Container(
-    margin: const EdgeInsets.only(
-        bottom: 8), // Agrega espacio inferior entre cada día de la semana
+    margin: EdgeInsets.only(bottom: 8),
     child: Row(
       children: [
         Text(
-          '$nombreDia:',
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          '$nombreDia',
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        const SizedBox(
-            width:
-                16), // Agrega espacio horizontal entre el día de la semana y las palabras relacionadas
+        SizedBox(width: 16),
         Expanded(
           child: Text(
             palabras,
