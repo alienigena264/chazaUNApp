@@ -18,7 +18,6 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   final TextEditingController _controller = TextEditingController();
   String idChazero = ""; //Id del chazero, cambiar para probar el otro chazero
 
-
   @override
   void initState() {
     super.initState();
@@ -26,76 +25,97 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
     idChazero = widget.id!;
   }
 
-  @override //Se supone que esa Id se tomará sola al hacer login
+  @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final screenWidth = screenSize.width;
+    //final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          color: colorBackground,
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  barraSuperior_(),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                //height: 690,
-                height: screenHeight * 0.655, //Esto es para juan
-                width: screenWidth * 0.87, // Tamaño fijo
-                child: FutureBuilder(
-                  future: getChazasporChazero(idChazero),
-                  builder: ((context, snapshot) {
-                    if (snapshot.hasData) {
-                      //Si la consulta devuelve algo o espera
-                      return ListView.builder(
-                        //Hace una lista de todas las filas que había en la matriz chazas
-                        shrinkWrap: true,
-                        itemExtent: 215,
-                        padding: const EdgeInsets.only(bottom: 20),
-                        itemCount: snapshot.data
-                            ?.length, // casi como un for que itera las veces de las filas de la matriz
-                        itemBuilder: (ontext, index) {
+      body: Container(
+        color: colorBackground,
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                barraSuperior_(),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: FutureBuilder(
+                future: getChazasporChazero(idChazero),
+                builder: ((context, snapshot) {
+                  if (snapshot.hasData) {
+                    final itemCount = snapshot.data?.length ?? 0;
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics:
+                          const ClampingScrollPhysics(), // Deshabilita el desplazamiento excesivo
+                      padding: EdgeInsets.zero, // Elimina el espacio de relleno
+                      itemCount: itemCount +
+                          1, // Incrementar el itemCount en 1 para incluir el botón
+                      itemBuilder: (context, index) {
+                        if (index < itemCount) {
                           return Column(
                             children: [
                               SizedBox(
                                 height: screenHeight * 0.235,
                                 child: infoChaza_(
-                                    // hace una card infochaza con los detalles de cada fila, osea cada chaza
-                                    snapshot.data?[index]['nombre'],
-                                    snapshot.data?[index]['ubicacion'],
-                                    snapshot.data?[index]['puntuacion'],
-                                    snapshot.data?[index]['paga'],
-                                    snapshot.data?[index]['imagen'],
-                                    snapshot.data?[index]['id']),
+                                  snapshot.data?[index]['nombre'],
+                                  snapshot.data?[index]['ubicacion'],
+                                  snapshot.data?[index]['puntuacion'],
+                                  snapshot.data?[index]['paga'],
+                                  snapshot.data?[index]['imagen'],
+                                  snapshot.data?[index]['id'],
+                                ),
                               ),
                               const SizedBox(
                                 height: 5,
-                              )
-                            ], //Espacio entre las cards
+                              ),
+                            ],
                           );
-                        },
-                      );
-                    } else {
-                      return const Center(
-                        child:
-                            CircularProgressIndicator(), // Si la bd se tarda o no da nada
-                      );
-                    }
-                  }),
-                ),
+                        } else {
+                          // Último ítem, mostrar el botón
+                          return Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              registrarBoton_(),
+                            ],
+                          );
+                        }
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  ElevatedButton registrarBoton_() {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colorChazero,
+          minimumSize: const Size(
+              180, 50), // double.infinity is the width and 30 is the height
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
+        ),
+        onPressed: action(),
+        child: const Text(
+          "Añadir Chaza",
+          style: TextStyle(
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+        ));
   }
 
   SizedBox barraSuperior_() {
@@ -148,19 +168,24 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(height: screenHeight*0.025, width: screenWidth*0.35,padding: const EdgeInsets.only(left: 4, right: 4),
-                    child: AutoSizeText(
-                      nombre, // Nombre de la chaza
-                      style: const TextStyle(
-                        color: Color(0xff242424),
-                        fontSize: 24.0,
-                        fontFamily: "Inder",
-                        fontWeight: FontWeight.normal,
+                    Container(
+                      height: screenHeight * 0.025,
+                      width: screenWidth * 0.35,
+                      padding: const EdgeInsets.only(left: 4, right: 4),
+                      child: AutoSizeText(
+                        nombre, // Nombre de la chaza
+                        style: const TextStyle(
+                          color: Color(0xff242424),
+                          fontSize: 24.0,
+                          fontFamily: "Inder",
+                          fontWeight: FontWeight.normal,
+                        ),
+                        maxLines:
+                            1, // Define el número máximo de líneas permitidas
+                        overflow: TextOverflow
+                            .fade, // Define cómo se maneja el desbordamiento del texto
                       ),
-                      maxLines: 1, // Define el número máximo de líneas permitidas
-                      overflow: TextOverflow.fade, // Define cómo se maneja el desbordamiento del texto
-
-                    ),),
+                    ),
                     rowUbicacion_(ubicacion),
                     rowPuntuacion_(puntuacion),
                   ],
@@ -313,7 +338,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
 
   Function() _enProgreso(BuildContext context) {
     return () {
-      Navigator.pushNamed(context, '/menu/configuracionTrabajo');
+      Navigator.pushNamed(context, '/progreso');
     };
   }
 
@@ -322,5 +347,10 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
       Navigator.pushNamed(context, '/menu/chazero/personal', arguments: id);
     };
   }
-}
 
+  action() {
+    return () {
+      Navigator.pushNamed(context, '/menu/chazero/registrar/chaza');
+    };
+  }
+}
