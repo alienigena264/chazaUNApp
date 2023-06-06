@@ -53,18 +53,70 @@ Future<String> getTelefonoFromFirestore(String id) async {
   return ''; // Valor predeterminado si no se encuentra el teléfono en Firebase
 }
 
-Future<String> getCorreoFromFirestore(String id) async {
+Future<String?> getFotoUrlFromFirestore(String id) async {
   final document = db.collection('Trabajador').doc(id);
   final snapshot = await document.get();
   if (snapshot.exists) {
     final data = snapshot.data();
-    if (data != null && data['correo'] != null) {
-      return data['correo'];
+    if (data != null && data['foto'] != null) {
+      return data['foto'];
     } else {
-      print('Correo no encontrado en Firebase');
+      print('URL de foto no encontrada en Firebase');
     }
   } else {
     print('Documento no encontrado en Firebase');
   }
-  return ''; // Valor predeterminado si no se encuentra el teléfono en Firebase
+  return null; // Valor predeterminado si no se encuentra la URL de foto en Firebase
+}
+
+Future<List<String>> fetchIDHorario(String idTrabajador) async {
+  try {
+    QuerySnapshot querySnapshot = await db
+        .collection('RelacionTrabajadores')
+        .where('IDTrabajador', isEqualTo: idTrabajador)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // Se encontró al menos un documento con el IDTrabajador especificado
+      String idHorario = querySnapshot.docs[0]['IDHorario'];
+      // Acceder a la colección "Horario" utilizando el IDHorario obtenido
+      return fetchHoras(idHorario);
+    } else {
+      // No se encontró ningún documento con el IDTrabajador especificado
+      print(
+          'No se encontró el IDTrabajador en la colección "RelacionTrabajadores"');
+      return [];
+    }
+  } catch (error) {
+    print('Error al obtener los documentos de RelacionTrabajadores: $error');
+    return [];
+  }
+}
+
+Future<List<String>> fetchHoras(String idHorario) {
+  List<String> horasList = [];
+
+  return db.collection('Horario').doc(idHorario).get().then((documentSnapshot) {
+    if (documentSnapshot.exists) {
+      var data = documentSnapshot.data();
+
+      var dias = data!['Dias'];
+      for (var dia in dias.keys) {
+        var horas = dias[dia];
+        if (horas is List) {
+          for (var hora in horas) {
+            if (hora is String && hora.isNotEmpty) {
+              horasList.add(hora);
+            }
+          }
+        }
+      }
+    } else {
+      throw Exception('El ID de Horario no existe');
+    }
+
+    return horasList;
+  }).catchError((error) {
+    throw Exception('Error al obtener el Horario: $error');
+  });
 }
