@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chazaunapp/Services/services_menuchazero.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
@@ -131,6 +132,9 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
 
   Padding infoChaza_(String nombre, String ubicacion, String puntuacion,
       String pago, String imagen, String id) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenHeight = screenSize.height;
+    final screenWidth = screenSize.width;
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Card(
@@ -147,14 +151,19 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    Container(height: screenHeight*0.025, width: screenWidth*0.35,padding: const EdgeInsets.only(left: 4, right: 4),
+                    child: AutoSizeText(
                       nombre, // Nombre de la chaza
                       style: const TextStyle(
-                          color: Color(0xff242424),
-                          fontSize: 22.0,
-                          fontFamily: "Inder",
-                          fontWeight: FontWeight.normal),
-                    ),
+                        color: Color(0xff242424),
+                        fontSize: 24.0,
+                        fontFamily: "Inder",
+                        fontWeight: FontWeight.normal,
+                      ),
+                      maxLines: 1, // Define el número máximo de líneas permitidas
+                      overflow: TextOverflow.fade, // Define cómo se maneja el desbordamiento del texto
+
+                    ),),
                     rowUbicacion_(ubicacion),
                     rowPuntuacion_(puntuacion),
                   ],
