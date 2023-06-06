@@ -1,5 +1,5 @@
+import 'package:chazaunapp/view/inicio_chazero_vista.dart';
 import 'package:chazaunapp/view/login_vista.dart';
-import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class _PaginaInicio extends State<PaginaInicio> {
               if (FirebaseAuth.instance.currentUser!.providerData
                   .where((element) => element.providerId == 'google.com')
                   .isEmpty) {
-                return MenuChazeroVista(FirebaseAuth.instance.currentUser?.uid.toString().trim());
+                return InicioChazeroVista();
               } else {
                 return const MenuInicialVistaView();
               }

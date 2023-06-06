@@ -1,9 +1,10 @@
-import 'package:chazaunapp/Services/services_mehu_personalcandiadtos_chazero.dart';
-import 'package:chazaunapp/Services/services_menu_personalactivo_chazero.dart';
 import 'package:chazaunapp/view/Sprint2/ver_mas_activos.dart';
 import 'package:chazaunapp/view/Sprint2/ver_mas_postulados.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../Services/Sprint2/services_mehu_personalcandiadtos_chazero.dart';
+import '../../Services/Sprint2/services_menu_personalactivo_chazero.dart';
 
 class PersonalVista extends StatefulWidget {
   const PersonalVista({super.key});
