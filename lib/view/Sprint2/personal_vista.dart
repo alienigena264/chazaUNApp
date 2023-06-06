@@ -195,7 +195,7 @@ class _PersonalVistaState extends State<PersonalVista> {
           if (tipo == 0) {
             Navigator.of(context)
                 .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-              return const VerMasActivos();
+              return VerMasActivos(uid);
             }));
           } else {
             Navigator.of(context)

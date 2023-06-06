@@ -6,17 +6,14 @@ import 'personal_vista.dart';
 const String _title = 'Personal';
 const String id = 'oKnw05Cp9BZ6huQAvJTjW9X4XB62';
 
-class VerMasActivos extends StatefulWidget {
-  const VerMasActivos({super.key});
-
-  @override
-  State<VerMasActivos> createState() => _VerMasActivosState();
-}
-
-class _VerMasActivosState extends State<VerMasActivos> {
+class VerMasActivos extends StatelessWidget {
   List<String> horasSemana = [];
 
   int click = 0;
+
+  final String uid;
+
+  VerMasActivos(this.uid, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -107,20 +104,30 @@ class _VerMasActivosState extends State<VerMasActivos> {
                       width:
                           16), // Agrega un espacio horizontal entre los botones
                   Expanded(
-                      child: ElevatedButton(
-                    onPressed: () async {
-                      String idHorario = await fetchIDHorarioEliminar(id);
-                      if (idHorario.isNotEmpty) {
-                        eliminarDocumentoRelacionTrabajadores(id);
-                        eliminarDocumentoHorario(idHorario);
-                      }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.red),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        //   print("fun");
+                        //   String idHorario = await fetchIDHorarioEliminar(id);
+                        //   if (idHorario.isNotEmpty) {
+                        //     print("funciona?");
+                        //     eliminarDocumentoRelacionTrabajadores(id);
+                        //     eliminarDocumentoHorario(idHorario);
+
+                        //     // Navega a PersonalVista después de eliminar los documentos
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) => PersonalVista()),
+                        //     );
+                        //   }
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.red),
+                      ),
+                      child: const Text('Despedir'),
                     ),
-                    child: const Text('Despedir'),
-                  )),
+                  ),
                 ],
               ),
             ])),
@@ -335,7 +342,7 @@ Column buildColumnDiasSemana(List<List<String>> horasSemana) {
 }
 
 Widget buildDia(String nombreDia, List<String> horas) {
-  String palabras = horas.join(', ');
+  String palabras = horas.isNotEmpty ? horas.join(', ') : 'No disponible';
 
   return Container(
     margin: EdgeInsets.only(bottom: 8),
