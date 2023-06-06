@@ -133,7 +133,9 @@ class VerMasPostulados extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 100.0),
-                                Expanded(child: Text(snapshot.data?['correo'])),
+                                Expanded(
+                                    child: Text(
+                                        snapshot.data!['Martes'].toString())),
                               ],
                             ),
                             const SizedBox(height: 25.0),
@@ -146,7 +148,9 @@ class VerMasPostulados extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 82.0),
-                                Expanded(child: Text(snapshot.data?['correo'])),
+                                Expanded(
+                                    child: Text(snapshot.data!['Miercoles']
+                                        .toString())),
                               ],
                             ),
                             const SizedBox(height: 25.0),
@@ -159,7 +163,9 @@ class VerMasPostulados extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 101.0),
-                                Expanded(child: Text(snapshot.data?['correo'])),
+                                Expanded(
+                                    child: Text(
+                                        snapshot.data!['Jueves'].toString())),
                               ],
                             ),
                             const SizedBox(height: 25.0),
@@ -172,7 +178,9 @@ class VerMasPostulados extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 98.0),
-                                Expanded(child: Text(snapshot.data?['correo'])),
+                                Expanded(
+                                    child: Text(
+                                        snapshot.data!['Viernes'].toString())),
                               ],
                             ),
                             const SizedBox(height: 25.0),
@@ -185,7 +193,9 @@ class VerMasPostulados extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 98.0),
-                                Expanded(child: Text(snapshot.data?['correo'])),
+                                Expanded(
+                                    child: Text(
+                                        snapshot.data!['Sabado'].toString())),
                               ],
                             ),
                             const SizedBox(height: 50.0),
