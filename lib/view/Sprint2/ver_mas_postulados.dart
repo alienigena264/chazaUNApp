@@ -209,6 +209,7 @@ class VerMasPostulados extends StatelessWidget {
                   String mensajeboton=' ha sido acaptado';
                   String textorechazado=nombre + mensajeboton;
                   mostrarMensaje(context,textorechazado);
+                  Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
@@ -222,6 +223,8 @@ class VerMasPostulados extends StatelessWidget {
                   String mensajeboton=' ha sido rechazado';
                   String textoaceptado=nombre + mensajeboton;
                   mostrarMensaje(context, textoaceptado);
+                  Navigator.of(context).pop();
+                  despedir(uid,cid);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,

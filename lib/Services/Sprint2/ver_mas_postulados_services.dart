@@ -25,3 +25,24 @@ Future<Map<String, dynamic>> getinfo(uid, cid) async {
   datosTrabajador.addAll(datosHorario);
   return datosTrabajador;
 }
+
+despedir(uid,cid) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  CollectionReference coleccionRelacion = db.collection('Postulaciones');
+  CollectionReference coleccionHorario = db.collection('Horario');
+
+  var idHorario; 
+  
+      await coleccionRelacion
+      .where('IDTrabajador', isEqualTo: uid)
+      .where('IDChaza', isEqualTo: cid)
+      .get().then((value)=>{
+        idHorario=
+        (value.docs.first.data() as Map<String, dynamic>)['IDHorario'],
+        coleccionRelacion.doc(value.docs.first.id).delete()
+        
+      });
+      var horario=coleccionHorario.doc(idHorario).get();
+  coleccionHorario.doc(idHorario).delete();
+  return horario;
+}
