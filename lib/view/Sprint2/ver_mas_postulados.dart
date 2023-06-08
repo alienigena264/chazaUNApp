@@ -199,11 +199,50 @@ class VerMasPostulados extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 50.0),
+                            Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  // Lógica cuando se presiona el botón "Contratar"
+                  String nombre = snapshot.data?['nombres'];
+                  String mensajeboton=' ha sido acaptado';
+                  String textorechazado=nombre + mensajeboton;
+                  mostrarMensaje(context,textorechazado);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+                child: const Text('Contratar'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // Lógica cuando se presiona el botón "Rechazar"
+                  String nombre = snapshot.data?['nombres'];
+                  String mensajeboton=' ha sido rechazado';
+                  String textoaceptado=nombre + mensajeboton;
+                  mostrarMensaje(context, textoaceptado);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                child: const Text('Rechazar'),
+              ),
+            ],
+          ),
                           ])
                     ]));
                   } else {
                     return const Text('Papi, ya se lo tiró');
                   }
                 }))));
+  }
+  void mostrarMensaje(BuildContext context, String texto) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(texto),
+        duration: const Duration(seconds: 5),
+      ),
+    );
   }
 }
