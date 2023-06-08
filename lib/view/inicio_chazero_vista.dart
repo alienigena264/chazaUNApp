@@ -2,7 +2,6 @@ import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
 import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
@@ -11,7 +10,7 @@ class InicioChazeroVista extends StatefulWidget {
   const InicioChazeroVista({super.key});
 
   @override
-  _InicioChazeroVistaState createState() => _InicioChazeroVistaState();
+  State<InicioChazeroVista> createState() => _InicioChazeroVistaState();
 }
 
 class _InicioChazeroVistaState extends State<InicioChazeroVista> {
@@ -19,8 +18,8 @@ class _InicioChazeroVistaState extends State<InicioChazeroVista> {
 
   static List<Widget> pages = [
     MenuChazeroVista(FirebaseAuth.instance.currentUser?.uid.toString().trim()),
-    InfoCuenta(),
-    ConfiguracionVista(),
+    const InfoCuenta(),
+    const ConfiguracionVista(),
   ];
 
   void _onItemTapped(int index) {
@@ -49,13 +48,13 @@ class _InicioChazeroVistaState extends State<InicioChazeroVista> {
             icon: Icon(Icons.settings),
             label: 'Ajustes',
           ),
-        ], backgroundColor: Colors.white,
+        ],
+        backgroundColor: Colors.white,
         selectedItemColor: colorPrincipal,
         unselectedItemColor: const Color(0xff909090),
         unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
         selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
-        iconSize:
-        34,
+        iconSize: 34,
       ),
     );
   }

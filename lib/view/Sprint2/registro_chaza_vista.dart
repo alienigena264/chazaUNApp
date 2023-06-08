@@ -194,7 +194,7 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
             height: 130,
           ),
         ),
-        Positioned(
+        const Positioned(
           top: 5,
           left: 0,
           width: 160,
@@ -202,7 +202,7 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
+            children: [
               Icon(
                 Icons.add_a_photo,
                 size: 45,
@@ -243,50 +243,53 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
       ),
     );
   }
-accionRegistrar() async {
-  // Verificar que todos los campos estén llenos
-  if (nombreChzaController.text.isEmpty ||
-      ubicacionChzaController.text.isEmpty ||
-      sueldoChzaController.text.isEmpty ||
-      descrpcionChzaController.text.isEmpty ||
-      (foto == 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png')) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Campos incompletos'),
-          content: const Text('Por favor, completa todos los campos. Incluida la foto'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Aceptar'),
-            ),
-          ],
-        );
-      },
-    );
-    return; // Detener la ejecución si hay campos vacíos
-  }
 
-  // Continuar con la acción de registrar si todos los campos están llenos
-  if (FirebaseAuth.instance.currentUser != null) {
-    await registrarChaza(
-      FirebaseAuth.instance.currentUser?.uid,
-      descrpcionChzaController.text,
-      foto,
-      nombreChzaController.text,
-      sueldoChzaController.text,
-      '4,5',
-      ubicacionChzaController.text,
-      valorElegido,
-    );
+  accionRegistrar() async {
+    // Verificar que todos los campos estén llenos
+    if (nombreChzaController.text.isEmpty ||
+        ubicacionChzaController.text.isEmpty ||
+        sueldoChzaController.text.isEmpty ||
+        descrpcionChzaController.text.isEmpty ||
+        (foto ==
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png')) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Campos incompletos'),
+            content: const Text(
+                'Por favor, completa todos los campos. Incluida la foto'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Aceptar'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Detener la ejecución si hay campos vacíos
+    }
 
-    // Mostrar el AlertDialog después de completar el envío de datos
-    mostrarErroe();
+    // Continuar con la acción de registrar si todos los campos están llenos
+    if (FirebaseAuth.instance.currentUser != null) {
+      await registrarChaza(
+        FirebaseAuth.instance.currentUser?.uid,
+        descrpcionChzaController.text,
+        foto,
+        nombreChzaController.text,
+        sueldoChzaController.text,
+        '4,5',
+        ubicacionChzaController.text,
+        valorElegido,
+      );
+
+      // Mostrar el AlertDialog después de completar el envío de datos
+      mostrarErroe();
+    }
   }
-}
 
   void mostrarErroe() {
     showDialog(
@@ -297,7 +300,8 @@ accionRegistrar() async {
             "Registro Exitoso",
             style: TextStyle(fontSize: 35, color: colorPrincipal),
           ),
-          content: const Text("Tu chaza se ha añadido a tu cuenta, Talvez debas reiniciar la app para verla en el inicio",
+          content: const Text(
+              "Tu chaza se ha añadido a tu cuenta, Talvez debas reiniciar la app para verla en el inicio",
               style: TextStyle(fontSize: 25)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
@@ -326,5 +330,4 @@ accionRegistrar() async {
       },
     );
   }
-
 }
