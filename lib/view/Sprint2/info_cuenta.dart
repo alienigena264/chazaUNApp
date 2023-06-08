@@ -152,10 +152,10 @@ class _InfoCuentaState extends State<InfoCuenta> {
   }
 
   Expanded botonCambiar() {
-    return  Expanded(
+    return const Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: const [
+        children: [
           TextButton(
             onPressed: null,
             child: Text(
@@ -325,6 +325,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
   void cambiarDatos(int variablCambiar) async {
     if (variablCambiar == 0) {
       nombre = controllerCampo.text;
+      FirebaseAuth.instance.currentUser?.updateDisplayName(nombre);
     } else if (variablCambiar == 1) {
       apellido = controllerCampo.text;
     } else if (variablCambiar == 2) {
