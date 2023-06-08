@@ -206,7 +206,7 @@ class VerMasPostulados extends StatelessWidget {
                 onPressed: () {
                   // Lógica cuando se presiona el botón "Contratar"
                   String nombre = snapshot.data?['nombres'];
-                  String mensajeboton=' ha sido acaptado';
+                  String mensajeboton=' ha sido contratad@';
                   String textorechazado=nombre + mensajeboton;
                   mostrarMensaje(context,textorechazado);
                 },
@@ -219,7 +219,7 @@ class VerMasPostulados extends StatelessWidget {
                 onPressed: () {
                   // Lógica cuando se presiona el botón "Rechazar"
                   String nombre = snapshot.data?['nombres'];
-                  String mensajeboton=' ha sido rechazado';
+                  String mensajeboton=' ha sido rechazad@';
                   String textoaceptado=nombre + mensajeboton;
                   mostrarMensaje(context, textoaceptado);
                 },
