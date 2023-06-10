@@ -2,7 +2,6 @@ import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
 import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
@@ -11,6 +10,7 @@ class InicioChazeroVista extends StatefulWidget {
   const InicioChazeroVista({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _InicioChazeroVistaState createState() => _InicioChazeroVistaState();
 }
 
@@ -19,8 +19,8 @@ class _InicioChazeroVistaState extends State<InicioChazeroVista> {
 
   static List<Widget> pages = [
     MenuChazeroVista(FirebaseAuth.instance.currentUser?.uid.toString().trim()),
-    InfoCuenta(),
-    ConfiguracionVista(),
+    const InfoCuenta(),
+    const ConfiguracionVista(),
   ];
 
   void _onItemTapped(int index) {
