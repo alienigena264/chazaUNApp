@@ -31,6 +31,7 @@ despedir(uid,cid) async {
   CollectionReference coleccionRelacion = db.collection('Postulaciones');
   CollectionReference coleccionHorario = db.collection('Horario');
 
+  // ignore: prefer_typing_uninitialized_variables
   var idHorario; 
   
       await coleccionRelacion
