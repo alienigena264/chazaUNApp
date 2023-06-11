@@ -60,12 +60,6 @@ contratar(uid, cid) async {
       .get('Dias') as Map<String, dynamic>;
   var snapshotChaza = await coleccionChazas.doc(cid).get();
   String idHorario = snapshotChaza.get('horario');
-  final data = {
-    "IDTrabajador": uid,
-    "IDChaza": cid,
-    "IDHorario": idHorarioTrabajador
-  };
-  coleccionRelacion.add(data);
   //guarda en relacion trabajador
 
   var horarioChaza = (await coleccionHorario.doc(idHorario).get()).get('Dias')
@@ -76,17 +70,28 @@ contratar(uid, cid) async {
     var temp = horario[key];
     for (var i in temp) {
       //actualiza cada día
+      if (i == '') {
+        continue;
+      }
       map.update(
-          i,
-          (value) => {
-                //que no haya nadie en esa posición
-                if (value == "") {uid} else {uid} //por ahora reemplaza
-              },
-          ifAbsent: () => {});
+        i,
+        (value) => {
+          //que no haya nadie en esa posición
+          if (value == "") uid else uid
+          //por ahora reemplaza
+        },
+      );
     }
     //almacena cada día
     dias.addAll({key: map});
+    print({key: map});
   }
   //manda a la bd
-  coleccionHorario.doc(idHorario).set({'Dias': dias});
+  await coleccionHorario.doc(idHorario).set({'Dias': dias});
+  final data = {
+    "IDTrabajador": uid,
+    "IDChaza": cid,
+    "IDHorario": idHorarioTrabajador
+  };
+  coleccionRelacion.add(data);
 }
