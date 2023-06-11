@@ -194,7 +194,7 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
             height: 130,
           ),
         ),
-        Positioned(
+        const Positioned(
           top: 5,
           left: 0,
           width: 160,
@@ -202,7 +202,7 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
+            children: [
               Icon(
                 Icons.add_a_photo,
                 size: 45,
