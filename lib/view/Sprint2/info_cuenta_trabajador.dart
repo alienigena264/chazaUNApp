@@ -191,7 +191,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
   TextButton botonNombre() {
     return TextButton(
         onPressed: () async {
-          final name = await openDialog(cambiarDatos, 0);
+          final name = await openDialog(cambiarDatos, 0, TextInputType.text);
           if (name == null || name.isEmpty) return;
           setState(() => campolleno = name);
         },
@@ -201,7 +201,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
   TextButton botonApellido() {
     return TextButton(
         onPressed: () async {
-          final name = await openDialog(cambiarDatos, 1);
+          final name = await openDialog(cambiarDatos, 1, TextInputType.text);
           if (name == null || name.isEmpty) return;
           setState(() => campolleno = name);
         },
@@ -211,7 +211,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
   TextButton botonTelefono() {
     return TextButton(
         onPressed: () async {
-          final name = await openDialog(cambiarDatos, 2);
+          final name = await openDialog(cambiarDatos, 2, TextInputType.phone);
           if (name == null || name.isEmpty) return;
           setState(() => campolleno = name);
         },
@@ -355,7 +355,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
     }
   }
 
-  Future<String?> openDialog(Function toExecute, int cambiarVariable) =>
+  Future<String?> openDialog(Function toExecute, int cambiarVariable, TextInputType tipoTeclado) =>
       showDialog<String>(
         context: context,
         builder: (context) => AlertDialog(
@@ -364,6 +364,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
             style: TextStyle(fontSize: 10),
           ),
           content: TextField(
+            keyboardType: tipoTeclado,
               controller: controllerCampo,
               autofocus: true,
               decoration: const InputDecoration(hintText: 'Ingrese los datos')),
