@@ -92,7 +92,6 @@ class _PersonalVistaState extends State<PersonalVista> {
                 future: getPostulacionesPorChaza(chazaActual),
                 builder: ((context, snapshot) {
                   if (snapshot.hasData) {
-                    print(snapshot.data);
                     return ListView.builder(
                         itemCount: snapshot.data?.length,
                         itemBuilder: (context, index) {

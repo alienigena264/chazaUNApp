@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<Map<String, dynamic>> getinfo(uid, cid) async {
@@ -43,37 +41,50 @@ rechazar(uid, cid) async {
       .then((value) => {
             idHorario =
                 (value.docs.first.data() as Map<String, dynamic>)['IDHorario'],
-            //coleccionPostulacion.doc(value.docs.first.id).delete()
+            coleccionPostulacion.doc(value.docs.first.id).delete()
           });
-  var horario = coleccionHorario.doc(idHorario).get();
-  //coleccionHorario.doc(idHorario).delete();
-  return horario;
+  var horario = await coleccionHorario.doc(idHorario).get();
+  coleccionHorario.doc(idHorario).delete();
+  return horario.data() as Map<String, dynamic>;
 }
 
 contratar(uid, cid) async {
-  var horario = await rechazar(uid, cid) as Map<String, dynamic>;
-  print(horario);
+  //borra de postulados
+  Map<String, dynamic> horario = await rechazar(uid, cid);
   FirebaseFirestore db = FirebaseFirestore.instance;
-  CollectionReference coleccionRelacion = db.collection('RelacionTrabajadores');
+  CollectionReference coleccionRelacion = db.collection('RelacionTrabajador');
   CollectionReference coleccionHorario = db.collection('Horario');
-  CollectionReference coleccionChazas = db.collection('Chazas');
+  CollectionReference coleccionChazas = db.collection('Chaza');
 
-  var chaza = coleccionChazas.doc(cid).get() as Map<String, dynamic>;
+  var snapshotChaza = await coleccionChazas.doc(cid).get();
+  String idHorario = snapshotChaza.get('horario');
   final data = {"IDTrabajador": uid, "IDChaza": cid};
   coleccionRelacion.add(data);
+  //guarda en relacion trabajador
 
-  Map<String, Map<String, String>> horarioChaza =
-      (coleccionHorario.doc(chaza["horario"] as String).get()
-          as Map<String, dynamic>)['Dias'] as Map<String, Map<String, String>>;
-  horario = horario['Dias'] as Map<String, Array>;
-  print(horario);
-  print(horarioChaza);
+  var horarioChaza = (await coleccionHorario.doc(idHorario).get()).get('Dias')
+      as Map<String, dynamic>;
+  horario = horario['Dias'];
+  Map<String, dynamic> dias = {};
   for (var key in horarioChaza.keys) {
+    print('key $key');
+    var map = horarioChaza[key] as Map<String, dynamic>;
+    print(map);
     var temp = horario[key];
     for (var i in temp) {
-      horarioChaza[key]?.update(i, (value) => uid);
-      print(horarioChaza[key]);
+      print(i);
+      //actualiza cada día
+      map.update(
+          i,
+          (value) => {
+                //que no haya nadie en esa posición
+                if (value == "") {uid} else {uid} //por ahora reemplaza
+              },
+          ifAbsent: () => {});
     }
+    //almacena cada día
+    dias.addAll({key: map});
   }
-  coleccionHorario.doc(chaza['horario'] as String).set({'Dias': horarioChaza});
+  //manda a la bd
+  coleccionHorario.doc(idHorario).set({'Dias': horarioChaza});
 }

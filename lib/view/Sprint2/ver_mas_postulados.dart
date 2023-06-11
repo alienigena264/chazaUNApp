@@ -204,7 +204,7 @@ class VerMasPostulados extends StatelessWidget {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    rechazar(uid, cid);
+                                    contratar(uid, cid);
                                     // Lógica cuando se presiona el botón "Contratar"
                                     String nombre = snapshot.data?['nombres'];
                                     String mensajeboton = ' ha sido contratad@';
