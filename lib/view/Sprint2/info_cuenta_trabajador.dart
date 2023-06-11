@@ -1,3 +1,5 @@
+import 'dart:io';
+
 // ignore: file_names
 
 import 'package:chazaunapp/Services/Sprint2/select_image.dart';
@@ -5,7 +7,6 @@ import 'package:chazaunapp/view/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
-import 'dart:io';
 
 import '../../Services/Sprint2/info_personal_trabajador_services.dart';
 
@@ -220,16 +221,20 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
 
   TextButton botonEmail() {
     return TextButton(
-        onPressed: (){
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('No es posible editar esta información, consulte TyC'))
-          );
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content:
+                  Text('No es posible editar esta información, consulte TyC')));
         }, //cambiarDatos(controllerCampo.text),
         child: otrosDatos('Email', emailOculto));
   }
 
   TextButton botonContrasena() {
-    return TextButton(onPressed: () {Navigator.pushNamed(context, '/contrasena');}, child: otrosDatos('Contraseña', ''));
+    return TextButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/contrasena');
+        },
+        child: otrosDatos('Contraseña', ''));
   }
 
   Row visibilidadCuenta() {
@@ -339,13 +344,15 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
   void cambiarDatos(int variablCambiar) async {
     if (variablCambiar == 0) {
       nombre = controllerCampo.text;
+      //para contactanos UwU
+      FirebaseAuth.instance.currentUser?.updateDisplayName(nombre);
     } else if (variablCambiar == 1) {
       apellido = controllerCampo.text;
     } else if (variablCambiar == 2) {
       telefono = controllerCampo.text;
     } else if (variablCambiar == 3) {
       email = controllerCampo.text;
-    }else if(variablCambiar == 4){
+    } else if (variablCambiar == 4) {
       foto = uploades;
     }
     if (FirebaseAuth.instance.currentUser != null) {
