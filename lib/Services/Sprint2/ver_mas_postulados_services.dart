@@ -43,7 +43,7 @@ rechazar(uid, cid, {bool eliminar = true}) async {
             coleccionPostulacion.doc(value.docs.first.id).delete()
           });
   if (eliminar) {
-    coleccionHorario.doc(idHorario).delete();
+    await coleccionHorario.doc(idHorario).delete();
   }
   return idHorario;
 }
@@ -75,16 +75,11 @@ contratar(uid, cid) async {
       }
       map.update(
         i,
-        (value) => {
-          //que no haya nadie en esa posición
-          if (value == "") uid else uid
-          //por ahora reemplaza
-        },
+        (value) => uid,
       );
     }
     //almacena cada día
     dias.addAll({key: map});
-    print({key: map});
   }
   //manda a la bd
   await coleccionHorario.doc(idHorario).set({'Dias': dias});
@@ -93,5 +88,5 @@ contratar(uid, cid) async {
     "IDChaza": cid,
     "IDHorario": idHorarioTrabajador
   };
-  coleccionRelacion.add(data);
+  return await coleccionRelacion.add(data);
 }
