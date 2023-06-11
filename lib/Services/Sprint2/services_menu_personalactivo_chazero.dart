@@ -38,7 +38,6 @@ Future<List> getPersonalActivoPorChaza(String idChaza) async {
     datosTrabajadorHorario = []; //Reinicia la lista
   }
   Future.delayed(const Duration(milliseconds: 800));
-  print(resultadosTotales);
   return resultadosTotales;
 }
 
