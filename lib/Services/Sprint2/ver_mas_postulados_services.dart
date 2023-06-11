@@ -80,6 +80,7 @@ contratar(uid, cid) async {
     }
     //almacena cada día
     dias.addAll({key: map});
+    // ignore: avoid_print
   }
   //manda a la bd
   await coleccionHorario.doc(idHorario).set({'Dias': dias});
