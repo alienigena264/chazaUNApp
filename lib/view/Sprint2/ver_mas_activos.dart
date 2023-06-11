@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:chazaunapp/Services/Sprint2/ver_mas_activos_services.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
@@ -299,11 +301,11 @@ Widget buildDiasSemana() {
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         // Muestra un indicador de carga mientras se obtienen las horas desde Firebase
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       } else if (snapshot.hasError) {
         // Muestra un mensaje de error si ocurre un error al obtener las horas
         print('Error al obtener las horas desde Firebase: ${snapshot.error}');
-        return Text('Error al obtener las horas');
+        return const Text('Error al obtener las horas');
       } else {
         // Muestra las horas obtenidas desde Firebase
         final horasSemana = snapshot.data ?? [];

@@ -31,7 +31,7 @@ rechazar(uid, cid) async {
   CollectionReference coleccionPostulacion = db.collection('Postulaciones');
   CollectionReference coleccionHorario = db.collection('Horario');
 
-  var idHorario;
+  String idHorario = "";
 
   await coleccionPostulacion
       .where('IDTrabajador', isEqualTo: uid)
@@ -66,12 +66,9 @@ contratar(uid, cid) async {
   horario = horario['Dias'];
   Map<String, dynamic> dias = {};
   for (var key in horarioChaza.keys) {
-    print('key $key');
     var map = horarioChaza[key] as Map<String, dynamic>;
-    print(map);
     var temp = horario[key];
     for (var i in temp) {
-      print(i);
       //actualiza cada día
       map.update(
           i,
