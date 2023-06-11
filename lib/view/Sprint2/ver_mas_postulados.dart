@@ -207,7 +207,7 @@ class VerMasPostulados extends StatelessWidget {
                                     contratar(uid, cid);
                                     // Lógica cuando se presiona el botón "Contratar"
                                     String nombre = snapshot.data?['nombres'];
-                                    String mensajeboton = ' ha sido contratad@';
+                                    String mensajeboton = ' ha sido contratad@, Talvez debas reiniciar la chaza para ver los cambios';
                                     String textorechazado =
                                         nombre + mensajeboton;
                                     mostrarMensaje(context, textorechazado);

@@ -84,6 +84,7 @@ contratar(uid, cid) async {
     }
     //almacena cada día
     dias.addAll({key: map});
+    // ignore: avoid_print
     print({key: map});
   }
   //manda a la bd
