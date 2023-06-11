@@ -152,18 +152,18 @@ class _InfoCuentaState extends State<InfoCuenta> {
   }
 
   Expanded botonCambiar() {
-    return const Expanded(
+    return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: null,
-            child: Text(
+            onPressed: (){},
+            child: const Text(
               "Informacion Personal",
               style: TextStyle(fontSize: 20, color: Color(0xff404040)),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           )
         ],

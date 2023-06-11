@@ -38,7 +38,9 @@ Future<List> getPersonalActivoPorChaza(String idChaza) async {
     datosTrabajadorHorario = []; //Reinicia la lista
   }
   Future.delayed(const Duration(milliseconds: 800));
-  return resultadosTotales;
+  // ignore: avoid_print
+  print(resultadosTotales);
+
 }
 
 List<bool> trabajaDiasActivo(List todos) {

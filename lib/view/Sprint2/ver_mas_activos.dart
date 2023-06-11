@@ -6,11 +6,10 @@ import 'package:flutter/material.dart';
 
 import 'personal_vista.dart';
 
-const String id = 'oKnw05Cp9BZ6huQAvJTjW9X4XB62';
-
 class VerMasActivos extends StatefulWidget {
   final String uid;
-  const VerMasActivos(this.uid, {super.key});
+
+  const VerMasActivos(this.uid, {Key? key}) : super(key: key);
 
   @override
   State<VerMasActivos> createState() => _VerMasActivosState();
@@ -23,6 +22,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
 
   @override
   Widget build(BuildContext context) {
+    String uid = widget.uid;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -40,14 +40,14 @@ class _VerMasActivosState extends State<VerMasActivos> {
             margin: const EdgeInsets.all(16),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(child: avatar()),
+              Center(child: avatar(uid)),
               const SizedBox(height: 25),
               Row(
                 children: [
                   const Text('Nombres:         ',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(width: 10),
-                  Expanded(child: nombre()),
+                  Expanded(child: nombre(uid)),
                 ],
               ),
               const SizedBox(height: 5),
@@ -56,7 +56,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
                   const Text('Apellidos:         ',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(width: 10),
-                  Expanded(child: apellido()),
+                  Expanded(child: apellido(uid)),
                 ],
               ),
               const SizedBox(height: 5),
@@ -65,7 +65,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
                   const Text('Teléfono:          ',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(width: 10),
-                  Expanded(child: telefono()),
+                  Expanded(child: telefono(uid)),
                 ],
               ),
               const SizedBox(height: 5),
@@ -85,7 +85,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
               const SizedBox(
                 height: 10,
               ),
-              buildDiasSemana(),
+              buildDiasSemana(uid),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -158,10 +158,10 @@ class _VerMasActivosState extends State<VerMasActivos> {
   }
 }
 
-Widget avatar() {
+Widget avatar(String uid) {
   return FutureBuilder<String?>(
     future: getFotoUrlFromFirestore(
-        id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+        uid), // Reemplaza 'ID_DEL_USUARIO' con el ID real
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         // Muestra un indicador de carga mientras se obtiene la URL de la foto desde Firebase
@@ -198,10 +198,10 @@ Widget linea() {
   );
 }
 
-Widget nombre() {
+Widget nombre(String uid) {
   return FutureBuilder<String>(
-    future:
-        getNombreFromFirestore(id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    future: getNombreFromFirestore(
+        uid), // Reemplaza 'ID_DEL_USUARIO' con el ID real
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         // Muestra un indicador de carga mientras se obtiene el nombre desde Firebase
@@ -225,10 +225,10 @@ Widget nombre() {
   );
 }
 
-Widget apellido() {
+Widget apellido(String uid) {
   return FutureBuilder<String>(
     future: getApellidosFromFirestore(
-        id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+        uid), // Reemplaza 'ID_DEL_USUARIO' con el ID real
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         // Muestra un indicador de carga mientras se obtienen los apellidos desde Firebase
@@ -256,10 +256,10 @@ Widget apellido() {
   );
 }
 
-Widget telefono() {
+Widget telefono(String uid) {
   return FutureBuilder<String>(
     future: getTelefonoFromFirestore(
-        id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+        uid), // Reemplaza 'ID_DEL_USUARIO' con el ID real
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         // Muestra un indicador de carga mientras se obtiene el teléfono desde Firebase
@@ -295,9 +295,9 @@ Map<String, String> palabrasRelacionadas = {
   'Sábado:    ': '09:00-10:30,   16:00-18:00',
 };
 
-Widget buildDiasSemana() {
+Widget buildDiasSemana(String uid) {
   return FutureBuilder<List<String>>(
-    future: fetchIDHorario(id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    future: fetchIDHorario(uid), // Reemplaza 'ID_DEL_USUARIO' con el ID real
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         // Muestra un indicador de carga mientras se obtienen las horas desde Firebase

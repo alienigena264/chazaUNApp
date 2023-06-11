@@ -239,7 +239,9 @@ class VerMasPostulados extends StatelessWidget {
                           ])
                     ]));
                   } else {
-                    return const Text('Papi, ya se lo tiró');
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   }
                 }))));
   }
