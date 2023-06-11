@@ -26,7 +26,7 @@ Future<Map<String, dynamic>> getinfo(uid, cid) async {
   return datosTrabajador;
 }
 
-rechazar(uid, cid) async {
+rechazar(uid, cid, {bool eliminar = true}) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   CollectionReference coleccionPostulacion = db.collection('Postulaciones');
   CollectionReference coleccionHorario = db.collection('Horario');
@@ -42,28 +42,34 @@ rechazar(uid, cid) async {
                 (value.docs.first.data() as Map<String, dynamic>)['IDHorario'],
             coleccionPostulacion.doc(value.docs.first.id).delete()
           });
-  var horario = await coleccionHorario.doc(idHorario).get();
-  coleccionHorario.doc(idHorario).delete();
-  return horario.data() as Map<String, dynamic>;
+  if (eliminar) {
+    coleccionHorario.doc(idHorario).delete();
+  }
+  return idHorario;
 }
 
 contratar(uid, cid) async {
   //borra de postulados
-  Map<String, dynamic> horario = await rechazar(uid, cid);
+  String idHorarioTrabajador = await rechazar(uid, cid, eliminar: false);
   FirebaseFirestore db = FirebaseFirestore.instance;
-  CollectionReference coleccionRelacion = db.collection('RelacionTrabajador');
+  CollectionReference coleccionRelacion = db.collection('RelacionTrabajadores');
   CollectionReference coleccionHorario = db.collection('Horario');
   CollectionReference coleccionChazas = db.collection('Chaza');
 
+  var horario = (await coleccionHorario.doc(idHorarioTrabajador).get())
+      .get('Dias') as Map<String, dynamic>;
   var snapshotChaza = await coleccionChazas.doc(cid).get();
   String idHorario = snapshotChaza.get('horario');
-  final data = {"IDTrabajador": uid, "IDChaza": cid};
+  final data = {
+    "IDTrabajador": uid,
+    "IDChaza": cid,
+    "IDHorario": idHorarioTrabajador
+  };
   coleccionRelacion.add(data);
   //guarda en relacion trabajador
 
   var horarioChaza = (await coleccionHorario.doc(idHorario).get()).get('Dias')
       as Map<String, dynamic>;
-  horario = horario['Dias'];
   Map<String, dynamic> dias = {};
   for (var key in horarioChaza.keys) {
     var map = horarioChaza[key] as Map<String, dynamic>;

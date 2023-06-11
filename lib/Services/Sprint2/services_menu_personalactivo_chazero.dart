@@ -26,8 +26,9 @@ Future<List> getPersonalActivoPorChaza(String idChaza) async {
         .collection('Trabajador')
         .doc(trabajadores[i].toString().trim())
         .get();
-    datosTrabajadorHorario
-        .add(infotrabajador.data()); // Mete en la lista los datos de cada id
+    var data = infotrabajador.data();
+    data?.addAll({"uid": trabajadores[i]});
+    datosTrabajadorHorario.add(data); // Mete en la lista los datos de cada id
     DocumentSnapshot<Map<String, dynamic>> infohorario =
         await db.collection('Horario').doc(horarios[i].toString().trim()).get();
     datosTrabajadorHorario.add(infohorario
@@ -37,6 +38,7 @@ Future<List> getPersonalActivoPorChaza(String idChaza) async {
     datosTrabajadorHorario = []; //Reinicia la lista
   }
   Future.delayed(const Duration(milliseconds: 800));
+  print(resultadosTotales);
   return resultadosTotales;
 }
 
