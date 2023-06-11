@@ -1,21 +1,23 @@
-// ignore_for_file: avoid_print
-
+import 'package:chazaunapp/Services/Sprint2/ver_mas_activos_services.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:chazaunapp/Services/Sprint2/ver_mas_activos_services.dart';
+
 import 'personal_vista.dart';
 
 const String id = 'oKnw05Cp9BZ6huQAvJTjW9X4XB62';
 
-// ignore: must_be_immutable
-class VerMasActivos extends StatelessWidget {
+class VerMasActivos extends StatefulWidget {
+  final String uid;
+  const VerMasActivos(this.uid, {super.key});
+
+  @override
+  State<VerMasActivos> createState() => _VerMasActivosState();
+}
+
+class _VerMasActivosState extends State<VerMasActivos> {
   List<String> horasSemana = [];
 
   int click = 0;
-
-  final String uid;
-
-  VerMasActivos(this.uid, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -292,29 +294,26 @@ Map<String, String> palabrasRelacionadas = {
 };
 
 Widget buildDiasSemana() {
-  // ignore: avoid_unnecessary_containers
-  return Container(
-    child: FutureBuilder<List<String>>(
-      future: fetchIDHorario(id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // Muestra un indicador de carga mientras se obtienen las horas desde Firebase
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          // Muestra un mensaje de error si ocurre un error al obtener las horas
-          print('Error al obtener las horas desde Firebase: ${snapshot.error}');
-          return const Text('Error al obtener las horas');
-        } else {
-          // Muestra las horas obtenidas desde Firebase
-          final horasSemana = snapshot.data ?? [];
-          print(
-              'horasSemana: $horasSemana'); // Agrega este print para verificar el contenido
-          final horasSemanaList = List<List<String>>.from(
-              horasSemana.map((horas) => horas.split(',')));
-          return buildColumnDiasSemana(horasSemanaList);
-        }
-      },
-    ),
+  return FutureBuilder<List<String>>(
+    future: fetchIDHorario(id), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        // Muestra un indicador de carga mientras se obtienen las horas desde Firebase
+        return CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        // Muestra un mensaje de error si ocurre un error al obtener las horas
+        print('Error al obtener las horas desde Firebase: ${snapshot.error}');
+        return Text('Error al obtener las horas');
+      } else {
+        // Muestra las horas obtenidas desde Firebase
+        final horasSemana = snapshot.data ?? [];
+        print(
+            'horasSemana: $horasSemana'); // Agrega este print para verificar el contenido
+        final horasSemanaList = List<List<String>>.from(
+            horasSemana.map((horas) => horas.split(',')));
+        return buildColumnDiasSemana(horasSemanaList);
+      }
+    },
   );
 }
 

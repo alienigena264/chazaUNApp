@@ -10,8 +10,7 @@ class InicioChazeroVista extends StatefulWidget {
   const InicioChazeroVista({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _InicioChazeroVistaState createState() => _InicioChazeroVistaState();
+  State<InicioChazeroVista> createState() => _InicioChazeroVistaState();
 }
 
 class _InicioChazeroVistaState extends State<InicioChazeroVista> {
@@ -49,13 +48,13 @@ class _InicioChazeroVistaState extends State<InicioChazeroVista> {
             icon: Icon(Icons.settings),
             label: 'Ajustes',
           ),
-        ], backgroundColor: Colors.white,
+        ],
+        backgroundColor: Colors.white,
         selectedItemColor: colorPrincipal,
         unselectedItemColor: const Color(0xff909090),
         unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
         selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
-        iconSize:
-        34,
+        iconSize: 34,
       ),
     );
   }

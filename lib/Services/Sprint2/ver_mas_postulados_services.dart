@@ -31,7 +31,6 @@ rechazar(uid, cid) async {
   CollectionReference coleccionPostulacion = db.collection('Postulaciones');
   CollectionReference coleccionHorario = db.collection('Horario');
 
-  // ignore: prefer_typing_uninitialized_variables
   var idHorario;
 
   await coleccionPostulacion
