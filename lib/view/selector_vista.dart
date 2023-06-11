@@ -17,7 +17,7 @@ class _SelectorVistaState extends State<SelectorVista> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Stack(
-              children: const [
+              children: const  [
                 Text(
                   'Registrarse como:',
                   style: TextStyle(

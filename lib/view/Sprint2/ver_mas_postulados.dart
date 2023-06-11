@@ -211,7 +211,11 @@ class VerMasPostulados extends StatelessWidget {
                                     String textorechazado =
                                         nombre + mensajeboton;
                                     mostrarMensaje(context, textorechazado);
-                                    Navigator.of(context).pop();
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/menu/chazero/personal',
+                                        ModalRoute.withName('/'),
+                                        arguments: cid);
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.green,
@@ -221,13 +225,17 @@ class VerMasPostulados extends StatelessWidget {
                                 ElevatedButton(
                                   onPressed: () {
                                     // Lógica cuando se presiona el botón "Rechazar"
+                                    rechazar(uid, cid);
                                     String nombre = snapshot.data?['nombres'];
                                     String mensajeboton = ' ha sido rechazad@';
                                     String textoaceptado =
                                         nombre + mensajeboton;
                                     mostrarMensaje(context, textoaceptado);
-                                    Navigator.of(context).pop();
-                                    rechazar(uid, cid);
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(
+                                            '/menu/chazero/personal',
+                                            ModalRoute.withName('/'),
+                                            arguments: cid);
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red,
