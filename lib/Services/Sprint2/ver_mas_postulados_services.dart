@@ -82,5 +82,5 @@ contratar(uid, cid) async {
     dias.addAll({key: map});
   }
   //manda a la bd
-  coleccionHorario.doc(idHorario).set({'Dias': horarioChaza});
+  coleccionHorario.doc(idHorario).set({'Dias': dias});
 }
