@@ -92,12 +92,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const PersonalVista()), // Navega a PersonalVista
-                        );
+                        Navigator.of(context).pop();
                       },
                       style: ButtonStyle(
                         backgroundColor:
