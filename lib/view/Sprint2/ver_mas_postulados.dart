@@ -200,46 +200,60 @@ class VerMasPostulados extends StatelessWidget {
                             ),
                             const SizedBox(height: 50.0),
                             Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  // Lógica cuando se presiona el botón "Contratar"
-                  String nombre = snapshot.data?['nombres'];
-                  String mensajeboton=' ha sido contratad@';
-                  String textorechazado=nombre + mensajeboton;
-                  mostrarMensaje(context,textorechazado);
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                ),
-                child: const Text('Contratar'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Lógica cuando se presiona el botón "Rechazar"
-                  String nombre = snapshot.data?['nombres'];
-                  String mensajeboton=' ha sido rechazad@';
-                  String textoaceptado=nombre + mensajeboton;
-                  mostrarMensaje(context, textoaceptado);
-                  Navigator.of(context).pop();
-                  despedir(uid,cid);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                ),
-                child: const Text('Rechazar'),
-              ),
-            ],
-          ),
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    contratar(uid, cid);
+                                    // Lógica cuando se presiona el botón "Contratar"
+                                    String nombre = snapshot.data?['nombres'];
+                                    String mensajeboton = ' ha sido contratad@, Talvez debas reiniciar la chaza para ver los cambios';
+                                    String textorechazado =
+                                        nombre + mensajeboton;
+                                    mostrarMensaje(context, textorechazado);
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/menu/chazero/personal',
+                                        ModalRoute.withName('/'),
+                                        arguments: cid);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.green,
+                                  ),
+                                  child: const Text('Contratar'),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Lógica cuando se presiona el botón "Rechazar"
+                                    rechazar(uid, cid);
+                                    String nombre = snapshot.data?['nombres'];
+                                    String mensajeboton = ' ha sido rechazad@';
+                                    String textoaceptado =
+                                        nombre + mensajeboton;
+                                    mostrarMensaje(context, textoaceptado);
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(
+                                            '/menu/chazero/personal',
+                                            ModalRoute.withName('/'),
+                                            arguments: cid);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                  ),
+                                  child: const Text('Rechazar'),
+                                ),
+                              ],
+                            ),
                           ])
                     ]));
                   } else {
-                    return const Text('Papi, ya se lo tiró');
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   }
                 }))));
   }
+
   void mostrarMensaje(BuildContext context, String texto) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
