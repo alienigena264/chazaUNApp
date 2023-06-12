@@ -291,48 +291,61 @@ Map<String, String> palabrasRelacionadas = {
 };
 
 Widget buildDiasSemana(String uid) {
-  return FutureBuilder<List<String>>(
-    future: fetchIDHorario(uid), // Reemplaza 'ID_DEL_USUARIO' con el ID real
+  return FutureBuilder<List<List<String>>>(
+    future: fetchIDHorario(uid),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        // Muestra un indicador de carga mientras se obtienen las horas desde Firebase
         return const CircularProgressIndicator();
       } else if (snapshot.hasError) {
-        // Muestra un mensaje de error si ocurre un error al obtener las horas
         print('Error al obtener las horas desde Firebase: ${snapshot.error}');
         return const Text('Error al obtener las horas');
       } else {
-        // Muestra las horas obtenidas desde Firebase
         final horasSemana = snapshot.data ?? [];
-        print(
-            'horasSemana: $horasSemana'); // Agrega este print para verificar el contenido
-        final horasSemanaList = List<List<String>>.from(
-            horasSemana.map((horas) => horas.split(',')));
-        return buildColumnDiasSemana(horasSemanaList);
+        print('horasSemana: $horasSemana');
+        return buildColumnDiasSemana(horasSemana);
       }
     },
   );
 }
 
 Column buildColumnDiasSemana(List<List<String>> horasSemana) {
-  List<String> dias = [
-    'Lunes       ',
-    'Martes     ',
-    'Miércoles',
-    'Jueves     ',
-    'Viernes    ',
-    'Sábado    '
-  ];
   List<Widget> columnChildren = [];
 
-  for (int i = 0; i < dias.length; i++) {
-    String dia = dias[i];
-    List<String> horas =
-        (horasSemana.length > i) ? horasSemana[i] : ['No disponible'];
+  // Lunes
+  String diaLunes = 'Lunes:       ';
+  List<String> horasLunes = horasSemana[1] ?? ['No disponible'];
+  columnChildren.add(buildDia(diaLunes, horasLunes));
+  columnChildren.add(const SizedBox(height: 16));
 
-    columnChildren.add(buildDia('$dia:       ', horas));
-    columnChildren.add(const SizedBox(height: 16));
-  }
+  // Martes
+  String diaMartes = 'Martes:     ';
+  List<String> horasMartes = horasSemana[2] ?? ['No disponible'];
+  columnChildren.add(buildDia(diaMartes, horasMartes));
+  columnChildren.add(const SizedBox(height: 16));
+
+  // Miércoles
+  String diaMiercoles = 'Miércoles:';
+  List<String> horasMiercoles = horasSemana[4] ?? ['No disponible'];
+  columnChildren.add(buildDia(diaMiercoles, horasMiercoles));
+  columnChildren.add(const SizedBox(height: 16));
+
+  // Jueves
+  String diaJueves = 'Jueves:     ';
+  List<String> horasJueves = horasSemana[5] ?? ['No disponible'];
+  columnChildren.add(buildDia(diaJueves, horasJueves));
+  columnChildren.add(const SizedBox(height: 16));
+
+  // Viernes
+  String diaViernes = 'Viernes:    ';
+  List<String> horasViernes = horasSemana[3] ?? ['No disponible'];
+  columnChildren.add(buildDia(diaViernes, horasViernes));
+  columnChildren.add(const SizedBox(height: 16));
+
+  // Sábado
+  String diaSabado = 'Sábado:    ';
+  List<String> horasSabado = horasSemana[0] ?? ['No disponible'];
+  columnChildren.add(buildDia(diaSabado, horasSabado));
+  columnChildren.add(const SizedBox(height: 16));
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,

@@ -70,7 +70,7 @@ Future<String?> getFotoUrlFromFirestore(String id) async {
   return null; // Valor predeterminado si no se encuentra la URL de foto en Firebase
 }
 
-Future<List<String>> fetchIDHorario(String idTrabajador) async {
+Future<List<List<String>>> fetchIDHorario(String idTrabajador) async {
   try {
     QuerySnapshot querySnapshot = await db
         .collection('RelacionTrabajadores')
@@ -94,32 +94,30 @@ Future<List<String>> fetchIDHorario(String idTrabajador) async {
   }
 }
 
-Future<List<String>> fetchHoras(String idHorario) {
-  List<String> horasList = [];
+Future<List<List<String>>> fetchHoras(String idHorario) async {
+  Map<String, List<String>> horasMap = {};
 
-  return db.collection('Horario').doc(idHorario).get().then((documentSnapshot) {
+  try {
+    var documentSnapshot = await db.collection('Horario').doc(idHorario).get();
+
     if (documentSnapshot.exists) {
       var data = documentSnapshot.data();
 
       var dias = data!['Dias'];
-      for (var dia in dias.keys) {
-        var horas = dias[dia];
-        if (horas is List) {
-          for (var hora in horas) {
-            if (hora is String && hora.isNotEmpty) {
-              horasList.add(hora);
-            }
-          }
-        }
-      }
+      dias.forEach((dia, horas) {
+        horasMap[dia] = List<String>.from(horas);
+      });
+      print(dias);
     } else {
       throw Exception('El ID de Horario no existe');
     }
-
-    return horasList;
-  }).catchError((error) {
+  } catch (error) {
     throw Exception('Error al obtener el Horario: $error');
-  });
+  }
+
+  List<List<String>> horasSemana = horasMap.values.toList();
+  print(horasSemana);
+  return horasSemana;
 }
 
 Future<String> fetchIDHorarioEliminar(String idTrabajador) async {
