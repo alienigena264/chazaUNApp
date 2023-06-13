@@ -30,6 +30,8 @@ Future<List> getPersonalActivoPorChaza(String idChaza) async {
         .add(infotrabajador.data()); // Mete en la lista los datos de cada id
     DocumentSnapshot<Map<String, dynamic>> infohorario =
         await db.collection('Horario').doc(horarios[i].toString().trim()).get();
+    datosTrabajadorHorario.add(trabajadores[i].toString()); // añade el uid a la lista
+
     datosTrabajadorHorario.add(infohorario
         .data()); //Mete en la misma lista los detalles de cada horario
     resultadosTotales.add(
@@ -42,11 +44,11 @@ Future<List> getPersonalActivoPorChaza(String idChaza) async {
 
 List<bool> trabajaDiasActivo(List todos) {
   List<bool> trabaja = [];
-  trabaja.add(todos[1]['Dias']['Lunes'][0] != "");
-  trabaja.add(todos[1]['Dias']['Martes'][0] != "");
-  trabaja.add(todos[1]['Dias']['Miercoles'][0] != "");
-  trabaja.add(todos[1]['Dias']['Jueves'][0] != "");
-  trabaja.add(todos[1]['Dias']['Viernes'][0] != "");
-  trabaja.add(todos[1]['Dias']['Sabado'][0] != "");
+  trabaja.add(todos[2]['Dias']['Lunes'][0] != "");
+  trabaja.add(todos[2]['Dias']['Martes'][0] != "");
+  trabaja.add(todos[2]['Dias']['Miercoles'][0] != "");
+  trabaja.add(todos[2]['Dias']['Jueves'][0] != "");
+  trabaja.add(todos[2]['Dias']['Viernes'][0] != "");
+  trabaja.add(todos[2]['Dias']['Sabado'][0] != "");
   return trabaja;
 }
