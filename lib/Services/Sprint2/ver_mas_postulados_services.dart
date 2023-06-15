@@ -40,7 +40,9 @@ rechazar(uid, cid, {bool eliminar = true}) async {
       .then((value) => {
             idHorario =
                 (value.docs.first.data() as Map<String, dynamic>)['IDHorario'],
-            coleccionPostulacion.doc(value.docs.first.id).delete()
+            coleccionPostulacion
+                .doc(value.docs.first.id)
+                .update({'Rechazado': true})
           });
   if (eliminar) {
     await coleccionHorario.doc(idHorario).delete();
@@ -83,11 +85,12 @@ contratar(uid, cid) async {
     // ignore: avoid_print
   }
   //manda a la bd
-  await coleccionHorario.doc(idHorario).set({'Dias': dias});
+  await coleccionHorario.doc(idHorario).update({'Dias': dias});
   final data = {
     "IDTrabajador": uid,
     "IDChaza": cid,
-    "IDHorario": idHorarioTrabajador
+    "IDHorario": idHorarioTrabajador,
+    "Estado": true,
   };
   return await coleccionRelacion.add(data);
 }

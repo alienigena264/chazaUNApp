@@ -4,8 +4,6 @@ import 'package:chazaunapp/Services/Sprint2/ver_mas_activos_services.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'personal_vista.dart';
-
 class VerMasActivos extends StatefulWidget {
   final String uid;
 

@@ -12,6 +12,7 @@ Future<List> getPostulacionesPorChaza(String idChaza) async {
       db.collection('Postulaciones');
   QuerySnapshot querypostulaciones = await collectionReferencePostulaciones
       .where('IDChaza', isEqualTo: idChaza)
+      .where('Rechazado', isEqualTo: false)
       .get();
   for (var doc in querypostulaciones.docs) {
     dynamic trabajador = doc.get('IDTrabajador');
