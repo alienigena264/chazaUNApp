@@ -143,7 +143,7 @@ Future<String> fetchIDHorarioEliminar(String idTrabajador) async {
   }
 }
 
-Future<void> eliminarDocumentoRelacionTrabajadores(String idTrabajador) async {
+Future<void> actualizarEstadoRelacionTrabajadores(String idTrabajador) async {
   try {
     QuerySnapshot querySnapshot = await db
         .collection('RelacionTrabajadores')
@@ -151,21 +151,11 @@ Future<void> eliminarDocumentoRelacionTrabajadores(String idTrabajador) async {
         .get();
 
     for (var doc in querySnapshot.docs) {
-      await doc.reference.delete();
+      await doc.reference.update({'Estado': false});
     }
 
-    print('Documento(s) de RelacionTrabajadores eliminado(s) correctamente');
+    print('Estado actualizado correctamente en RelacionTrabajadores');
   } catch (error) {
-    print('Error al eliminar el documento de RelacionTrabajadores: $error');
-  }
-}
-
-Future<void> eliminarDocumentoHorario(String idHorario) async {
-  try {
-    await db.collection('Horario').doc(idHorario).delete();
-
-    print('Documento de Horario eliminado correctamente');
-  } catch (error) {
-    print('Error al eliminar el documento de Horario: $error');
+    print('Error al actualizar el estado en RelacionTrabajadores: $error');
   }
 }

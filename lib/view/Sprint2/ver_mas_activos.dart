@@ -107,20 +107,19 @@ class _VerMasActivosState extends State<VerMasActivos> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () async {
-                        //   print("fun");
-                        //   String idHorario = await fetchIDHorarioEliminar(id);
-                        //   if (idHorario.isNotEmpty) {
-                        //     print("funciona?");
-                        //     eliminarDocumentoRelacionTrabajadores(id);
-                        //     eliminarDocumentoHorario(idHorario);
+                        print("fun");
+                        String idHorario = await fetchIDHorarioEliminar(uid);
+                        if (idHorario.isNotEmpty) {
+                          print("funciona?");
+                          actualizarEstadoRelacionTrabajadores(uid);
 
-                        //     // Navega a PersonalVista después de eliminar los documentos
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //           builder: (context) => PersonalVista()),
-                        //     );
-                        //   }
+                          // Navega a PersonalVista después de eliminar los documentos
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PersonalVista()),
+                          );
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -313,37 +312,37 @@ Column buildColumnDiasSemana(List<List<String>> horasSemana) {
 
   // Lunes
   String diaLunes = 'Lunes:       ';
-  List<String> horasLunes = horasSemana[1] ?? ['No disponible'];
+  List<String> horasLunes = horasSemana[1];
   columnChildren.add(buildDia(diaLunes, horasLunes));
   columnChildren.add(const SizedBox(height: 16));
 
   // Martes
   String diaMartes = 'Martes:     ';
-  List<String> horasMartes = horasSemana[2] ?? ['No disponible'];
+  List<String> horasMartes = horasSemana[2];
   columnChildren.add(buildDia(diaMartes, horasMartes));
   columnChildren.add(const SizedBox(height: 16));
 
   // Miércoles
   String diaMiercoles = 'Miércoles:';
-  List<String> horasMiercoles = horasSemana[4] ?? ['No disponible'];
+  List<String> horasMiercoles = horasSemana[4];
   columnChildren.add(buildDia(diaMiercoles, horasMiercoles));
   columnChildren.add(const SizedBox(height: 16));
 
   // Jueves
   String diaJueves = 'Jueves:     ';
-  List<String> horasJueves = horasSemana[5] ?? ['No disponible'];
+  List<String> horasJueves = horasSemana[5];
   columnChildren.add(buildDia(diaJueves, horasJueves));
   columnChildren.add(const SizedBox(height: 16));
 
   // Viernes
   String diaViernes = 'Viernes:    ';
-  List<String> horasViernes = horasSemana[3] ?? ['No disponible'];
+  List<String> horasViernes = horasSemana[3];
   columnChildren.add(buildDia(diaViernes, horasViernes));
   columnChildren.add(const SizedBox(height: 16));
 
   // Sábado
   String diaSabado = 'Sábado:    ';
-  List<String> horasSabado = horasSemana[0] ?? ['No disponible'];
+  List<String> horasSabado = horasSemana[0];
   columnChildren.add(buildDia(diaSabado, horasSabado));
   columnChildren.add(const SizedBox(height: 16));
 
