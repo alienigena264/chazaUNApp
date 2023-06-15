@@ -72,7 +72,7 @@ class _PersonalVistaState extends State<PersonalVista> {
                         return Column(
                           children: [
                             infoPostulacion_(
-                                snapshot.data![index][0]['uid'],
+                                snapshot.data![index][1],
                                 snapshot.data![index][0]['nombres'],
                                 snapshot.data![index][0]['foto'],
                                 trabajaDiasActivo(snapshot.data![index]),
@@ -98,7 +98,7 @@ class _PersonalVistaState extends State<PersonalVista> {
                           return Column(
                             children: [
                               infoPostulacion_(
-                                  snapshot.data![index][0]['uid'],
+                                  snapshot.data![index][1], // uid
                                   snapshot.data![index][0]['nombres'],
                                   snapshot.data![index][0]['foto'],
                                   trabajaDiasPostulado(snapshot.data![index]),
