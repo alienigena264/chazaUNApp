@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:chazaunapp/Services/Sprint2/ver_mas_activos_services.dart';
+import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -111,12 +112,10 @@ class _VerMasActivosState extends State<VerMasActivos> {
                           print("funciona?");
                           actualizarEstadoRelacionTrabajadores(uid);
 
+                          Navigator.pushNamed(context, '/menu/chazero/personal',
+                              arguments: uid);
+
                           // Navega a PersonalVista después de eliminar los documentos
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PersonalVista()),
-                          );
                         }
                       },
                       style: ButtonStyle(

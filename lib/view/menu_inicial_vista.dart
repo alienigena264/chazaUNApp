@@ -1,5 +1,8 @@
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
 import 'package:chazaunapp/view/colors.dart';
+import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
+import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
+
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +13,29 @@ class MenuInicialVistaView extends StatefulWidget {
   State<MenuInicialVistaView> createState() => _MenuInicialVistaView();
 }
 
+int _currentIndex = 0; // Índice del ítem seleccionado actualmente
+
 class _MenuInicialVistaView extends State<MenuInicialVistaView> {
-  int _currentIndex = 0;
   String idChazero = "D5KI1DaVGA8e9toA0lCq";
+
+  // Función para cambiar el índice y navegar a la pantalla correspondiente
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+      if (_currentIndex == 1) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => InfoCuenta()),
+        );
+      } else if (_currentIndex == 2) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ConfiguracionVista()),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     //para no tener que iniciar sesion cada vez que se oprima atras quite el Pop
@@ -71,7 +94,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               const SizedBox(
                 width: 55,
               ),
-              const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Padding(
                     padding: EdgeInsets.all(15),
                     child: Text(
@@ -134,14 +157,23 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
           ),
         ),
       ),
+      // En el cuerpo de tu widget, en el método build, debajo del BottomNavigationBar:
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onItemTapped, // Función que se ejecuta al hacer clic en un ítem
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home), label: 'Inicio'), //Icono home
+            icon: Icon(Icons.home),
+            label: 'Inicio',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
+            icon: Icon(Icons.person_outline_rounded),
+            label: 'Perfil',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined), label: 'Ajustes')
+            icon: Icon(Icons.settings_outlined),
+            label: 'Ajustes',
+          ),
         ],
         backgroundColor: Colors.white,
         selectedItemColor: colorPrincipal,
@@ -375,13 +407,6 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
         ),
       ),
     );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    _enProgreso(context);
   }
 
   Function() _enProgreso(BuildContext context) {
