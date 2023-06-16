@@ -18,6 +18,8 @@ Future<List<dynamic>> traerInfoGeneral(String? uid) async {
       info.add(docSnapshot.get('primer_nombre'));
       info.add(docSnapshot.get('segundo_apellido'));
       info.add(docSnapshot.get('segundo_nombre'));
+      info.add(docSnapshot.get('FechaCreacion'));
+      info.add(docSnapshot.get('FechaUltimaActualizacion'));
     } else {}
   } catch (e) {
     // ignore: avoid_print
@@ -27,7 +29,8 @@ Future<List<dynamic>> traerInfoGeneral(String? uid) async {
 }
 
 Future<void> actualizarDatos(String? uid, correoActual, contrasena, telefono,
-    pApellido, pNombre, sApellido, sNombre) async {
+    pApellido, pNombre, sApellido, sNombre,Timestamp fechaCreacion) async {
+  DateTime fechaHoy = DateTime.now();
   await db.collection('Chazero').doc(uid).set({
     'contraseña': contrasena,
     'correo': correoActual,
@@ -35,6 +38,8 @@ Future<void> actualizarDatos(String? uid, correoActual, contrasena, telefono,
     'primer_apellido': pApellido,
     'primer_nombre': pNombre,
     'segundo_apellido': sApellido,
-    'segundo_nombre': sNombre
+    'segundo_nombre': sNombre,
+    'FechaCreacion': fechaCreacion,
+    'FechaUltimaActualizacion' : fechaHoy
   });
 }

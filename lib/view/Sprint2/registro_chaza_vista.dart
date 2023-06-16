@@ -202,7 +202,7 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
-            children:const  [
+            children: [
               Icon(
                 Icons.add_a_photo,
                 size: 45,
