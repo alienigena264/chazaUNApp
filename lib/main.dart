@@ -29,6 +29,7 @@ void main() async {
     statusBarColor: Colors.transparent,
   ));
   await Firebase.initializeApp(
+    name: 'ChazaUNApp',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
