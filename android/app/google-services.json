@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "198907188314-51vb27uue62v3mq2tem8n57k9df23r0s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.queremoscancelar.chazaunapp",
+            "certificate_hash": "012622e1256bd80a3433af5a4f6f2512e818a981"
+          }
+        },
+        {
           "client_id": "198907188314-jauk4fivc5q5gjgl39q9nndr28157f6g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -23,11 +31,27 @@
           }
         },
         {
+          "client_id": "198907188314-lp81e4s3muh1pbmh17hrsrdb21avng5e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.queremoscancelar.chazaunapp",
+            "certificate_hash": "f6f300def873078887318794966e8d80edbc8845"
+          }
+        },
+        {
           "client_id": "198907188314-lpkatfai33prhca9fdp4397j2q51q53i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.queremoscancelar.chazaunapp",
             "certificate_hash": "d0b74ec27e8f4c0a5d1bf97332adc4b032e60abd"
+          }
+        },
+        {
+          "client_id": "198907188314-ml8jr442pen1kk3b5sa64ffbtobqgcki.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.queremoscancelar.chazaunapp",
+            "certificate_hash": "903d9971c847e498ff80ba638b52cfe1188ebd0f"
           }
         },
         {
