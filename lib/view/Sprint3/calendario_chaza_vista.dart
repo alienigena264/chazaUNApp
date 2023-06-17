@@ -26,7 +26,7 @@ var horas = {
   '1300': '',
   '1330': '',
   '1400': 'oKnw05Cp9BZ6huQAvJTjW9X4XB62',
-  '1430': '',
+  '1430': 's',
   '1500': 'oKnw05Cp9BZ6huQAvJTjW9X4XB62',
   '1530': '',
   '1600': '',
@@ -147,7 +147,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         print('Hora: $horaKey, Valor: $valor');
         if (valor != '') {
           String? diaIngles = '';
-          
+
           Map<String, String> dias = {
             'Lunes': 'Monday',
             'Martes': 'Tuesday',
@@ -160,18 +160,22 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
 
           diaIngles = dias[key];
 
-          int horaInt = int.parse(horaKey);
-          var horaFormat = horaInt > 999 ? horaKey[0] + horaKey[1] : horaKey[0];
-          var input = '$diaIngles $horaFormat';
-          print(input);
+          var input = '$diaIngles $horaKey';
           List<String> parts = input.split(' ');
           String dayName = parts[0];
-          int hours = int.parse(parts[1]);
+          String time = parts[1];
+
           DateTime now = DateTime.now();
+          int currentHour = now.hour;
+          int currentMinute = now.minute;
           int daysToAdd = _getDaysToAdd(dayName, now.weekday);
 
-          DateTime fecha =
-              DateTime(now.year, now.month, now.day + daysToAdd, hours, 0, 0);
+          int hours2 = int.parse(time.substring(0, 2));
+          int minutes = int.parse(time.substring(2, 4));
+
+          DateTime fecha = DateTime(
+              now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
+
           print(fecha);
           DateTime to = fecha.add(const Duration(minutes: 30));
           meetings.add(Meeting("Ocupado", fecha, to, Colors.blue, false));
@@ -200,6 +204,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         ));
   }
 }
+
 
 int _getDaysToAdd(String dayName, int currentDayOfWeek) {
   int targetDayOfWeek = _getDayOfWeekNumber(dayName.toLowerCase());
