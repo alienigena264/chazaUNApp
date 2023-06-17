@@ -3,13 +3,13 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../colors.dart';
 import 'package:intl/intl.dart';
 
+
 class HorarioChazaVista extends StatefulWidget {
   const HorarioChazaVista({super.key});
 
   @override
   State<HorarioChazaVista> createState() => _HorarioChazaVistaState();
 }
-
 var horas = {
   '800': '',
   '830': '',
@@ -67,6 +67,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           height: 350,
           child: SfCalendar(
             view: CalendarView.week,
+
             firstDayOfWeek: 1,
             timeSlotViewSettings:
                 const TimeSlotViewSettings(startHour: 8, endHour: 20),
@@ -76,6 +77,13 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         const SizedBox(
           height: 10,
         ),
+            timeSlotViewSettings: const TimeSlotViewSettings(
+              startHour: 8,
+              endHour: 20
+            ),
+          ),
+        ),
+        const SizedBox( height: 10,),
         volverButtom()
       ],
     ));
@@ -175,6 +183,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
     }
     return meetings;
   }
+
 
   ElevatedButton volverButtom() {
     return ElevatedButton(
