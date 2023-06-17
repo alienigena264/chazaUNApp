@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../colors.dart';
@@ -134,18 +132,14 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
     final List<Meeting> meetings = <Meeting>[];
     final DateTime today = DateTime.now();
     final DateTime startTime = DateTime(today.year, today.month, today.day, 8);
-    print('La fecha de hoy es');
-    print(today.day);
     final DateTime endTime = startTime.add(const Duration(minutes: 180));
     meetings.add(Meeting(
         'Conference', startTime, endTime, const Color(0xFF0F8644), false));
     //Aca se recorre el mapa de los horarios de la chaza
     for (var key in dias.keys) {
-      print('Día: $key');
       var horasMap = dias[key];
       for (var horaKey in horasMap.keys) {
         var valor = horasMap[horaKey];
-        print('Hora: $horaKey, Valor: $valor');
         if (valor != '') {
           String? diaIngles = '';
 
@@ -174,10 +168,8 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
 
           DateTime fecha = DateTime(
               now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
-
-          print(fecha);
           DateTime to = fecha.add(const Duration(minutes: 30));
-          meetings.add(Meeting("Ocupado", fecha, to, Colors.blue, false));
+          meetings.add(Meeting('Valor', fecha, to, Colors.blue, false));
         }
       }
     }
