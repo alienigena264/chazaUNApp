@@ -16,6 +16,8 @@ Future<List<dynamic>> traerInfoGeneralTrabajo(String? uid) async {
       info.add(docSnapshot.get('foto'));
       info.add(docSnapshot.get('nombres'));
       info.add(docSnapshot.get('telefono'));
+      info.add(docSnapshot.get('FechaCreacion'));
+      info.add(docSnapshot.get('FechaUltimaActualizacion'));
     } else {}
   } catch (e) {
     // ignore: avoid_print
@@ -25,12 +27,16 @@ Future<List<dynamic>> traerInfoGeneralTrabajo(String? uid) async {
 }
 
 Future<void> actualizarDatosTrabajador(
-    String? uid, apellidos, correoActual, foto, nombres, telefono) async {
+    String? uid, apellidos, correoActual, foto, nombres, telefono, Timestamp fechaCrea) async {
+    DateTime fechaActual = DateTime.now();
+    Timestamp fechaHoy = Timestamp.fromDate(fechaActual);
   await db.collection('Trabajador').doc(uid).set({
     'apellidos': apellidos,
     'correo': correoActual,
     'foto': foto,
     'nombres': nombres,
-    'telefono': telefono
+    'telefono': telefono,
+    'FechaCreacion':fechaCrea,
+    'FechaUltimaActualizacion': fechaHoy
   });
 }

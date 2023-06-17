@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:chazaunapp/Services/Sprint2/info_personal_services.dart';
 import 'package:chazaunapp/view/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
@@ -26,6 +27,8 @@ class _InfoCuentaState extends State<InfoCuenta> {
   String telefonoOculto = '';
   String email = '';
   String emailOculto = '';
+  Timestamp fechaCreacion = Timestamp(0, 0);
+  Timestamp fechaUltimaActualizacion =  Timestamp(0, 0);
   List<dynamic> resultado = [];
   @override
   void initState() {
@@ -53,6 +56,8 @@ class _InfoCuentaState extends State<InfoCuenta> {
           contrasena = resultado[0];
           telefono = resultado[2];
           email = resultado[1];
+          fechaCreacion = resultado[7];
+          fechaUltimaActualizacion = resultado [8];
           telefonoOculto = telefono.replaceRange(3, 6, '***');
           emailOculto = email.replaceRange(3, 8, '******');
         }); // Actualizar el estado para mostrar los datos en el widget
@@ -342,7 +347,8 @@ class _InfoCuentaState extends State<InfoCuenta> {
           apellido.split(' ')[0],
           nombre.split(' ')[0],
           apellido.split(' ')[1],
-          nombre.split(' ')[1]);
+          nombre.split(' ')[1],
+          fechaCreacion);
       controllerCampo.text = '';
     }
   }
