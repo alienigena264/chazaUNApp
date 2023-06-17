@@ -411,7 +411,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
 
   Function() _enProgreso(BuildContext context) {
     return () {
-      Navigator.pushNamed(context, '/progreso');
+      Navigator.pushNamed(context, '/menu/configuracionTrabajo');
     };
   }
 }

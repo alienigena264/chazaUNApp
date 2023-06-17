@@ -8,6 +8,7 @@ FirebaseFirestore db = FirebaseFirestore.instance;
 Future<void> registrarChaza(String? uid, String descripcion, imagen, nombre,
     paga, puntuacion, ubicacion, int tipo) async {
   String horario = await crearDocumentoYObtenerNumero();
+  DateTime fecha =DateTime.now();
   await db.collection('Chaza').add({
     'ID_Chazero': uid,
     'descripcion': descripcion,
@@ -17,7 +18,8 @@ Future<void> registrarChaza(String? uid, String descripcion, imagen, nombre,
     'paga': paga,
     'puntuacion': puntuacion,
     'tipo': tipo,
-    'ubicacion': ubicacion
+    'ubicacion': ubicacion,
+    'FechaCreacion':fecha
   });
 }
 Future<String> crearDocumentoYObtenerNumero() async {
