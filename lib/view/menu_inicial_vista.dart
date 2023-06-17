@@ -25,12 +25,12 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
       if (_currentIndex == 1) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InfoCuenta()),
+          MaterialPageRoute(builder: (context) => const InfoCuenta()),
         );
       } else if (_currentIndex == 2) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ConfiguracionVista()),
+          MaterialPageRoute(builder: (context) => const ConfiguracionVista()),
         );
       }
     });
@@ -94,7 +94,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               const SizedBox(
                 width: 55,
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Padding(
                     padding: EdgeInsets.all(15),
                     child: Text(
