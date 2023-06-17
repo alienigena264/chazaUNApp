@@ -252,7 +252,7 @@ class VerMasPostulados extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: () async {
                                   // Lógica cuando se presiona el botón "Rechazar"
-                                  await rechazar(uid, cid, eliminar: false);
+                                  await rechazar(uid, cid);
                                   String nombre = snapshot.data?['nombres'];
                                   String mensajeboton = ' ha sido rechazad@';
                                   String textoaceptado = nombre + mensajeboton;

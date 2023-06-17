@@ -26,13 +26,17 @@ Future<Map<String, dynamic>> getinfo(uid, cid) async {
   return datosTrabajador;
 }
 
-rechazar(uid, cid, {bool eliminar = true}) async {
+rechazar(uid, cid, {bool contratacion = false}) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   CollectionReference coleccionPostulacion = db.collection('Postulaciones');
-  CollectionReference coleccionHorario = db.collection('Horario');
 
   String idHorario = "";
-
+  String campo;
+  if (contratacion) {
+    campo = 'Contratado';
+  } else {
+    campo = 'Rechazado';
+  }
   await coleccionPostulacion
       .where('IDTrabajador', isEqualTo: uid)
       .where('IDChaza', isEqualTo: cid)
@@ -40,19 +44,14 @@ rechazar(uid, cid, {bool eliminar = true}) async {
       .then((value) => {
             idHorario =
                 (value.docs.first.data() as Map<String, dynamic>)['IDHorario'],
-            coleccionPostulacion
-                .doc(value.docs.first.id)
-                .update({'Rechazado': true})
+            coleccionPostulacion.doc(value.docs.first.id).update({campo: true})
           });
-  if (eliminar) {
-    await coleccionHorario.doc(idHorario).delete();
-  }
   return idHorario;
 }
 
 contratar(uid, cid) async {
   //borra de postulados
-  String idHorarioTrabajador = await rechazar(uid, cid, eliminar: false);
+  String idHorarioTrabajador = await rechazar(uid, cid, contratacion: true);
   FirebaseFirestore db = FirebaseFirestore.instance;
   CollectionReference coleccionRelacion = db.collection('RelacionTrabajadores');
   CollectionReference coleccionHorario = db.collection('Horario');

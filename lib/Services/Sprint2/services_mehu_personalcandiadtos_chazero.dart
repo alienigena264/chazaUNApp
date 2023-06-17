@@ -13,6 +13,7 @@ Future<List> getPostulacionesPorChaza(String idChaza) async {
   QuerySnapshot querypostulaciones = await collectionReferencePostulaciones
       .where('IDChaza', isEqualTo: idChaza)
       .where('Rechazado', isEqualTo: false)
+      .where('Contratado', isEqualTo: false)
       .get();
   for (var doc in querypostulaciones.docs) {
     dynamic trabajador = doc.get('IDTrabajador');
@@ -32,7 +33,8 @@ Future<List> getPostulacionesPorChaza(String idChaza) async {
     datosTrabajadorHorario.add(data); // Mete en la lista los datos de cada id
     DocumentSnapshot<Map<String, dynamic>> infohorario =
         await db.collection('Horario').doc(horarios[i].toString().trim()).get();
-    datosTrabajadorHorario.add(trabajadores[i].toString()); // añade el uid a la lista
+    datosTrabajadorHorario
+        .add(trabajadores[i].toString()); // añade el uid a la lista
     datosTrabajadorHorario.add(infohorario
         .data()); //Mete en la misma lista los detalles de cada horario
     resultadosTotales.add(
