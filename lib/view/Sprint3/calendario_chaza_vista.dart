@@ -69,6 +69,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           height: 350,
           child: SfCalendar(
             view: CalendarView.week,
+            firstDayOfWeek: 1,
             timeSlotViewSettings:
                 const TimeSlotViewSettings(startHour: 8, endHour: 20),
             dataSource: MeetingDataSource(_getDataSource(dias)),
@@ -166,8 +167,6 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           String time = parts[1];
 
           DateTime now = DateTime.now();
-          int currentHour = now.hour;
-          int currentMinute = now.minute;
           int daysToAdd = _getDaysToAdd(dayName, now.weekday);
 
           int hours2 = int.parse(time.substring(0, 2));
@@ -205,13 +204,9 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
   }
 }
 
-
 int _getDaysToAdd(String dayName, int currentDayOfWeek) {
   int targetDayOfWeek = _getDayOfWeekNumber(dayName.toLowerCase());
   int daysToAdd = targetDayOfWeek - currentDayOfWeek;
-  if (daysToAdd <= 0) {
-    daysToAdd += 7;
-  }
   return daysToAdd;
 }
 
