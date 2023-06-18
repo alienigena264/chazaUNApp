@@ -5,13 +5,13 @@ import 'dart:math';
 // ignore: unused_import
 import 'package:intl/intl.dart';
 
+
 class HorarioChazaVista extends StatefulWidget {
   const HorarioChazaVista({super.key});
 
   @override
   State<HorarioChazaVista> createState() => _HorarioChazaVistaState();
 }
-
 var horas = {
   '800': '',
   '830': '',
@@ -69,6 +69,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           height: 350,
           child: SfCalendar(
             view: CalendarView.week,
+
             firstDayOfWeek: 1,
             timeSlotViewSettings:
                 const TimeSlotViewSettings(startHour: 8, endHour: 20),
@@ -78,6 +79,13 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         const SizedBox(
           height: 10,
         ),
+            timeSlotViewSettings: const TimeSlotViewSettings(
+              startHour: 8,
+              endHour: 20
+            ),
+          ),
+        ),
+        const SizedBox( height: 10,),
         volverButtom()
       ],
     ));
@@ -184,6 +192,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
   int b = random.nextInt(256); // Genera un valor de 0 a 255 para el componente de azul (blue)
   return Color.fromARGB(255, r, g, b); // Devuelve un color con los valores generados
 }
+
 
   ElevatedButton volverButtom() {
     return ElevatedButton(
