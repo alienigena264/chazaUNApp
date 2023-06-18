@@ -45,8 +45,8 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
                         builder: (context, snapshot2) {
                           if (snapshot2.hasData) {
                             return SfCalendar(
+                                viewNavigationMode: ViewNavigationMode.none,
                                 view: CalendarView.workWeek,
-                                allowViewNavigation: false,
                                 firstDayOfWeek: 1,
                                 timeSlotViewSettings:
                                     const TimeSlotViewSettings(
