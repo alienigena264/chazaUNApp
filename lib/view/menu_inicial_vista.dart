@@ -1,8 +1,8 @@
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
-import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
 import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
-
+import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
+import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
 import 'package:flutter/material.dart';
 
@@ -127,12 +127,14 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                                 height: 250,
                                 width: 300,
                                 child: card(
-                                    // hace una card infochaza con los detalles de cada fila, osea cada chaza
-                                    snapshot.data?[index]['nombre'],
-                                    snapshot.data?[index]['ubicacion'],
-                                    snapshot.data?[index]['puntuacion'],
-                                    snapshot.data?[index]['paga'],
-                                    snapshot.data?[index]['imagen']),
+                                  // hace una card infochaza con los detalles de cada fila, osea cada chaza
+                                  snapshot.data?[index]['nombre'],
+                                  snapshot.data?[index]['ubicacion'],
+                                  snapshot.data?[index]['puntuacion'],
+                                  snapshot.data?[index]['paga'],
+                                  snapshot.data?[index]['imagen'],
+                                  snapshot.data?[index]['horario'],
+                                ),
                               ),
                               const SizedBox(
                                 height: 15,
@@ -289,7 +291,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   // }
 
   Card card(String nombre, String ubicacion, String puntuacion, String pago,
-      String imagen) {
+      String imagen, String idHorario) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -298,7 +300,17 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
             width: 300,
             heightImage: 140,
             imageProvider: NetworkImage(imagen),
-            tags: [_tag('Ingresar', () {})],
+            tags: [
+              _tag('Ingresar', () {
+                Navigator.of(context).push(
+                    MaterialPageRoute<void>(builder: (BuildContext context) {
+                  return HorarioChazaVista(
+                    nombreChaza: nombre,
+                    idHorario: idHorario,
+                  );
+                }));
+              })
+            ],
             title: _title(nombre),
             description: _content(ubicacion, pago),
           ),
@@ -396,7 +408,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
 
   Widget _tag(String tag, VoidCallback onPressed) {
     return InkWell(
-      onTap: _enProgreso(context),
+      onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6), color: colorChazero),

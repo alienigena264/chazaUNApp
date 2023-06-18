@@ -1,58 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
-import '../colors.dart';
-import 'package:intl/intl.dart';
+import 'dart:math';
 
+import 'package:chazaunapp/Services/Sprint3/horarios_chaza_services.dart';
+import 'package:flutter/material.dart';
+// ignore: unused_import
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
+
+import '../colors.dart';
 
 class HorarioChazaVista extends StatefulWidget {
-  const HorarioChazaVista({super.key});
+  final String nombreChaza;
+  final String idHorario;
+  const HorarioChazaVista(
+      {required this.nombreChaza, required this.idHorario, super.key});
 
   @override
   State<HorarioChazaVista> createState() => _HorarioChazaVistaState();
 }
-var horas = {
-  '800': '',
-  '830': '',
-  '900': '',
-  '930': '',
-  '1000': '',
-  '1030': '',
-  '1100': '',
-  '1130': '',
-  '1200': '',
-  '1230': '',
-  '1300': '',
-  '1330': '',
-  '1400': 'oKnw05Cp9BZ6huQAvJTjW9X4XB62',
-  '1430': 's',
-  '1500': 'oKnw05Cp9BZ6huQAvJTjW9X4XB62',
-  '1530': '',
-  '1600': '',
-  '1630': '',
-  '1700': '',
-  '1730': '',
-  '1800': '',
-  '1830': '',
-  '1900': '',
-  '1930': ''
-};
-var dias = {
-  'Lunes': horas,
-  'Martes': horas,
-  'Miercoles': horas,
-  'Jueves': horas,
-  'Viernes': horas,
-  'Sabado': horas,
-};
 
 class _HorarioChazaVistaState extends State<HorarioChazaVista> {
-  String chazaNombre = 'El parchadero';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
       children: [
-        barraSuperior_(chazaNombre),
+        barraSuperior_(widget.nombreChaza),
         const SizedBox(height: 10),
         const Padding(
           padding: EdgeInsets.only(left: 24, top: 10, right: 24),
@@ -62,29 +34,33 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
             textAlign: TextAlign.justify,
           ),
         ),
-        SizedBox(
-          width: 330,
-          height: 350,
-          child: SfCalendar(
-            view: CalendarView.week,
-
-            firstDayOfWeek: 1,
-            timeSlotViewSettings:
-                const TimeSlotViewSettings(startHour: 8, endHour: 20),
-            dataSource: MeetingDataSource(_getDataSource(dias)),
-          ),
-        ),
+        FutureBuilder(
+            future: getHorario(widget.idHorario),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                var data = snapshot.data;
+                return Expanded(
+                    child: SfCalendar(
+                  view: CalendarView.workWeek,
+                  allowViewNavigation: false,
+                  firstDayOfWeek: 1,
+                  timeSlotViewSettings: const TimeSlotViewSettings(
+                      startHour: 8,
+                      endHour: 20,
+                      nonWorkingDays: <int>[DateTime.sunday]),
+                  dataSource: MeetingDataSource(_getDataSource(data!)),
+                ));
+              } else {
+                return Text(widget.idHorario);
+              }
+            }),
         const SizedBox(
           height: 10,
         ),
-            timeSlotViewSettings: const TimeSlotViewSettings(
-              startHour: 8,
-              endHour: 20
-            ),
-          ),
-        ),
-        const SizedBox( height: 10,),
-        volverButtom()
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: volverButtom(),
+        )
       ],
     ));
   }
@@ -136,13 +112,8 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
     );
   }
 
-  List<Meeting> _getDataSource(Map dias) {
-    final List<Meeting> meetings = <Meeting>[];
-    final DateTime today = DateTime.now();
-    final DateTime startTime = DateTime(today.year, today.month, today.day, 8);
-    final DateTime endTime = startTime.add(const Duration(minutes: 180));
-    meetings.add(Meeting(
-        'Conference', startTime, endTime, const Color(0xFF0F8644), false));
+  List<Meeting> _getDataSource(Map<dynamic, dynamic> dias) {
+    List<Meeting> meetings = <Meeting>[];
     //Aca se recorre el mapa de los horarios de la chaza
     for (var key in dias.keys) {
       var horasMap = dias[key];
@@ -162,7 +133,6 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           };
 
           diaIngles = dias[key];
-
           var input = '$diaIngles $horaKey';
           List<String> parts = input.split(' ');
           String dayName = parts[0];
@@ -170,20 +140,38 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
 
           DateTime now = DateTime.now();
           int daysToAdd = _getDaysToAdd(dayName, now.weekday);
-
-          int hours2 = int.parse(time.substring(0, 2));
-          int minutes = int.parse(time.substring(2, 4));
+          int hours2;
+          int minutes;
+          if (time.length == 3) {
+            hours2 = int.parse(time.substring(0, 1));
+            minutes = int.parse(time.substring(1, 3));
+          } else {
+            hours2 = int.parse(time.substring(0, 2));
+            minutes = int.parse(time.substring(2, 4));
+          }
 
           DateTime fecha = DateTime(
               now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
           DateTime to = fecha.add(const Duration(minutes: 30));
-          meetings.add(Meeting('Valor', fecha, to, Colors.blue, false));
+          meetings
+              .add(Meeting('Valor', fecha, to, generarColorRandom(), false));
         }
       }
     }
     return meetings;
   }
 
+  Color generarColorRandom() {
+    Random random = Random();
+    int r = random.nextInt(
+        256); // Genera un valor de 0 a 255 para el componente de rojo (red)
+    int g = random.nextInt(
+        256); // Genera un valor de 0 a 255 para el componente de verde (green)
+    int b = random.nextInt(
+        256); // Genera un valor de 0 a 255 para el componente de azul (blue)
+    return Color.fromARGB(
+        255, r, g, b); // Devuelve un color con los valores generados
+  }
 
   ElevatedButton volverButtom() {
     return ElevatedButton(
