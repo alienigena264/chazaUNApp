@@ -69,7 +69,6 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           height: 350,
           child: SfCalendar(
             view: CalendarView.week,
-
             firstDayOfWeek: 1,
             timeSlotViewSettings:
                 const TimeSlotViewSettings(startHour: 8, endHour: 20),
@@ -78,12 +77,6 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         ),
         const SizedBox(
           height: 10,
-        ),
-            timeSlotViewSettings: const TimeSlotViewSettings(
-              startHour: 8,
-              endHour: 20
-            ),
-          ),
         ),
         const SizedBox( height: 10,),
         volverButtom()
