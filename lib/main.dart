@@ -57,6 +57,10 @@ class MyApp extends StatelessWidget {
         '/menu/chazero/registrar/chaza': (context) => const RegistrarChaza(),
         '/menu/trabajador': (context) => const MenuInicialVistaView(),
         '/menu/trabajador/perfil': (context) => const PerfilTrabajadorVista(),
+        '/menu/trabajador/chaza/horario': (context) => const HorarioChazaVista(
+              nombreChaza: '',
+              idHorario: '',
+            ),
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),
         '/menu/configuracion': (context) => const ConfiguracionVista(),
         '/menu/configuracionTrabajo': (context) =>
