@@ -123,13 +123,15 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           int multiplicador = 1;
           var diasLista = dias.entries.toList();
           // Acceder a un valor en la lista de pares clave-valor
-          var valorActual = diasLista[1].value['1600'];
+          var valorActual = diasLista[1].value[horaKey];
           // Acceder al siguiente valor en la lista de pares clave-valor
           var siguienteValor = diasLista[1].value['1630'];
           if((valorActual == siguienteValor) ){
             print('En efecto son iguales y sirve $valorActual');
-            print(diasLista[1].value['1600']);
-            print(diasLista[1].value['1630']);
+            print(diasLista[4].value[horaKey]);
+            print('En efecto son iguales y no sirve $valorActual');
+            print(diasLista[4].value['1430']);
+            print ("-------------");
             multiplicador +=1;
           }
           String? diaIngles = '';
