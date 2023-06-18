@@ -9,7 +9,6 @@ Future<Map<String, dynamic>> getHorario(String idHorario) async {
   return horario;
 }
 
-
 FirebaseFirestore db = FirebaseFirestore.instance;
 
 Future<String> getNombreTrabajador(String? uid) async {

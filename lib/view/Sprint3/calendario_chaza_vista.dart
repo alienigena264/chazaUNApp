@@ -40,18 +40,26 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
               if (snapshot.hasData) {
                 var data = snapshot.data;
                 return Expanded(
-                    child: SfCalendar(
-                  view: CalendarView.workWeek,
-                  allowViewNavigation: false,
-                  firstDayOfWeek: 1,
-                  timeSlotViewSettings: const TimeSlotViewSettings(
-                      startHour: 8,
-                      endHour: 20,
-                      nonWorkingDays: <int>[DateTime.sunday]),
-                  dataSource: MeetingDataSource(_getDataSource(data!)),
-                ));
+                    child: FutureBuilder(
+                        future: _getDataSource(data!),
+                        builder: (context, snapshot2) {
+                          if (snapshot2.hasData) {
+                            return SfCalendar(
+                                view: CalendarView.workWeek,
+                                allowViewNavigation: false,
+                                firstDayOfWeek: 1,
+                                timeSlotViewSettings:
+                                    const TimeSlotViewSettings(
+                                        startHour: 8,
+                                        endHour: 20,
+                                        nonWorkingDays: <int>[DateTime.sunday]),
+                                dataSource: MeetingDataSource(snapshot2.data!));
+                          } else {
+                            return const Text('Cargando...');
+                          }
+                        }));
               } else {
-                return Text(widget.idHorario);
+                return const Text('Cargando...');
               }
             }),
         const SizedBox(
@@ -112,7 +120,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
     );
   }
 
-  List<Meeting> _getDataSource(Map<dynamic, dynamic> dias) {
+  Future<List<Meeting>> _getDataSource(Map<dynamic, dynamic> dias) async {
     List<Meeting> meetings = <Meeting>[];
     //Aca se recorre el mapa de los horarios de la chaza
     for (var key in dias.keys) {
@@ -126,13 +134,13 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           var valorActual = diasLista[1].value[horaKey];
           // Acceder al siguiente valor en la lista de pares clave-valor
           var siguienteValor = diasLista[1].value['1630'];
-          if((valorActual == siguienteValor) ){
+          if ((valorActual == siguienteValor)) {
             print('En efecto son iguales y sirve $valorActual');
             print(diasLista[4].value[horaKey]);
             print('En efecto son iguales y no sirve $valorActual');
             print(diasLista[4].value['1430']);
-            print ("-------------");
-            multiplicador +=1;
+            print("-------------");
+            multiplicador += 1;
           }
           String? diaIngles = '';
           Map<String, String> dias2 = {
@@ -163,11 +171,11 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
             minutes = int.parse(time.substring(2, 4));
           }
 
+          String nombre = await getNombreTrabajador(valor);
           DateTime fecha = DateTime(
               now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
           DateTime to = fecha.add(Duration(minutes: 30 * multiplicador));
-          meetings
-              .add(Meeting('Ocupado', fecha, to, generarColorRandom(), false));
+          meetings.add(Meeting(nombre, fecha, to, generarColorRandom(), false));
         }
       }
     }
