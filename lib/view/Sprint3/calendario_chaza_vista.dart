@@ -73,8 +73,6 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
             future: getHorario(widget.idHorario),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                print(snapshot.data);
-                print(dias);
                 var data = snapshot.data;
                 return Expanded(
                     child: SfCalendar(
@@ -174,7 +172,6 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           List<String> parts = input.split(' ');
           String dayName = parts[0];
           String time = parts[1];
-          print(time);
 
           DateTime now = DateTime.now();
           int daysToAdd = _getDaysToAdd(dayName, now.weekday);
@@ -187,8 +184,6 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
             hours2 = int.parse(time.substring(0, 2));
             minutes = int.parse(time.substring(2, 4));
           }
-          print(hours2);
-          print(minutes);
 
           DateTime fecha = DateTime(
               now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
