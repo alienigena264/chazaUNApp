@@ -18,41 +18,6 @@ class HorarioChazaVista extends StatefulWidget {
   State<HorarioChazaVista> createState() => _HorarioChazaVistaState();
 }
 
-var horas = {
-  '800': '',
-  '830': '',
-  '900': '',
-  '930': '',
-  '1000': '',
-  '1030': '',
-  '1100': '',
-  '1130': '',
-  '1200': '',
-  '1230': '',
-  '1300': '',
-  '1330': '',
-  '1400': 'oKnw05Cp9BZ6huQAvJTjW9X4XB62',
-  '1430': 's',
-  '1500': 'oKnw05Cp9BZ6huQAvJTjW9X4XB62',
-  '1530': '',
-  '1600': '',
-  '1630': '',
-  '1700': '',
-  '1730': '',
-  '1800': '',
-  '1830': '',
-  '1900': '',
-  '1930': ''
-};
-var dias = {
-  'Lunes': horas,
-  'Martes': horas,
-  'Miercoles': horas,
-  'Jueves': horas,
-  'Viernes': horas,
-  'Sabado': horas,
-};
-
 class _HorarioChazaVistaState extends State<HorarioChazaVista> {
   @override
   Widget build(BuildContext context) {
