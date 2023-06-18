@@ -309,37 +309,37 @@ Column buildColumnDiasSemana(List<List<String>> horasSemana) {
 
   // Lunes
   String diaLunes = 'Lunes:       ';
-  List<String> horasLunes = horasSemana[1];
+  List<String> horasLunes = horasSemana[0];
   columnChildren.add(buildDia(diaLunes, horasLunes));
   columnChildren.add(const SizedBox(height: 16));
 
   // Martes
   String diaMartes = 'Martes:     ';
-  List<String> horasMartes = horasSemana[2];
+  List<String> horasMartes = horasSemana[1];
   columnChildren.add(buildDia(diaMartes, horasMartes));
   columnChildren.add(const SizedBox(height: 16));
 
   // Miércoles
   String diaMiercoles = 'Miércoles:';
-  List<String> horasMiercoles = horasSemana[4];
+  List<String> horasMiercoles = horasSemana[2];
   columnChildren.add(buildDia(diaMiercoles, horasMiercoles));
   columnChildren.add(const SizedBox(height: 16));
 
   // Jueves
   String diaJueves = 'Jueves:     ';
-  List<String> horasJueves = horasSemana[5];
+  List<String> horasJueves = horasSemana[3];
   columnChildren.add(buildDia(diaJueves, horasJueves));
   columnChildren.add(const SizedBox(height: 16));
 
   // Viernes
   String diaViernes = 'Viernes:    ';
-  List<String> horasViernes = horasSemana[3];
+  List<String> horasViernes = horasSemana[4];
   columnChildren.add(buildDia(diaViernes, horasViernes));
   columnChildren.add(const SizedBox(height: 16));
 
   // Sábado
   String diaSabado = 'Sábado:    ';
-  List<String> horasSabado = horasSemana[0];
+  List<String> horasSabado = horasSemana[5];
   columnChildren.add(buildDia(diaSabado, horasSabado));
   columnChildren.add(const SizedBox(height: 16));
 
@@ -350,7 +350,7 @@ Column buildColumnDiasSemana(List<List<String>> horasSemana) {
 }
 
 Widget buildDia(String nombreDia, List<String> horas) {
-  String palabras = horas.isNotEmpty ? horas.join(', ') : 'No disponible';
+  String palabras = horas.isNotEmpty ? horas.join(', ') : '';
 
   return Container(
     margin: const EdgeInsets.only(bottom: 8),
