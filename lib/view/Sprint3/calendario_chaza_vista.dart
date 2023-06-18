@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../colors.dart';
+import 'dart:math';
+// ignore: unused_import
 import 'package:intl/intl.dart';
 
 class HorarioChazaVista extends StatefulWidget {
@@ -169,12 +171,19 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           DateTime fecha = DateTime(
               now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
           DateTime to = fecha.add(const Duration(minutes: 30));
-          meetings.add(Meeting('Valor', fecha, to, Colors.blue, false));
+          meetings.add(Meeting('Valor', fecha, to, generarColorRandom(), false));
         }
       }
     }
     return meetings;
   }
+  Color generarColorRandom() {
+  Random random = Random();
+  int r = random.nextInt(256); // Genera un valor de 0 a 255 para el componente de rojo (red)
+  int g = random.nextInt(256); // Genera un valor de 0 a 255 para el componente de verde (green)
+  int b = random.nextInt(256); // Genera un valor de 0 a 255 para el componente de azul (blue)
+  return Color.fromARGB(255, r, g, b); // Devuelve un color con los valores generados
+}
 
   ElevatedButton volverButtom() {
     return ElevatedButton(
