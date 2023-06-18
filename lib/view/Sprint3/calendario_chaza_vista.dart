@@ -120,9 +120,20 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
       for (var horaKey in horasMap.keys) {
         var valor = horasMap[horaKey];
         if (valor != '') {
+          int multiplicador = 1;
+          var diasLista = dias.entries.toList();
+          // Acceder a un valor en la lista de pares clave-valor
+          var valorActual = diasLista[1].value['1600'];
+          // Acceder al siguiente valor en la lista de pares clave-valor
+          var siguienteValor = diasLista[1].value['1630'];
+          if((valorActual == siguienteValor) ){
+            print('En efecto son iguales y sirve $valorActual');
+            print(diasLista[1].value['1600']);
+            print(diasLista[1].value['1630']);
+            multiplicador +=1;
+          }
           String? diaIngles = '';
-
-          Map<String, String> dias = {
+          Map<String, String> dias2 = {
             'Lunes': 'Monday',
             'Martes': 'Tuesday',
             'Miercoles': 'Wednesday',
@@ -132,7 +143,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
             'Domingo': 'Sunday',
           };
 
-          diaIngles = dias[key];
+          diaIngles = dias2[key];
           var input = '$diaIngles $horaKey';
           List<String> parts = input.split(' ');
           String dayName = parts[0];
@@ -152,9 +163,9 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
 
           DateTime fecha = DateTime(
               now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
-          DateTime to = fecha.add(const Duration(minutes: 30));
+          DateTime to = fecha.add(Duration(minutes: 30 * multiplicador));
           meetings
-              .add(Meeting('Valor', fecha, to, generarColorRandom(), false));
+              .add(Meeting('Ocupado', fecha, to, generarColorRandom(), false));
         }
       }
     }
