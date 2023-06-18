@@ -15,10 +15,7 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
 
   @override
   Widget build(BuildContext context) {
-    chaza = ModalRoute
-        .of(context)
-        ?.settings
-        .arguments as String;
+    chaza = ModalRoute.of(context)?.settings.arguments as String;
     return Scaffold(
       backgroundColor: colorBackground,
       body: Column(children: [
@@ -26,27 +23,29 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
         const SizedBox(
           height: 15,
         ),
-        FutureBuilder(future: getChaza(chaza), builder: ((context, snapshot) {
-          if (snapshot.hasData) {
-            return informacion_(
-                snapshot.data?['nombre'], snapshot.data?['descripcion'],
-                snapshot.data?['paga'], snapshot.data?['ubicacion'],
-                snapshot.data?['puntuacion'], snapshot.data?['imagen']);
-          }
-          else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        }))
+        FutureBuilder(
+            future: getChaza(chaza),
+            builder: ((context, snapshot) {
+              if (snapshot.hasData) {
+                return informacion_(
+                    snapshot.data?['nombre'],
+                    snapshot.data?['descripcion'],
+                    snapshot.data?['paga'],
+                    snapshot.data?['ubicacion'],
+                    snapshot.data?['puntuacion'],
+                    snapshot.data?['imagen']);
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }))
       ]),
     );
   }
 
   Stack barraConfiguracion_() {
-    final screenSize = MediaQuery
-        .of(context)
-        .size;
+    final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
     final screenWidth = screenSize.width;
     return Stack(children: [
@@ -68,13 +67,12 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
     ]);
   }
 
-  Column informacion_(String nombre, String descripcion, String pago,
+  Padding informacion_(String nombre, String descripcion, String pago,
       String ubicacion, String puntuacion, String imagen) {
-    final screenSize = MediaQuery
-        .of(context)
-        .size;
+    final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
-    return Column(
+    return Padding(padding: EdgeInsets.all(10.0),child:
+    Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -87,20 +85,32 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
             height: screenHeight * 0.38,
           ),
         ),
-        SizedBox(height: screenHeight*0.015,),
+        SizedBox(
+          height: screenHeight * 0.015,
+        ),
         nombreyPago(nombre, pago),
-        SizedBox(height: screenHeight*0.01,),
+        SizedBox(
+          height: screenHeight * 0.01,
+        ),
         rowUbicacion_(ubicacion),
         Divider(thickness: 1.3),
         rowPuntuacion_(puntuacion),
         Divider(thickness: 1.3),
-        SizedBox(height: 1.8,),
-        _descripcion(descripcion)
+        SizedBox(
+          height: 1.8,
+        ),
+        _descripcion(descripcion),
+        SizedBox(height: screenHeight * 0.02),
+        horarioBoton_(),
+        SizedBox(height: screenHeight * 0.015),
+        postularseBoton_()
       ],
-    );
+    ),);
   }
 
   Row nombreyPago(String nombre, String pago) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       mainAxisSize: MainAxisSize.max,
@@ -113,34 +123,40 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
               fontFamily: "Inder",
               fontWeight: FontWeight.normal),
         ),
-        Text(
-          pago,
-          style: const TextStyle(
-              color: colorTrabajador,
-              fontSize: 32.0,
-              fontFamily: "Inder",
-              fontWeight: FontWeight.normal),
-        ),
-        Text("/Hora", style: const TextStyle(
-            color: Color(0xff444444),
-            fontSize: 18.0,
-            fontFamily: "Inder",
-            fontWeight: FontWeight.normal),)
+        Row(
+          children: [
+            Text(
+              pago,
+              style: const TextStyle(
+                  color: colorTrabajador,
+                  fontSize: 32.0,
+                  fontFamily: "Inder",
+                  fontWeight: FontWeight.normal),
+            ),
+            SizedBox(width: screenWidth*0.013,),
+            Text(
+              "/Hora",
+              style: const TextStyle(
+                  color: Color(0xff444444),
+                  fontSize: 18.0,
+                  fontFamily: "Inder",
+                  fontWeight: FontWeight.normal),
+            )
+          ],
+        )
       ],
     );
   }
 
   Row rowUbicacion_(String ubicacion) {
-    final screenSize = MediaQuery
-        .of(context)
-        .size;
+    final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     //row para juntar el icono y el texto
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(width: screenWidth*0.02),
+        SizedBox(width: screenWidth * 0.02),
         const Icon(Icons.location_on_rounded,
             color: Color(0xff919191), size: 17.0),
         Text(
@@ -157,15 +173,13 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
 
   Row rowPuntuacion_(String puntuacion) {
     //row para juntar el icono y el texto
-    final screenSize = MediaQuery
-        .of(context)
-        .size;
+    final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(width: screenWidth*0.02),
+        SizedBox(width: screenWidth * 0.02),
         const Icon(
           Icons.star,
           color: colorChazero,
@@ -183,34 +197,77 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
     );
   }
 
-  Column _descripcion(String descripcion){
-    final screenSize = MediaQuery
-        .of(context)
-        .size;
+  Column _descripcion(String descripcion) {
+    final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(mainAxisSize: MainAxisSize.max,mainAxisAlignment: MainAxisAlignment.start,
-        children: [SizedBox(width: screenWidth*0.02),Text('Descripcion',
-          style: const TextStyle(
-              color: Colors.black,
-              fontSize: 23.0,
-              fontFamily: "Inder",
-              fontWeight: FontWeight.normal),)],),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(width: screenWidth * 0.02),
+            Text(
+              'Descripcion',
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 23.0,
+                  fontFamily: "Inder",
+                  fontWeight: FontWeight.normal),
+            )
+          ],
+        ),
         Text(
           descripcion,
           maxLines: null,
-          textAlign: TextAlign.center
-          ,style: const TextStyle(
-            color: Colors.black,
-            fontSize: 17,
-            fontFamily: "Inder"
-          ),
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              color: Colors.black, fontSize: 17, fontFamily: "Inder"),
         )
       ],
     );
+  }
+
+  ElevatedButton horarioBoton_() {
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
+    return ElevatedButton(
+        onPressed: _enProgreso(context),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colorPrincipal,
+          minimumSize: Size(screenWidth * 0.85, screenHeight * 0.063),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+        ),
+        child: const Text(
+          "Ver horario de la chaza",
+          style:
+              TextStyle(color: Colors.white, fontSize: 22, fontFamily: "Inder"),
+        ));
+  }
+
+  ElevatedButton postularseBoton_() {
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
+    return ElevatedButton(
+        onPressed: _enProgreso(context),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colorPrincipal,
+          minimumSize: Size(screenWidth * 0.85, screenHeight * 0.064),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+        ),
+        child: const Text(
+          "Aplicar al puesto",
+          style:
+              TextStyle(color: Colors.white, fontSize: 22, fontFamily: "Inder"),
+        ));
   }
 
   TextButton volverBoton_() {
@@ -222,6 +279,12 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
         color: Colors.white,
       ),
     );
+  }
+
+  Function() _enProgreso(BuildContext context) {
+    return () {
+      Navigator.pushNamed(context, '/menu/configuracionTrabajo');
+    };
   }
 
   volverInicio_() {
