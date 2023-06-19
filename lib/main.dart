@@ -9,6 +9,8 @@ import 'package:chazaunapp/view/Sprint2/perfil_trabajador_vista.dart';
 import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
 import 'package:chazaunapp/view/Sprint2/registro_chaza_vista.dart';
 import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
+import 'package:chazaunapp/view/Sprint3/info_chaza_vista.dart';
+import 'package:chazaunapp/view/Sprint3/horarios_chaza_chazero.dart';
 // ignore: unused_import
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
@@ -53,6 +55,8 @@ class MyApp extends StatelessWidget {
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),
         '/registro/chazero': (context) => const RegistroChazeroVista(),
         '/menu/chazero': (context) => const MenuChazeroVista(""),
+        '/menu/chazero/horario': (context) =>
+            const HorarioChazaChazeroVista(nombreChaza: "", idHorario: ""),
         '/menu/chazero/personal': (context) => const PersonalVista(),
         '/menu/chazero/registrar/chaza': (context) => const RegistrarChaza(),
         '/menu/trabajador': (context) => const MenuInicialVistaView(),
@@ -70,7 +74,8 @@ class MyApp extends StatelessWidget {
         '/menu/configuracion/infoPersonalChazero': (context) =>
             const InfoCuenta(),
         '/menu/configuracion/infoPersonalTrabajador': (context) =>
-            const InfoCuentaTrabajador()
+            const InfoCuentaTrabajador(),
+        '/menu/chazas/informacion': (context) => InfoChazaVista()
       },
     );
   }

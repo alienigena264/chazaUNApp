@@ -1,10 +1,11 @@
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
-import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
-import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
 import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
 import 'package:flutter/material.dart';
+
+import 'Sprint2/configuracion_trabajador_vista.dart';
+import 'Sprint2/info_cuenta_trabajador.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
   const MenuInicialVistaView({super.key});
@@ -18,8 +19,6 @@ int filtroTipo =
     3; // Valor inicial que representa el filtro inicial (0 = todos los tipos)
 
 class _MenuInicialVistaView extends State<MenuInicialVistaView> {
-  String idChazero = "D5KI1DaVGA8e9toA0lCq";
-
   // Función para cambiar el índice y navegar a la pantalla correspondiente
   void _onItemTapped(int index) {
     setState(() {
@@ -27,12 +26,13 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
       if (_currentIndex == 1) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const InfoCuenta()),
+          MaterialPageRoute(builder: (context) => const InfoCuentaTrabajador()),
         );
       } else if (_currentIndex == 2) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ConfiguracionVista()),
+          MaterialPageRoute(
+              builder: (context) => const ConfiguracionTrabajoVista()),
         );
       }
     });
@@ -54,8 +54,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     height: 186.0,
                     child: Container(
                       decoration: const BoxDecoration(
-                        color:
-                            colorPrincipal, // Establece el color de fondo del contenedor con el texto
+                        color: colorPrincipal,
+                        // Establece el color de fondo del contenedor con el texto
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(50.0),
                         ),
@@ -166,7 +166,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
       // En el cuerpo de tu widget, en el método build, debajo del BottomNavigationBar:
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: _onItemTapped, // Función que se ejecuta al hacer clic en un ítem
+        onTap: _onItemTapped,
+        // Función que se ejecuta al hacer clic en un ítem
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -407,7 +408,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   // }
 
   Card card(String nombre, String ubicacion, String puntuacion, String pago,
-      String imagen, String idHorario) {
+      String imagen, String id) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -416,17 +417,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
             width: 300,
             heightImage: 140,
             imageProvider: NetworkImage(imagen),
-            tags: [
-              _tag('Ingresar', () {
-                Navigator.of(context).push(
-                    MaterialPageRoute<void>(builder: (BuildContext context) {
-                  return HorarioChazaVista(
-                    nombreChaza: nombre,
-                    idHorario: idHorario,
-                  );
-                }));
-              })
-            ],
+            tags: [_tag(id, 'Ingresar', () {})],
             title: _title(nombre),
             description: _content(ubicacion, pago),
           ),
@@ -500,7 +491,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
 
   Widget _tag(String tag, VoidCallback onPressed) {
     return InkWell(
-      onTap: onPressed,
+      onTap: pantallaInfoChaza(id),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6), color: colorChazero),
@@ -516,6 +507,12 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   Function() _enProgreso(BuildContext context) {
     return () {
       Navigator.pushNamed(context, '/menu/configuracionTrabajo');
+    };
+  }
+
+  pantallaInfoChaza(String id) {
+    return () {
+      Navigator.pushNamed(context, '/menu/chazas/informacion', arguments: id);
     };
   }
 }
