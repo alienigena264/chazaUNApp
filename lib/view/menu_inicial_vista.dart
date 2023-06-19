@@ -2,6 +2,7 @@ import 'package:chazaunapp/Services/services_menu_inicial.dart';
 import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'Sprint2/configuracion_trabajador_vista.dart';
@@ -13,6 +14,8 @@ class MenuInicialVistaView extends StatefulWidget {
   @override
   State<MenuInicialVistaView> createState() => _MenuInicialVistaView();
 }
+
+String? userId = FirebaseAuth.instance.currentUser?.uid.toString().trim();
 
 int _currentIndex = 0; // Índice del ítem seleccionado actualmente
 int filtroTipo =
@@ -376,37 +379,6 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
     );
   }
 
-  // ListView chazas(String nombre, String ubicacion, String puntuacion,
-  //     String pago, String imagen) {
-  //   return ListView.separated(
-  //     separatorBuilder: (BuildContext context, int index) {
-  //       return const SizedBox(height: 30);
-  //     },
-  //     shrinkWrap: true,
-  //     scrollDirection: Axis.vertical,
-  //     itemCount: chazaList.length,
-  //     itemBuilder: (ontext, index) {
-  //       return Column(
-  //         children: [
-  //           SizedBox(
-  //             height: 200,
-  //             child: card(
-  //                 // hace una card infochaza con los detalles de cada fila, osea cada chaza
-  //                 nombre,
-  //                 ubicacion,
-  //                 puntuacion,
-  //                 pago,
-  //                 imagen),
-  //           ),
-  //           const SizedBox(
-  //             height: 15,
-  //           )
-  //         ], //Espacio entre las cards
-  //       );
-  //     },
-  //   );
-  // }
-
   Card card(String nombre, String ubicacion, String puntuacion, String pago,
       String imagen, String id) {
     return Card(
@@ -424,29 +396,6 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
           const SizedBox(width: 12),
         ],
       ),
-    );
-  }
-
-  BottomNavigationBar barraChazero() {
-    //La barra de opciones inferior
-    return BottomNavigationBar(
-      currentIndex: _currentIndex,
-      onTap: _onItemTapped,
-      items: const [
-        BottomNavigationBarItem(
-            icon: Icon(Icons.home), label: 'Inicio'), //Icono home
-        BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline_rounded), label: 'Perfil'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined), label: 'Ajustes')
-      ],
-      backgroundColor: Colors.white,
-      selectedItemColor: colorPrincipal,
-      unselectedItemColor: const Color(0xff909090),
-      unselectedLabelStyle: const TextStyle(fontFamily: "Inder"),
-      selectedLabelStyle: const TextStyle(fontFamily: "Inder"),
-      iconSize:
-          34, //Detalles del color del item seleccionado y la fuente de lo labels
     );
   }
 
@@ -489,7 +438,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
         ]);
   }
 
-  Widget _tag(String tag, VoidCallback onPressed) {
+  Widget _tag(String id, String tag, VoidCallback onPressed) {
     return InkWell(
       onTap: pantallaInfoChaza(id),
       child: Container(

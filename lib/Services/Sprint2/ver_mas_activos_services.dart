@@ -110,7 +110,7 @@ Future<List<List<String>>> fetchHoras(String idHorario) async {
         'Miercoles',
         'Jueves',
         'Viernes',
-        'Sábado'
+        'Sabado'
       ];
       for (var dia in orderedDias) {
         if (dias.containsKey(dia)) {
