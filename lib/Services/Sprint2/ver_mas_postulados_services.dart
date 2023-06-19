@@ -26,7 +26,7 @@ Future<Map<String, dynamic>> getinfo(uid, cid) async {
   return datosTrabajador;
 }
 
-rechazar(uid, cid, {bool contratacion = false}) async {
+rechazar(uid, cid, {bool contratacion = false, bool success = false}) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   CollectionReference coleccionPostulacion = db.collection('Postulaciones');
   DateTime fechaHoy = DateTime.now();
@@ -46,7 +46,7 @@ rechazar(uid, cid, {bool contratacion = false}) async {
                 (value.docs.first.data() as Map<String, dynamic>)['IDHorario'],
             coleccionPostulacion
                 .doc(value.docs.first.id)
-                .update({campo: true, 'FechaUltimaActualizacion': fechaHoy})
+                .update({campo: success, 'FechaUltimaActualizacion': fechaHoy})
           });
   return idHorario;
 }
@@ -78,7 +78,13 @@ contratar(uid, cid) async {
       }
       map.update(
         i,
-        (value) => uid,
+        (value) {
+          if (value != '') {
+            rechazar(uid, cid, contratacion: true, success: false);
+            throw Exception('LLENO');
+          }
+          return uid;
+        },
       );
     }
     //almacena cada día

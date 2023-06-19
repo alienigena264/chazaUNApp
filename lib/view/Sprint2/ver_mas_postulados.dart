@@ -1,3 +1,4 @@
+import 'package:chazaunapp/Components/error_prompt.dart';
 import 'package:chazaunapp/Services/Sprint2/ver_mas_postulados_services.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
@@ -236,13 +237,21 @@ class VerMasPostulados extends StatelessWidget {
                             children: [
                               ElevatedButton(
                                 onPressed: () async {
-                                  await contratar(uid, cid);
-                                  // Lógica cuando se presiona el botón "Contratar"
-                                  String nombre = snapshot.data?['nombres'];
-                                  String mensajeboton =
-                                      ' ha sido contratad@, Talvez debas reiniciar la chaza para ver los cambios';
-                                  String textorechazado = nombre + mensajeboton;
-                                  goMenu(textorechazado);
+                                  try {
+                                    await contratar(uid, cid);
+                                    // Lógica cuando se presiona el botón "Contratar"
+                                    String nombre = snapshot.data?['nombres'];
+                                    String mensajeboton =
+                                        ' ha sido contratad@, Talvez debas reiniciar la chaza para ver los cambios';
+                                    String textorechazado =
+                                        nombre + mensajeboton;
+                                    goMenu(textorechazado);
+                                  } on Exception catch (_) {
+                                    errorPrompt(
+                                        context,
+                                        'Conflictos en el horario',
+                                        'Resuelvalos para poder contratar');
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.green,
@@ -297,31 +306,39 @@ class VerMasPostulados extends StatelessWidget {
       } else {
         hora = int.parse(i.substring(0, 2));
       }
+      //buscando significa que hay hora de inicio pero no final
       if (!buscando) {
+        //horas tipo xx:30
         if (i.endsWith('30')) {
           if (!lista.contains("${hora + 1}00")) {
-            horarios = "$horarios $hora:30";
+            //si no hay mas de un bloque seguido agrega solo ese bloque
+            horarios = "$horarios $hora:30-${hora + 1}:00";
           } else {
+            //si hay bloques seguidos añade la hora de inicio y busca el final
             horarios = "$horarios $hora:30-";
             buscando = true;
           }
         } else {
+          //lo mismo para horas tipo xx:00
           if (!lista.contains("${hora}30")) {
-            horarios = "$horarios $hora:00";
+            horarios = "$horarios $hora:00-$hora:30";
           } else {
             horarios = "$horarios $hora:00-";
             buscando = true;
           }
         }
       } else {
+        //horas tipo xx:30
         if (i.endsWith('30')) {
           if (!lista.contains("${hora + 1}00")) {
-            horarios = "$horarios$hora:30";
+            //si ya no hay mas agrega la hora final y deja de buscar
+            horarios = "$horarios${hora + 1}:00";
             buscando = false;
           }
         } else {
+          //lo mismo para horas tipo xx:00
           if (!lista.contains("${hora}30")) {
-            horarios = "$horarios$hora:00";
+            horarios = "$horarios$hora:30";
             buscando = false;
           }
         }
