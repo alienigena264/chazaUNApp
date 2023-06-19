@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:math';
 
 import 'package:chazaunapp/Services/Sprint3/horarios_chaza_services.dart';
@@ -209,12 +211,16 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         }
 
         //---------
+        /*
         if (addCita) {
+          var color = generarColorRandom();
+          DateTime to = fecha.add(  Duration(minutes: 30 * multiplicador));
+          meetings.add(Meeting(nombre, fechaGeneral, to, color, false));
           buscando = false;
           multiplicador = 1;
           addCita = false;
           fechaGeneral = fecha;
-        }
+        }*/
         var color = generarColorRandom();
         DateTime to = fecha.add( const Duration(minutes: 30));
         meetings.add(Meeting(nombre, fecha, to, color, false));
