@@ -136,8 +136,8 @@ class VerMasPostulados extends StatelessWidget {
                               ),
                               const SizedBox(width: 107.0),
                               Expanded(
-                                  child:
-                                      Text(snapshot.data!['Lunes'].toString())),
+                                  child: Text(
+                                      mostrarHorario(snapshot.data!['Lunes']))),
                             ],
                           ),
                           Row(
@@ -154,8 +154,8 @@ class VerMasPostulados extends StatelessWidget {
                               ),
                               const SizedBox(width: 100.0),
                               Expanded(
-                                  child: Text(
-                                      snapshot.data!['Martes'].toString())),
+                                  child: Text(mostrarHorario(
+                                      snapshot.data!['Martes']))),
                             ],
                           ),
                           Row(
@@ -172,8 +172,8 @@ class VerMasPostulados extends StatelessWidget {
                               ),
                               const SizedBox(width: 82.0),
                               Expanded(
-                                  child: Text(
-                                      snapshot.data!['Miercoles'].toString())),
+                                  child: Text(mostrarHorario(
+                                      snapshot.data!['Miercoles']))),
                             ],
                           ),
                           Row(
@@ -190,8 +190,8 @@ class VerMasPostulados extends StatelessWidget {
                               ),
                               const SizedBox(width: 101.0),
                               Expanded(
-                                  child: Text(
-                                      snapshot.data!['Jueves'].toString())),
+                                  child: Text(mostrarHorario(
+                                      snapshot.data!['Jueves']))),
                             ],
                           ),
                           Row(
@@ -208,8 +208,8 @@ class VerMasPostulados extends StatelessWidget {
                               ),
                               const SizedBox(width: 98.0),
                               Expanded(
-                                  child: Text(
-                                      snapshot.data!['Viernes'].toString())),
+                                  child: Text(mostrarHorario(
+                                      snapshot.data!['Viernes']))),
                             ],
                           ),
                           Row(
@@ -226,8 +226,8 @@ class VerMasPostulados extends StatelessWidget {
                               ),
                               const SizedBox(width: 98.0),
                               Expanded(
-                                  child: Text(
-                                      snapshot.data!['Sabado'].toString())),
+                                  child: Text(mostrarHorario(
+                                      snapshot.data!['Sabado']))),
                             ],
                           ),
                           const Spacer(),
@@ -282,5 +282,51 @@ class VerMasPostulados extends StatelessWidget {
         duration: const Duration(seconds: 5),
       ),
     );
+  }
+
+  String mostrarHorario(List<dynamic> lista) {
+    String horarios = "";
+    int hora = 0;
+    bool buscando = false;
+    for (String i in lista) {
+      if (i == "") {
+        continue;
+      }
+      if (i.length == 3) {
+        hora = int.parse(i.substring(0, 1));
+      } else {
+        hora = int.parse(i.substring(0, 2));
+      }
+      if (!buscando) {
+        if (i.endsWith('30')) {
+          if (!lista.contains("${hora + 1}00")) {
+            horarios = "$horarios $hora:30";
+          } else {
+            horarios = "$horarios $hora:30-";
+            buscando = true;
+          }
+        } else {
+          if (!lista.contains("${hora}30")) {
+            horarios = "$horarios $hora:00";
+          } else {
+            horarios = "$horarios $hora:00-";
+            buscando = true;
+          }
+        }
+      } else {
+        if (i.endsWith('30')) {
+          if (!lista.contains("${hora + 1}00")) {
+            horarios = "$horarios$hora:30";
+            buscando = false;
+          }
+        } else {
+          if (!lista.contains("${hora}30")) {
+            horarios = "$horarios$hora:00";
+            buscando = false;
+          }
+        }
+      }
+    }
+    return horarios;
   }
 }
