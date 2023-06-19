@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       title: 'ChazaUNApp',
       initialRoute: '/',
       routes: {
-        '/': (context) => const PostuladosChaza(),
+        '/': (context) => PostuladosChaza(),
         //'/': (context) => const PaginaInicio(),
         '/contrasena': (context) => const ContrasenaVista(),
         '/registro/selector': (context) => const SelectorVista(),
