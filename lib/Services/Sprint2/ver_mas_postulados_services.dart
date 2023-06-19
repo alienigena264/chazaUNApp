@@ -29,7 +29,7 @@ Future<Map<String, dynamic>> getinfo(uid, cid) async {
 rechazar(uid, cid, {bool contratacion = false}) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   CollectionReference coleccionPostulacion = db.collection('Postulaciones');
-
+  DateTime fechaHoy = DateTime.now();
   String idHorario = "";
   String campo;
   if (contratacion) {
@@ -44,7 +44,9 @@ rechazar(uid, cid, {bool contratacion = false}) async {
       .then((value) => {
             idHorario =
                 (value.docs.first.data() as Map<String, dynamic>)['IDHorario'],
-            coleccionPostulacion.doc(value.docs.first.id).update({campo: true})
+            coleccionPostulacion
+                .doc(value.docs.first.id)
+                .update({campo: true, 'FechaUltimaActualizacion': fechaHoy})
           });
   return idHorario;
 }
@@ -83,13 +85,18 @@ contratar(uid, cid) async {
     dias.addAll({key: map});
     // ignore: avoid_print
   }
+  DateTime fechaHoy = DateTime.now();
   //manda a la bd
-  await coleccionHorario.doc(idHorario).update({'Dias': dias});
+  await coleccionHorario
+      .doc(idHorario)
+      .update({'Dias': dias, 'FechaUltimaActualizacion': fechaHoy});
   final data = {
     "IDTrabajador": uid,
     "IDChaza": cid,
     "IDHorario": idHorarioTrabajador,
     "Estado": true,
+    "FechaCreacion": fechaHoy,
+    "FechaUltimaActualizacion": fechaHoy,
   };
   return await coleccionRelacion.add(data);
 }
