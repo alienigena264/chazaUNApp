@@ -1,3 +1,4 @@
+import 'package:chazaunapp/Components/error_prompt.dart';
 import 'package:chazaunapp/Services/Sprint2/ver_mas_postulados_services.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
@@ -236,13 +237,21 @@ class VerMasPostulados extends StatelessWidget {
                             children: [
                               ElevatedButton(
                                 onPressed: () async {
-                                  await contratar(uid, cid);
-                                  // Lógica cuando se presiona el botón "Contratar"
-                                  String nombre = snapshot.data?['nombres'];
-                                  String mensajeboton =
-                                      ' ha sido contratad@, Talvez debas reiniciar la chaza para ver los cambios';
-                                  String textorechazado = nombre + mensajeboton;
-                                  goMenu(textorechazado);
+                                  try {
+                                    await contratar(uid, cid);
+                                    // Lógica cuando se presiona el botón "Contratar"
+                                    String nombre = snapshot.data?['nombres'];
+                                    String mensajeboton =
+                                        ' ha sido contratad@, Talvez debas reiniciar la chaza para ver los cambios';
+                                    String textorechazado =
+                                        nombre + mensajeboton;
+                                    goMenu(textorechazado);
+                                  } on Exception catch (_) {
+                                    errorPrompt(
+                                        context,
+                                        'Conflictos en el horario',
+                                        'Resuelvalos para poder contratar');
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.green,
