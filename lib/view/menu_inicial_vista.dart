@@ -1,10 +1,11 @@
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
-import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
-import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
 import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
 import 'package:flutter/material.dart';
+
+import 'Sprint2/configuracion_trabajador_vista.dart';
+import 'Sprint2/info_cuenta_trabajador.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
   const MenuInicialVistaView({super.key});
@@ -25,12 +26,12 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
       if (_currentIndex == 1) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const InfoCuenta()),
+          MaterialPageRoute(builder: (context) => const InfoCuentaTrabajador()),
         );
       } else if (_currentIndex == 2) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ConfiguracionVista()),
+          MaterialPageRoute(builder: (context) => const ConfiguracionTrabajoVista()),
         );
       }
     });

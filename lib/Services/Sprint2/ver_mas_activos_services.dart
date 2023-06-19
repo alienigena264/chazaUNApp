@@ -104,10 +104,22 @@ Future<List<List<String>>> fetchHoras(String idHorario) async {
       var data = documentSnapshot.data();
 
       var dias = data!['Dias'];
-      dias.forEach((dia, horas) {
-        horasMap[dia] = List<String>.from(horas);
-      });
-      print(dias);
+      var orderedDias = [
+        'Lunes',
+        'Martes',
+        'Miercoles',
+        'Jueves',
+        'Viernes',
+        'Sábado'
+      ];
+      for (var dia in orderedDias) {
+        if (dias.containsKey(dia)) {
+          horasMap[dia] = List<String>.from(dias[dia]);
+        } else {
+          horasMap[dia] = [];
+        }
+      }
+      print(orderedDias);
     } else {
       throw Exception('El ID de Horario no existe');
     }
