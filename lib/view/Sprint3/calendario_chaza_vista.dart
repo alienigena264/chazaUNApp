@@ -127,6 +127,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
     DateTime fechaGeneral = DateTime.now();
     int hours2;
     //Aca se recorre el mapa de los horarios de la chaza
+    //para ir en orden
     List<String> keys = [
       "800",
       "830",
@@ -153,6 +154,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
       "1900",
       "1930",
     ];
+    //diaIngles es solo porque flutter/dart/la dependencia trabaja con los dias pero solo si estan en ingles
     Map<String, String> dias2 = {
       'Lunes': 'Monday',
       'Martes': 'Tuesday',
@@ -176,7 +178,6 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         }
         String? diaIngles = '';
         diaIngles = dias2[key];
-        //diaIngles es solo porque flutter/dart/la dependencia trabaja con los dias pero solo si estan en ingles
         var input = '$diaIngles $horaKey';
         List<String> parts = input.split(' ');
         String dayName = parts[0];
@@ -199,39 +200,48 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         DateTime fecha = DateTime(
             now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
 
+        //buscando significa que hay hora de inicio pero no sabemos el final
         if (!buscando) {
+          //funciona diferente por ser base 60 xd
           if (horaKey.endsWith('30')) {
             if (valor != horasMap["${hours2 + 1}00"]) {
+              //si no esta en la siguiente media hora se crea el meeting de solo 1 cuadro
               var color = generarColorRandom();
-              DateTime to = fecha.add(const Duration(minutes: 30));
-              meetings.add(Meeting(nombre, fecha, to, color, false));
+              meetings.add(Meeting(nombre, fecha,
+                  fecha.add(const Duration(minutes: 30)), color, false));
             } else {
+              //si esta la hora de inicio se guarda y buscamos la final
               fechaGeneral = fecha;
               buscando = true;
             }
           } else {
+            //lo mismo de arriba pero ajustado a horas del tipo xx:00
             if (valor != horasMap["${hours2}30"]) {
               var color = generarColorRandom();
-              DateTime to = fecha.add(const Duration(minutes: 30));
-              meetings.add(Meeting(nombre, fecha, to, color, false));
+              meetings.add(Meeting(nombre, fecha,
+                  fecha.add(const Duration(minutes: 30)), color, false));
             } else {
               fechaGeneral = fecha;
               buscando = true;
             }
           }
         } else {
+          //funciona diferente por ser base 60 xd
           if (horaKey.endsWith('30')) {
             if (valor != horasMap["${hours2 + 1}00"]) {
+              //si ya no esta en la proxima media hora se guarda la reunion con la hora inicial y se reinicia el bool
+              //no se necesita reiniciar fechaGeneral porque primero tiene que pasar por la parte de arriba y cambiara automaticamente
               var color = generarColorRandom();
-              DateTime to = fecha.add(const Duration(minutes: 30));
-              meetings.add(Meeting(nombre, fechaGeneral, to, color, false));
+              meetings.add(Meeting(nombre, fechaGeneral,
+                  fecha.add(const Duration(minutes: 30)), color, false));
               buscando = false;
-            }
+            } //no hay else porque sin fecha de finalización no se puede hacer nada
           } else {
+            //lo mismo pero para horas de tipo xx:00
             if (valor != horasMap["${hours2}30"]) {
               var color = generarColorRandom();
-              DateTime to = fecha.add(const Duration(minutes: 30));
-              meetings.add(Meeting(nombre, fechaGeneral, to, color, false));
+              meetings.add(Meeting(nombre, fechaGeneral,
+                  fecha.add(const Duration(minutes: 30)), color, false));
               buscando = false;
             }
           }
