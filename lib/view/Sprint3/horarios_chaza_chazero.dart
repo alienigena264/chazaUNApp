@@ -90,7 +90,7 @@ class _HorarioChazaChazeroVistaState extends State<HorarioChazaChazeroVista> {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  'Horario de la chaza', // el texto que quieres mostrar
+                  'Horario de', // el texto que quieres mostrar
                   style: TextStyle(
                       color: Colors.white, // Establece el color del texto
                       fontSize: 35.0, // Establece el tamaño del texto
