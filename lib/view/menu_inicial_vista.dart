@@ -17,8 +17,6 @@ class MenuInicialVistaView extends StatefulWidget {
 int _currentIndex = 0; // Índice del ítem seleccionado actualmente
 
 class _MenuInicialVistaView extends State<MenuInicialVistaView> {
-  String idChazero = "D5KI1DaVGA8e9toA0lCq";
-
   // Función para cambiar el índice y navegar a la pantalla correspondiente
   void _onItemTapped(int index) {
     setState(() {
@@ -53,8 +51,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     height: 186.0,
                     child: Container(
                       decoration: const BoxDecoration(
-                        color:
-                            colorPrincipal, // Establece el color de fondo del contenedor con el texto
+                        color: colorPrincipal,
+                        // Establece el color de fondo del contenedor con el texto
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(50.0),
                         ),
@@ -119,8 +117,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                         //Hace una lista de todas las filas que había en la matriz chazas
                         shrinkWrap: true,
                         padding: const EdgeInsets.only(bottom: 20),
-                        itemCount: snapshot.data?.length ??
-                            0, // casi como un for que itera las veces de las filas de la matriz
+                        itemCount: snapshot.data?.length ?? 0,
+                        // casi como un for que itera las veces de las filas de la matriz
                         itemBuilder: (text, index) {
                           return Column(
                             children: [
@@ -128,14 +126,13 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                                 height: 250,
                                 width: 300,
                                 child: card(
-                                  // hace una card infochaza con los detalles de cada fila, osea cada chaza
-                                  snapshot.data?[index]['nombre'],
-                                  snapshot.data?[index]['ubicacion'],
-                                  snapshot.data?[index]['puntuacion'],
-                                  snapshot.data?[index]['paga'],
-                                  snapshot.data?[index]['imagen'],
-                                  snapshot.data?[index]['horario'],
-                                ),
+                                    // hace una card infochaza con los detalles de cada fila, osea cada chaza
+                                    snapshot.data?[index]['nombre'],
+                                    snapshot.data?[index]['ubicacion'],
+                                    snapshot.data?[index]['puntuacion'],
+                                    snapshot.data?[index]['paga'],
+                                    snapshot.data?[index]['imagen'],
+                                    snapshot.data?[index]['id']),
                               ),
                               const SizedBox(
                                 height: 15,
@@ -163,7 +160,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
       // En el cuerpo de tu widget, en el método build, debajo del BottomNavigationBar:
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: _onItemTapped, // Función que se ejecuta al hacer clic en un ítem
+        onTap: _onItemTapped,
+        // Función que se ejecuta al hacer clic en un ítem
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -292,7 +290,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   // }
 
   Card card(String nombre, String ubicacion, String puntuacion, String pago,
-      String imagen, String idHorario) {
+
+      String imagen, String id) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -301,17 +300,8 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
             width: 300,
             heightImage: 140,
             imageProvider: NetworkImage(imagen),
-            tags: [
-              _tag('Ingresar', () {
-                Navigator.of(context).push(
-                    MaterialPageRoute<void>(builder: (BuildContext context) {
-                  return HorarioChazaVista(
-                    nombreChaza: nombre,
-                    idHorario: idHorario,
-                  );
-                }));
-              })
-            ],
+            tags: [_tag(id,'Ingresar', () {})],
+
             title: _title(nombre),
             description: _content(ubicacion, pago),
           ),
@@ -407,9 +397,10 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   //   );
   // }
 
-  Widget _tag(String tag, VoidCallback onPressed) {
+  Widget _tag(String id,String tag, VoidCallback onPressed) {
     return InkWell(
-      onTap: onPressed,
+      onTap: pantallaInfoChaza(id),
+
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6), color: colorChazero),
@@ -425,6 +416,11 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   Function() _enProgreso(BuildContext context) {
     return () {
       Navigator.pushNamed(context, '/menu/configuracionTrabajo');
+    };
+  }
+  pantallaInfoChaza(String id) {
+    return () {
+      Navigator.pushNamed(context, '/menu/chazas/informacion', arguments: id);
     };
   }
 }
