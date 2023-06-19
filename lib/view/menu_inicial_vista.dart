@@ -1,10 +1,11 @@
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
+import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
 import 'package:chazaunapp/view/colors.dart';
-import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
-import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
-
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
 import 'package:flutter/material.dart';
+
+import 'Sprint2/configuracion_trabajador_vista.dart';
+import 'Sprint2/info_cuenta_trabajador.dart';
 
 class MenuInicialVistaView extends StatefulWidget {
   const MenuInicialVistaView({super.key});
@@ -23,12 +24,12 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
       if (_currentIndex == 1) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InfoCuenta()),
+          MaterialPageRoute(builder: (context) => const InfoCuentaTrabajador()),
         );
       } else if (_currentIndex == 2) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ConfiguracionVista()),
+          MaterialPageRoute(builder: (context) => const ConfiguracionTrabajoVista()),
         );
       }
     });
@@ -92,7 +93,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               const SizedBox(
                 width: 55,
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Padding(
                     padding: EdgeInsets.all(15),
                     child: Text(
@@ -289,6 +290,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   // }
 
   Card card(String nombre, String ubicacion, String puntuacion, String pago,
+
       String imagen, String id) {
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -299,6 +301,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
             heightImage: 140,
             imageProvider: NetworkImage(imagen),
             tags: [_tag(id,'Ingresar', () {})],
+
             title: _title(nombre),
             description: _content(ubicacion, pago),
           ),
@@ -397,6 +400,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
   Widget _tag(String id,String tag, VoidCallback onPressed) {
     return InkWell(
       onTap: pantallaInfoChaza(id),
+
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6), color: colorChazero),
