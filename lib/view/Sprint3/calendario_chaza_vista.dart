@@ -124,10 +124,8 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
 
   Future<List<Meeting>> _getDataSource(Map<dynamic, dynamic> dias) async {
     List<Meeting> meetings = <Meeting>[];
-    var multiplicador = 1;
     DateTime fechaGeneral = DateTime.now();
     int hours2;
-    bool addCita = false;
     //Aca se recorre el mapa de los horarios de la chaza
     List<String> keys = [
       "800",
