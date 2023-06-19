@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:math';
 
 import 'package:chazaunapp/Services/Sprint3/horarios_chaza_services.dart';
@@ -122,60 +124,117 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
 
   Future<List<Meeting>> _getDataSource(Map<dynamic, dynamic> dias) async {
     List<Meeting> meetings = <Meeting>[];
+    DateTime fechaGeneral = DateTime.now();
+    int hours2;
     //Aca se recorre el mapa de los horarios de la chaza
+    List<String> keys = [
+      "800",
+      "830",
+      "900",
+      "930",
+      "1000",
+      "1030",
+      "1100",
+      "1130",
+      "1200",
+      "1230",
+      "1300",
+      "1330",
+      "1400",
+      "1430",
+      "1500",
+      "1530",
+      "1600",
+      "1630",
+      "1700",
+      "1730",
+      "1800",
+      "1830",
+      "1900",
+      "1930",
+    ];
+    Map<String, String> dias2 = {
+      'Lunes': 'Monday',
+      'Martes': 'Tuesday',
+      'Miercoles': 'Wednesday',
+      'Jueves': 'Thursday',
+      'Viernes': 'Friday',
+      'Sabado': 'Saturday',
+      'Domingo': 'Sunday',
+    };
     for (var key in dias.keys) {
+      //key es el dia en el que estamos actualmente
       var horasMap = dias[key];
-      for (var horaKey in horasMap.keys) {
+      //horasMap es el map del dia ejm todo el map del lunes
+      bool buscando = false;
+      for (String horaKey in keys) {
+        //horaKey es el valor dentro del dia ejemplo es 1400 del lunes, solo es 1400
         var valor = horasMap[horaKey];
-        if (valor != '') {
-          int multiplicador = 1;
-          var diasLista = dias.entries.toList();
-          // Acceder a un valor en la lista de pares clave-valor
-          var valorActual = diasLista[1].value[horaKey];
-          // Acceder al siguiente valor en la lista de pares clave-valor
-          var siguienteValor = diasLista[1].value['1630'];
-          if ((valorActual == siguienteValor)) {
-            print('En efecto son iguales y sirve $valorActual');
-            print(diasLista[4].value[horaKey]);
-            print('En efecto son iguales y no sirve $valorActual');
-            print(diasLista[4].value['1430']);
-            print("-------------");
-            multiplicador += 1;
-          }
-          String? diaIngles = '';
-          Map<String, String> dias2 = {
-            'Lunes': 'Monday',
-            'Martes': 'Tuesday',
-            'Miercoles': 'Wednesday',
-            'Jueves': 'Thursday',
-            'Viernes': 'Friday',
-            'Sabado': 'Saturday',
-            'Domingo': 'Sunday',
-          };
+        // valor es el uid del postulado para esa fecha
+        if (valor == '') {
+          continue;
+        }
+        String? diaIngles = '';
+        diaIngles = dias2[key];
+        //diaIngles es solo porque flutter/dart/la dependencia trabaja con los dias pero solo si estan en ingles
+        var input = '$diaIngles $horaKey';
+        List<String> parts = input.split(' ');
+        String dayName = parts[0];
+        String time = parts[1];
+        DateTime now = DateTime.now();
+        int daysToAdd = _getDaysToAdd(dayName, now.weekday);
+        int minutes;
 
-          diaIngles = dias2[key];
-          var input = '$diaIngles $horaKey';
-          List<String> parts = input.split(' ');
-          String dayName = parts[0];
-          String time = parts[1];
+        //Esta seccion de abajo es solo para dividir bien las horas
+        if (time.length == 3) {
+          hours2 = int.parse(time.substring(0, 1));
+          minutes = int.parse(time.substring(1, 3));
+        } else {
+          hours2 = int.parse(time.substring(0, 2));
+          minutes = int.parse(time.substring(2, 4));
+        }
 
-          DateTime now = DateTime.now();
-          int daysToAdd = _getDaysToAdd(dayName, now.weekday);
-          int hours2;
-          int minutes;
-          if (time.length == 3) {
-            hours2 = int.parse(time.substring(0, 1));
-            minutes = int.parse(time.substring(1, 3));
+        //Aca se establece la hora de inicio de la reunion es decir el esta semana a las {dias que indicque el map}
+        String nombre = await getNombreTrabajador(valor);
+        DateTime fecha = DateTime(
+            now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
+
+        if (!buscando) {
+          if (horaKey.endsWith('30')) {
+            if (valor != horasMap["${hours2 + 1}00"]) {
+              var color = generarColorRandom();
+              DateTime to = fecha.add(const Duration(minutes: 30));
+              meetings.add(Meeting(nombre, fecha, to, color, false));
+            } else {
+              fechaGeneral = fecha;
+              buscando = true;
+            }
           } else {
-            hours2 = int.parse(time.substring(0, 2));
-            minutes = int.parse(time.substring(2, 4));
+            if (valor != horasMap["${hours2}30"]) {
+              var color = generarColorRandom();
+              DateTime to = fecha.add(const Duration(minutes: 30));
+              meetings.add(Meeting(nombre, fecha, to, color, false));
+            } else {
+              fechaGeneral = fecha;
+              buscando = true;
+            }
           }
-
-          String nombre = await getNombreTrabajador(valor);
-          DateTime fecha = DateTime(
-              now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
-          DateTime to = fecha.add(Duration(minutes: 30 * multiplicador));
-          meetings.add(Meeting(nombre, fecha, to, generarColorRandom(), false));
+        } else {
+          if (horaKey.endsWith('30')) {
+            if (valor != horasMap["${hours2 + 1}00"]) {
+              var color = generarColorRandom();
+              DateTime to = fecha.add(const Duration(minutes: 30));
+              meetings.add(Meeting(nombre, fechaGeneral, to, color, false));
+              buscando = false;
+            }
+          } else {
+            if (valor != horasMap["${hours2}30"]) {
+              var color = generarColorRandom();
+              DateTime to = fecha.add(const Duration(minutes: 30));
+              meetings.add(Meeting(nombre, fechaGeneral, to, color, false));
+              buscando = false;
+            }
+          }
         }
       }
     }
