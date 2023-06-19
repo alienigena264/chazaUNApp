@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chazaunapp/Services/services_menuchazero.dart';
+import 'package:chazaunapp/view/Sprint3/horarios_chaza_chazero.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -69,6 +70,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
                                   snapshot.data?[index]['paga'],
                                   snapshot.data?[index]['imagen'],
                                   snapshot.data?[index]['id'],
+                                  snapshot.data?[index]['horario'],
                                 ),
                               ),
                               const SizedBox(
@@ -148,7 +150,7 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
   }
 
   Padding infoChaza_(String nombre, String ubicacion, String puntuacion,
-      String pago, String imagen, String id) {
+      String pago, String imagen, String id, String idHorario) {
     final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
     final screenWidth = screenSize.width;
@@ -203,7 +205,14 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [botonHorarios(context), botonPersonal(context, id)],
+              children: [
+                botonHorarios(
+                  context,
+                  idHorario,
+                  nombre,
+                ),
+                botonPersonal(context, id)
+              ],
             )
           ],
         ),
@@ -291,7 +300,8 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
     );
   }
 
-  ElevatedButton botonHorarios(BuildContext context) {
+  ElevatedButton botonHorarios(
+      BuildContext context, String idHorario, String nombre) {
     //Au no hace nada porque no tengo seguridad de si esa pantalla está disponible
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
@@ -307,7 +317,15 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
-        onPressed: _enProgreso(context),
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+            return HorarioChazaChazeroVista(
+              nombreChaza: nombre,
+              idHorario: idHorario,
+            );
+          }));
+        },
         child: const Text(
           "Horarios",
           style:
@@ -336,12 +354,13 @@ class _MenuChazeroVistaState extends State<MenuChazeroVista> {
         ));
   }
 
+/* ya no se usaaaaaaaaa :DDDD
   Function() _enProgreso(BuildContext context) {
     return () {
       Navigator.pushNamed(context, '/progreso');
     };
   }
-
+*/
   pantallaPersonal(String id) {
     return () {
       Navigator.pushNamed(context, '/menu/chazero/personal', arguments: id);

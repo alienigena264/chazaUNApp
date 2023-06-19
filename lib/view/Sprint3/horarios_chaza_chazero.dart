@@ -5,17 +5,18 @@ import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-class HorarioChazaVista extends StatefulWidget {
+class HorarioChazaChazeroVista extends StatefulWidget {
   final String nombreChaza;
   final String idHorario;
-  const HorarioChazaVista(
+  const HorarioChazaChazeroVista(
       {required this.nombreChaza, required this.idHorario, super.key});
 
   @override
-  State<HorarioChazaVista> createState() => _HorarioChazaVistaState();
+  State<HorarioChazaChazeroVista> createState() =>
+      _HorarioChazaChazeroVistaState();
 }
 
-class _HorarioChazaVistaState extends State<HorarioChazaVista> {
+class _HorarioChazaChazeroVistaState extends State<HorarioChazaChazeroVista> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +27,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         const Padding(
           padding: EdgeInsets.only(left: 24, top: 10, right: 24),
           child: Text(
-            'A continuación verás el horario actual de la chaza, Evita seleccionar horarios que ya esten ocupados en tu postulación',
+            'Este es el horario actual y los trabajadores de la chaza:',
             style: TextStyle(fontSize: 20),
             textAlign: TextAlign.justify,
           ),
@@ -89,7 +90,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  'Horarios disponibles', // el texto que quieres mostrar
+                  'Horario de la chaza', // el texto que quieres mostrar
                   style: TextStyle(
                       color: Colors.white, // Establece el color del texto
                       fontSize: 35.0, // Establece el tamaño del texto
@@ -162,7 +163,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
     for (var key in dias.keys) {
       //key es el dia en el que estamos actualmente
       var horasMap = dias[key];
-      //horasMap es el map del dia ejm todo el map del lunes
+      //horasMap es el map del dia ejm todoo el map del lunes
       bool buscando = false;
       for (String horaKey in keys) {
         //horaKey es el valor dentro del dia ejemplo es 1400 del lunes, solo es 1400
