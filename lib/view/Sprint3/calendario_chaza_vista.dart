@@ -128,13 +128,48 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
     DateTime fechaGeneral = DateTime.now();
     int hours2;
     bool addCita = false;
-    bool buscando = false;
     //Aca se recorre el mapa de los horarios de la chaza
+    List<String> keys = [
+      "800",
+      "830",
+      "900",
+      "930",
+      "1000",
+      "1030",
+      "1100",
+      "1130",
+      "1200",
+      "1230",
+      "1300",
+      "1330",
+      "1400",
+      "1430",
+      "1500",
+      "1530",
+      "1600",
+      "1630",
+      "1700",
+      "1730",
+      "1800",
+      "1830",
+      "1900",
+      "1930",
+    ];
+    Map<String, String> dias2 = {
+      'Lunes': 'Monday',
+      'Martes': 'Tuesday',
+      'Miercoles': 'Wednesday',
+      'Jueves': 'Thursday',
+      'Viernes': 'Friday',
+      'Sabado': 'Saturday',
+      'Domingo': 'Sunday',
+    };
     for (var key in dias.keys) {
       //key es el dia en el que estamos actualmente
       var horasMap = dias[key];
       //horasMap es el map del dia ejm todo el map del lunes
-      for (var horaKey in horasMap.keys) {
+      bool buscando = false;
+      for (String horaKey in keys) {
         //horaKey es el valor dentro del dia ejemplo es 1400 del lunes, solo es 1400
         var valor = horasMap[horaKey];
         // valor es el uid del postulado para esa fecha
@@ -142,15 +177,6 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
           continue;
         }
         String? diaIngles = '';
-        Map<String, String> dias2 = {
-          'Lunes': 'Monday',
-          'Martes': 'Tuesday',
-          'Miercoles': 'Wednesday',
-          'Jueves': 'Thursday',
-          'Viernes': 'Friday',
-          'Sabado': 'Saturday',
-          'Domingo': 'Sunday',
-        };
         diaIngles = dias2[key];
         //diaIngles es solo porque flutter/dart/la dependencia trabaja con los dias pero solo si estan en ingles
         var input = '$diaIngles $horaKey';
@@ -175,56 +201,43 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         DateTime fecha = DateTime(
             now.year, now.month, now.day + daysToAdd, hours2, minutes, 0);
 
-        if (buscando) {
+        if (!buscando) {
           if (horaKey.endsWith('30')) {
-            if (valor == horasMap["${hours2 + 1}00"]) {
-              multiplicador += 1;
+            if (valor != horasMap["${hours2 + 1}00"]) {
+              var color = generarColorRandom();
+              DateTime to = fecha.add(const Duration(minutes: 30));
+              meetings.add(Meeting(nombre, fecha, to, color, false));
             } else {
-              addCita = true;
-              buscando = false;
+              fechaGeneral = fecha;
+              buscando = true;
             }
           } else {
-            if (valor == horasMap["${hours2}30"]) {
-              multiplicador += 1;
+            if (valor != horasMap["${hours2}30"]) {
+              var color = generarColorRandom();
+              DateTime to = fecha.add(const Duration(minutes: 30));
+              meetings.add(Meeting(nombre, fecha, to, color, false));
             } else {
-              addCita = true;
-              buscando = false;
+              fechaGeneral = fecha;
+              buscando = true;
             }
           }
         } else {
-          fechaGeneral = fecha;
           if (horaKey.endsWith('30')) {
-            if (valor == horasMap["${hours2 + 1}00"]) {
-              multiplicador += 1;
-              buscando = true;
-            } else {
-              addCita = true;
+            if (valor != horasMap["${hours2 + 1}00"]) {
+              var color = generarColorRandom();
+              DateTime to = fecha.add(const Duration(minutes: 30));
+              meetings.add(Meeting(nombre, fechaGeneral, to, color, false));
+              buscando = false;
             }
           } else {
-            if (valor == horasMap["${hours2}30"]) {
-              multiplicador += 1;
-              buscando = true;
-            } else {
-              addCita = true;
+            if (valor != horasMap["${hours2}30"]) {
+              var color = generarColorRandom();
+              DateTime to = fecha.add(const Duration(minutes: 30));
+              meetings.add(Meeting(nombre, fechaGeneral, to, color, false));
+              buscando = false;
             }
           }
         }
-
-        //---------
-        /*
-        if (addCita) {
-          var color = generarColorRandom();
-          DateTime to = fecha.add(  Duration(minutes: 30 * multiplicador));
-          meetings.add(Meeting(nombre, fechaGeneral, to, color, false));
-          buscando = false;
-          multiplicador = 1;
-          addCita = false;
-          fechaGeneral = fecha;
-        }*/
-        var color = generarColorRandom();
-        DateTime to = fecha.add( const Duration(minutes: 30));
-        meetings.add(Meeting(nombre, fecha, to, color, false));
-        //----------
       }
     }
     return meetings;
