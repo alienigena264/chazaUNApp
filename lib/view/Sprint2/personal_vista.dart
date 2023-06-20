@@ -102,7 +102,9 @@ class _PersonalVistaState extends State<PersonalVista> {
                                   snapshot.data![index][0]['nombres'],
                                   snapshot.data![index][0]['foto'],
                                   trabajaDiasPostulado(snapshot.data![index]),
-                                  1)
+                                  1,
+                                  idHorario: snapshot.data![index][0]
+                                      ['idHorario'])
                             ],
                           );
                         });
@@ -119,7 +121,8 @@ class _PersonalVistaState extends State<PersonalVista> {
   }
 
   Padding infoPostulacion_(
-      String uid, String nombres, String foto, List<bool> dias, int tipo) {
+      String uid, String nombres, String foto, List<bool> dias, int tipo,
+      {String idHorario = ""}) {
     return Padding(
       padding: const EdgeInsets.only(left: 27, right: 27),
       child: Card(
@@ -158,7 +161,12 @@ class _PersonalVistaState extends State<PersonalVista> {
               diaIcono(dias[5], 'S')
             ],
           ),
-          botonVermas(context, uid, tipo),
+          botonVermas(
+            context,
+            uid,
+            tipo,
+            idHorario,
+          ),
           const Divider(
             thickness: 1.5,
             color: Colors.black,
@@ -168,7 +176,8 @@ class _PersonalVistaState extends State<PersonalVista> {
     );
   }
 
-  ElevatedButton botonVermas(BuildContext context, String uid, int tipo) {
+  ElevatedButton botonVermas(
+      BuildContext context, String uid, int tipo, String idHorario) {
     //Ya anda bien
 
     final screenSize = MediaQuery.of(context).size;
@@ -201,7 +210,7 @@ class _PersonalVistaState extends State<PersonalVista> {
           } else {
             Navigator.of(context)
                 .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-              return VerMasPostulados(uid, chazaActual);
+              return VerMasPostulados(uid, idHorario);
             }));
           }
         },
