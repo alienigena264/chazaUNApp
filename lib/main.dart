@@ -49,8 +49,7 @@ class MyApp extends StatelessWidget {
       title: 'ChazaUNApp',
       initialRoute: '/',
       routes: {
-        '/': (context) => const PostuladosChaza(),
-        //'/': (context) => const PaginaInicio(),
+        '/': (context) => const PaginaInicio(),
         '/contrasena': (context) => const ContrasenaVista(),
         '/registro/selector': (context) => const SelectorVista(),
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),
@@ -66,6 +65,8 @@ class MyApp extends StatelessWidget {
               nombreChaza: '',
               idHorario: '',
             ),
+        '/menu/trabajador/chaza/postulacion': (context) => const PostuladosChaza(idChaza: '',),
+
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),
         '/menu/configuracion': (context) => const ConfiguracionVista(),
         '/menu/configuracionTrabajo': (context) =>
