@@ -173,50 +173,6 @@ Future<void> actualizarEstadoRelacionTrabajadores(String idTrabajador) async {
   }
 }
 
-// Future<void> buscarHorarioPorIdTrabajador(String idTrabajador) async {
-//   try {
-//     // Buscar en la colección "RelacionTrabajadores" por el idTrabajador
-//     QuerySnapshot relacionSnapshot = await db
-//         .collection('RelacionTrabajadores')
-//         .where('IDTrabajador', isEqualTo: idTrabajador)
-//         .get();
-
-//     // Verificar si se encontraron documentos en la colección "RelacionTrabajadores"
-//     if (relacionSnapshot.docs.isNotEmpty) {
-//       // Obtener el IDChaza del primer documento encontrado
-//       String idChaza = relacionSnapshot.docs[0]['IDChaza'];
-
-//       // Buscar en la colección "Chaza" por el idChaza
-//       DocumentSnapshot chazaSnapshot =
-//           await db.collection('Chaza').doc(idChaza).get();
-
-//       // Verificar si se encontró el documento en la colección "Chaza"
-//       if (chazaSnapshot.exists) {
-//         // Obtener el ID del horario desde el campo "horario" del documento
-//         String idHorario = chazaSnapshot['horario'];
-
-//         // Buscar en la colección "Horario" por el idHorario
-//         DocumentSnapshot horarioSnapshot =
-//             await db.collection('Horario').doc(idHorario).get();
-
-//         // Verificar si se encontró el documento en la colección "Horario"
-//         if (horarioSnapshot.exists) {
-//           // El horario existe, puedes realizar las operaciones que necesites con él
-//           print('El horario existe');
-//         } else {
-//           print('El horario no existe');
-//         }
-//       } else {
-//         print('La chaza no existe');
-//       }
-//     } else {
-//       print('No se encontró la relación de trabajadores');
-//     }
-//   } catch (error) {
-//     print('Error al buscar el horario: $error');
-//   }
-// }
-
 Future<void> actualizarMapaEnFirestore(
     String idDocumento, Map<String, dynamic> nuevoMapa) async {
   try {
@@ -293,24 +249,3 @@ Future<void> buscarHorarioPorIdTrabajador(String idTrabajador) async {
     print('Error al buscar el horario: $error');
   }
 }
-
-
-
-// Future<Map<String, dynamic>?> horas(String idHorario) async {
-//   Map<String, List<String>> horasMap = {};
-
-//   try {
-//     var documentSnapshot = await db.collection('Horario').doc(idHorario).get();
-
-//     if (documentSnapshot.exists) {
-//       var data = documentSnapshot.data();
-//       print(data);
-
-//       return data;
-//     } else {
-//       throw Exception('El ID de Horario no existe');
-//     }
-//   } catch (error) {
-//     throw Exception('Error al obtener el Horario: $error');
-//   }
-// }

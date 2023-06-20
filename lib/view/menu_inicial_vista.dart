@@ -195,7 +195,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                         chazasFiltradas?[index]['puntuacion'],
                         chazasFiltradas?[index]['paga'],
                         chazasFiltradas?[index]['imagen'],
-                        chazasFiltradas?[index]['horario'],
+                        chazasFiltradas?[index]['id'],
                       ),
                     ),
                     const SizedBox(
