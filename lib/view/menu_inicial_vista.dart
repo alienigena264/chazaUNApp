@@ -1,5 +1,4 @@
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
-import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -244,7 +243,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                         chazasFiltradas?[index]['puntuacion'],
                         chazasFiltradas?[index]['paga'],
                         chazasFiltradas?[index]['imagen'],
-                        chazasFiltradas?[index]['horario'],
+                        chazasFiltradas?[index]['id'],
                       ),
                     ),
                     const SizedBox(
