@@ -80,7 +80,7 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
 
   Future<void> _showAddSlotDialog(String day) async {
     String startTime = '8:00';
-    String endTime = '20:00';
+    String endTime = '8:00';
     String selectedHour = '8:00';
 
     final List<String> hoursList = [
