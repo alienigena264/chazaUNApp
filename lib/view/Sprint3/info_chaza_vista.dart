@@ -1,3 +1,4 @@
+import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -28,12 +29,14 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
             builder: ((context, snapshot) {
               if (snapshot.hasData) {
                 return informacion_(
-                    snapshot.data?['nombre'],
-                    snapshot.data?['descripcion'],
-                    snapshot.data?['paga'],
-                    snapshot.data?['ubicacion'],
-                    snapshot.data?['puntuacion'],
-                    snapshot.data?['imagen']);
+                  snapshot.data?['nombre'],
+                  snapshot.data?['descripcion'],
+                  snapshot.data?['paga'],
+                  snapshot.data?['ubicacion'],
+                  snapshot.data?['puntuacion'],
+                  snapshot.data?['imagen'],
+                  snapshot.data?['horario'],
+                );
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -68,44 +71,46 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
   }
 
   Padding informacion_(String nombre, String descripcion, String pago,
-      String ubicacion, String puntuacion, String imagen) {
+      String ubicacion, String puntuacion, String imagen, String idHorario) {
     final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
-    return Padding(padding: EdgeInsets.all(10.0),child:
-    Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        ClipRRect(
-          // Contenedor para que la imagen tenga borde redondeado
-          borderRadius: BorderRadius.circular(8.0),
-          child: Image(
-            image: NetworkImage(imagen),
-            //Parametro del enlace de la imagen de la chaza
-            height: screenHeight * 0.38,
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ClipRRect(
+            // Contenedor para que la imagen tenga borde redondeado
+            borderRadius: BorderRadius.circular(8.0),
+            child: Image(
+              image: NetworkImage(imagen),
+              //Parametro del enlace de la imagen de la chaza
+              height: screenHeight * 0.38,
+            ),
           ),
-        ),
-        SizedBox(
-          height: screenHeight * 0.015,
-        ),
-        nombreyPago(nombre, pago),
-        SizedBox(
-          height: screenHeight * 0.01,
-        ),
-        rowUbicacion_(ubicacion),
-        Divider(thickness: 1.3),
-        rowPuntuacion_(puntuacion),
-        Divider(thickness: 1.3),
-        SizedBox(
-          height: 1.8,
-        ),
-        _descripcion(descripcion),
-        SizedBox(height: screenHeight * 0.02),
-        horarioBoton_(),
-        SizedBox(height: screenHeight * 0.015),
-        postularseBoton_()
-      ],
-    ),);
+          SizedBox(
+            height: screenHeight * 0.015,
+          ),
+          nombreyPago(nombre, pago),
+          SizedBox(
+            height: screenHeight * 0.01,
+          ),
+          rowUbicacion_(ubicacion),
+          const Divider(thickness: 1.3),
+          rowPuntuacion_(puntuacion),
+          const Divider(thickness: 1.3),
+          const SizedBox(
+            height: 1.8,
+          ),
+          _descripcion(descripcion),
+          SizedBox(height: screenHeight * 0.02),
+          horarioBoton_(nombre, idHorario),
+          SizedBox(height: screenHeight * 0.015),
+          postularseBoton_()
+        ],
+      ),
+    );
   }
 
   Row nombreyPago(String nombre, String pago) {
@@ -133,10 +138,12 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
             ),
-            SizedBox(width: screenWidth*0.013,),
-            Text(
+            SizedBox(
+              width: screenWidth * 0.013,
+            ),
+            const Text(
               "/Hora",
-              style: const TextStyle(
+              style: TextStyle(
                   color: Color(0xff444444),
                   fontSize: 18.0,
                   fontFamily: "Inder",
@@ -209,9 +216,9 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(width: screenWidth * 0.02),
-            Text(
+            const Text(
               'Descripcion',
-              style: const TextStyle(
+              style: TextStyle(
                   color: Colors.black,
                   fontSize: 23.0,
                   fontFamily: "Inder",
@@ -230,12 +237,16 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
     );
   }
 
-  ElevatedButton horarioBoton_() {
+  ElevatedButton horarioBoton_(String nombre, String idHorario) {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
     return ElevatedButton(
-        onPressed: _enProgreso(context),
+        onPressed: irHorario(
+          context,
+          nombre,
+          idHorario,
+        ),
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrincipal,
           minimumSize: Size(screenWidth * 0.85, screenHeight * 0.063),
@@ -281,9 +292,13 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
     );
   }
 
-  Function() _enProgreso(BuildContext context) {
+  Function() irHorario(BuildContext context, String nombre, String idHorario) {
     return () {
-      Navigator.pushNamed(context, '/menu/configuracionTrabajo');
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => HorarioChazaVista(
+                  nombreChaza: nombre, idHorario: idHorario)));
     };
   }
 
