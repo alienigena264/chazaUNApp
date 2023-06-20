@@ -23,7 +23,7 @@ class _BotonGoogle extends State<BotonGoogle> {
           const SizedBox(
             height: 10,
           ),
-          Row(
+          const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(

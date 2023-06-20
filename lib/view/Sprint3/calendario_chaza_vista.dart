@@ -26,7 +26,7 @@ class _HorarioChazaVistaState extends State<HorarioChazaVista> {
         const Padding(
           padding: EdgeInsets.only(left: 24, top: 10, right: 24),
           child: Text(
-            'A continuación verás el horario actual de la chaza, Evita seleccionar horarios que ya esten ocupados en tu postulación',
+            'A continuación verás el horario actual de la chaza, evita seleccionar horarios que ya esten ocupados en tu postulación.',
             style: TextStyle(fontSize: 20),
             textAlign: TextAlign.justify,
           ),
