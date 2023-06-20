@@ -70,30 +70,6 @@ Future<String?> getFotoUrlFromFirestore(String id) async {
   return null; // Valor predeterminado si no se encuentra la URL de foto en Firebase
 }
 
-Future<List<List<String>>> fetchIDHorario(String idTrabajador) async {
-  try {
-    QuerySnapshot querySnapshot = await db
-        .collection('RelacionTrabajadores')
-        .where('IDTrabajador', isEqualTo: idTrabajador)
-        .get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      // Se encontró al menos un documento con el IDTrabajador especificado
-      String idHorario = querySnapshot.docs[0]['IDHorario'];
-      // Acceder a la colección "Horario" utilizando el IDHorario obtenido
-      return fetchHoras(idHorario);
-    } else {
-      // No se encontró ningún documento con el IDTrabajador especificado
-      print(
-          'No se encontró el IDTrabajador en la colección "RelacionTrabajadores"');
-      return [];
-    }
-  } catch (error) {
-    print('Error al obtener los documentos de RelacionTrabajadores: $error');
-    return [];
-  }
-}
-
 Future<List<List<String>>> fetchHoras(String idHorario) async {
   Map<String, List<String>> horasMap = {};
 
@@ -114,11 +90,7 @@ Future<List<List<String>>> fetchHoras(String idHorario) async {
         'Sabado'
       ];
       for (var dia in orderedDias) {
-        if (dias.containsKey(dia)) {
-          horasMap[dia] = List<String>.from(dias[dia]);
-        } else {
-          horasMap[dia] = [];
-        }
+        horasMap[dia] = List<String>.from(dias[dia]);
       }
       print(orderedDias);
     } else {
@@ -133,34 +105,13 @@ Future<List<List<String>>> fetchHoras(String idHorario) async {
   return horasSemana;
 }
 
-Future<String> fetchIDHorarioEliminar(String idTrabajador) async {
+Future<void> actualizarEstadoRelacionTrabajadores(
+    String idTrabajador, String idChaza) async {
   try {
     QuerySnapshot querySnapshot = await db
         .collection('RelacionTrabajadores')
         .where('IDTrabajador', isEqualTo: idTrabajador)
-        .get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      // Se encontró al menos un documento con el IDTrabajador especificado
-      String idHorario = querySnapshot.docs[0]['IDHorario'];
-      return idHorario;
-    } else {
-      // No se encontró ningún documento con el IDTrabajador especificado
-      print(
-          'No se encontró el IDTrabajador en la colección "RelacionTrabajadores"');
-      return '';
-    }
-  } catch (error) {
-    print('Error al obtener los documentos de RelacionTrabajadores: $error');
-    return '';
-  }
-}
-
-Future<void> actualizarEstadoRelacionTrabajadores(String idTrabajador) async {
-  try {
-    QuerySnapshot querySnapshot = await db
-        .collection('RelacionTrabajadores')
-        .where('IDTrabajador', isEqualTo: idTrabajador)
+        .where('IDChaza', isEqualTo: idChaza)
         .get();
 
     for (var doc in querySnapshot.docs) {
@@ -200,52 +151,39 @@ void reemplazarIdTrabajadorEnMapa(
   }
 }
 
-Future<void> buscarHorarioPorIdTrabajador(String idTrabajador) async {
-  try {
-    // Buscar en la colección "RelacionTrabajadores" por el idTrabajador
-    QuerySnapshot relacionSnapshot = await db
-        .collection('RelacionTrabajadores')
-        .where('IDTrabajador', isEqualTo: idTrabajador)
-        .get();
+Future<void> buscarHorarioPorIdTrabajador(
+    String idTrabajador, String idChaza) async {
+  // Buscar en la colección "RelacionTrabajadores" por el idTrabajador
+  // String idHorarioTrabajador = relacionSnapshot.docs[0]['IDHorario'];
 
-    // Verificar si se encontraron documentos en la colección "RelacionTrabajadores"
-    if (relacionSnapshot.docs.isNotEmpty) {
-      // Obtener el IDChaza del primer documento encontrado
-      String idChaza = relacionSnapshot.docs[0]['IDChaza'];
-      // String idHorarioTrabajador = relacionSnapshot.docs[0]['IDHorario'];
+  // Buscar en la colección "Chaza" por el idChaza
+  DocumentSnapshot chazaSnapshot =
+      await db.collection('Chaza').doc(idChaza).get();
 
-      // Buscar en la colección "Chaza" por el idChaza
-      DocumentSnapshot chazaSnapshot =
-          await db.collection('Chaza').doc(idChaza).get();
+  // Verificar si se encontró el documento en la colección "Chaza"
+  if (chazaSnapshot.exists) {
+    // Obtener el ID del horario desde el campo "horario" del documento
+    String idHorario = chazaSnapshot['horario'];
 
-      // Verificar si se encontró el documento en la colección "Chaza"
-      if (chazaSnapshot.exists) {
-        // Obtener el ID del horario desde el campo "horario" del documento
-        String idHorario = chazaSnapshot['horario'];
+    // Buscar en la colección "Horario" por el idHorario
+    DocumentSnapshot horarioSnapshot =
+        await db.collection('Horario').doc(idHorario).get();
 
-        // Buscar en la colección "Horario" por el idHorario
-        DocumentSnapshot horarioSnapshot =
-            await db.collection('Horario').doc(idHorario).get();
+    // Verificar si se encontró el documento en la colección "Horario"
+    if (horarioSnapshot.exists) {
+      Map<String, dynamic> dias = horarioSnapshot['Dias'];
+      print(dias);
+      reemplazarIdTrabajadorEnMapa(dias, idTrabajador);
+      print("dias sin el id");
+      print(dias);
 
-        // Verificar si se encontró el documento en la colección "Horario"
-        if (horarioSnapshot.exists) {
-          Map<String, dynamic> dias = horarioSnapshot['Dias'];
-          print(dias);
-          reemplazarIdTrabajadorEnMapa(dias, idTrabajador);
-          print("dias sin el id");
-          print(dias);
-
-          actualizarMapaEnFirestore(idHorario, dias);
-          print("dias sin el id en la base de datos");
-          print(dias);
-        } else {
-          print('El mapa "Dias" no contiene todos los días de la semana');
-        }
-      } else {
-        print('El horario no existe');
-      }
+      actualizarMapaEnFirestore(idHorario, dias);
+      print("dias sin el id en la base de datos");
+      print(dias);
+    } else {
+      print('El mapa "Dias" no contiene todos los días de la semana');
     }
-  } catch (error) {
-    print('Error al buscar el horario: $error');
+  } else {
+    print('El horario no existe');
   }
 }
