@@ -76,7 +76,8 @@ class _PersonalVistaState extends State<PersonalVista> {
                                 snapshot.data![index][0]['nombres'],
                                 snapshot.data![index][0]['foto'],
                                 trabajaDiasActivo(snapshot.data![index]),
-                                0)
+                                0,
+                                snapshot.data![index][0]['idHorario'])
                           ],
                         );
                       },
@@ -103,8 +104,7 @@ class _PersonalVistaState extends State<PersonalVista> {
                                   snapshot.data![index][0]['foto'],
                                   trabajaDiasPostulado(snapshot.data![index]),
                                   1,
-                                  idHorario: snapshot.data![index][0]
-                                      ['idHorario'])
+                                  snapshot.data![index][0]['idHorario'])
                             ],
                           );
                         });
@@ -120,9 +120,8 @@ class _PersonalVistaState extends State<PersonalVista> {
         ));
   }
 
-  Padding infoPostulacion_(
-      String uid, String nombres, String foto, List<bool> dias, int tipo,
-      {String idHorario = ""}) {
+  Padding infoPostulacion_(String uid, String nombres, String foto,
+      List<bool> dias, int tipo, String idHorario) {
     return Padding(
       padding: const EdgeInsets.only(left: 27, right: 27),
       child: Card(
@@ -205,7 +204,7 @@ class _PersonalVistaState extends State<PersonalVista> {
           if (tipo == 0) {
             Navigator.of(context)
                 .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-              return VerMasActivos(uid);
+              return VerMasActivos(uid, chazaActual, idHorario);
             }));
           } else {
             Navigator.of(context)

@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 
 class VerMasActivos extends StatefulWidget {
   final String uid;
-
-  const VerMasActivos(this.uid, {Key? key}) : super(key: key);
+  final String cid;
+  final String idHorario;
+  const VerMasActivos(this.uid, this.cid, this.idHorario, {Key? key})
+      : super(key: key);
 
   @override
   State<VerMasActivos> createState() => _VerMasActivosState();
@@ -21,6 +23,8 @@ class _VerMasActivosState extends State<VerMasActivos> {
   @override
   Widget build(BuildContext context) {
     String uid = widget.uid;
+    String cid = widget.cid;
+    String idHorario = widget.idHorario;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -83,7 +87,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
               const SizedBox(
                 height: 10,
               ),
-              buildDiasSemana(uid),
+              buildDiasSemana(idHorario),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -106,16 +110,11 @@ class _VerMasActivosState extends State<VerMasActivos> {
                     child: ElevatedButton(
                       onPressed: () async {
                         print("fun");
-                        String idHorario = await fetchIDHorarioEliminar(uid);
                         if (idHorario.isNotEmpty) {
                           print("funciona?");
-                          actualizarEstadoRelacionTrabajadores(uid);
-                          buscarHorarioPorIdTrabajador(uid);
-
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushNamed(context, '/menu/chazero/personal',
-                              arguments: uid);
-
+                          actualizarEstadoRelacionTrabajadores(uid, cid);
+                          buscarHorarioPorIdTrabajador(uid, cid);
+                          goMenu(cid, context);
                           // Navega a PersonalVista después de eliminar los documentos
                         }
                       },
@@ -177,6 +176,11 @@ Widget avatar(String uid) {
       }
     },
   );
+}
+
+goMenu(cid, context) {
+  Navigator.pop(context);
+  Navigator.popAndPushNamed(context, '/menu/chazero/personal', arguments: cid);
 }
 
 Widget linea() {
@@ -278,9 +282,9 @@ Widget telefono(String uid) {
   );
 }
 
-Widget buildDiasSemana(String uid) {
+Widget buildDiasSemana(String idHorario) {
   return FutureBuilder<List<List<String>>>(
-    future: fetchIDHorario(uid),
+    future: fetchHoras(idHorario),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const CircularProgressIndicator();
