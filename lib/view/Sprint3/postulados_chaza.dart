@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, prefer_final_fields, avoid_print
+
 import 'package:chazaunapp/Services/Sprint3/crearPostulacion.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +36,13 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
 
   @override
   Widget build(BuildContext context) {
+    
     chaza = ModalRoute.of(context)?.settings.arguments as String;
     final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -67,7 +71,7 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -112,7 +116,7 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                   },
                 ),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
                   crearPostulacion(horarioPostulacion, chaza);
@@ -166,7 +170,7 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => MenuInicialVistaView(),
+                      builder: (BuildContext context) => const MenuInicialVistaView(),
                     ),
                         (_) => false,
                   );
@@ -222,15 +226,15 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
             children: [
               Row(
                 children: [
-                  Text('Desde:'),
-                  SizedBox(width: 10.0),
+                  const Text('Desde:'),
+                  const SizedBox(width: 10.0),
                   Expanded(
                     child:
                     StatefulBuilder(
                       builder: (context, setState) {
                         return DropdownButton<String>(
                           value: selectedHour,
-                          hint: Text('Seleccionar hora'),
+                          hint: const Text('Seleccionar hora'),
                           onChanged: (String? value) {
                             setState(() {
                               selectedHour = value!;
@@ -249,18 +253,18 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                   ),
                 ],
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Row(
                 children: [
-                  Text('Hasta:'),
-                  SizedBox(width: 10.0),
+                  const Text('Hasta:'),
+                  const SizedBox(width: 10.0),
                   Expanded(
                     child:
                     StatefulBuilder(
                       builder: (context, setState) {
                         return DropdownButton<String>(
                           value: selectedHour,
-                          hint: Text('Seleccionar hora'),
+                          hint: const Text('Seleccionar hora'),
                           onChanged: (String? value) {
                             setState(() {
                               selectedHour = value!;

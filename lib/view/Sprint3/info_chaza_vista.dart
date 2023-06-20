@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +84,7 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
         children: [
           ClipRRect(
             // Contenedor para que la imagen tenga borde redondeado
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(30.0),
             child: Image(
               image: NetworkImage(imagen),
               //Parametro del enlace de la imagen de la chaza
@@ -97,10 +99,10 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
             height: screenHeight * 0.01,
           ),
           rowUbicacion_(ubicacion),
-          const const Divider(thickness: 1.3),
+          const  Divider(thickness: 1.3),
           rowPuntuacion_(puntuacion),
-          const const Divider(thickness: 1.3),
-          const const SizedBox(
+          const  Divider(thickness: 1.3),
+          const  SizedBox(
             height: 1.8,
           ),
           _descripcion(descripcion),
