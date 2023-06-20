@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class VerMasPostulados extends StatelessWidget {
   final String uid;
-  final String cid; //chaza id
-  const VerMasPostulados(this.uid, this.cid, {super.key});
+  final String idHorario; //chaza id
+  const VerMasPostulados(this.uid, this.idHorario, {super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,13 +22,13 @@ class VerMasPostulados extends StatelessWidget {
           backgroundColor: colorPrincipal,
         )),
         body: FutureBuilder(
-            future: getinfo(uid, cid),
+            future: getinfo(uid, idHorario),
             builder: ((context, snapshot) {
               goMenu(String texto) {
                 mostrarMensaje(context, texto);
                 Navigator.pushNamedAndRemoveUntil(
                     context, '/menu/chazero/personal', ModalRoute.withName('/'),
-                    arguments: cid);
+                    arguments: idHorario);
               }
 
               if (snapshot.hasData) {
@@ -118,6 +118,7 @@ class VerMasPostulados extends StatelessWidget {
                             child: Text(
                               'Horarios disponibles:',
                               style: TextStyle(
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -238,7 +239,7 @@ class VerMasPostulados extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: () async {
                                   try {
-                                    await contratar(uid, cid);
+                                    await contratar(uid, idHorario);
                                     // Lógica cuando se presiona el botón "Contratar"
                                     String nombre = snapshot.data?['nombres'];
                                     String mensajeboton =
@@ -247,6 +248,8 @@ class VerMasPostulados extends StatelessWidget {
                                         nombre + mensajeboton;
                                     goMenu(textorechazado);
                                   } on Exception catch (_) {
+                                    rechazar(uid, idHorario,
+                                        contratacion: true, success: false);
                                     errorPrompt(
                                         context,
                                         'Conflictos en el horario',
@@ -261,7 +264,7 @@ class VerMasPostulados extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: () async {
                                   // Lógica cuando se presiona el botón "Rechazar"
-                                  await rechazar(uid, cid);
+                                  await rechazar(uid, idHorario);
                                   String nombre = snapshot.data?['nombres'];
                                   String mensajeboton = ' ha sido rechazad@';
                                   String textoaceptado = nombre + mensajeboton;

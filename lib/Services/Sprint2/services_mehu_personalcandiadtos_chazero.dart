@@ -29,7 +29,7 @@ Future<List> getPostulacionesPorChaza(String idChaza) async {
         .doc(trabajadores[i].toString().trim())
         .get();
     var data = infotrabajador.data();
-    data?.addAll({"uid": trabajadores[i]});
+    data?.addAll({"uid": trabajadores[i], "idHorario": horarios[i]});
     datosTrabajadorHorario.add(data); // Mete en la lista los datos de cada id
     DocumentSnapshot<Map<String, dynamic>> infohorario =
         await db.collection('Horario').doc(horarios[i].toString().trim()).get();
@@ -41,6 +41,7 @@ Future<List> getPostulacionesPorChaza(String idChaza) async {
         datosTrabajadorHorario); //Mete pareja trabajador-horario en la lista final
     datosTrabajadorHorario = []; //Reinicia la lista
   }
+  print(resultadosTotales);
   Future.delayed(const Duration(milliseconds: 800));
   return resultadosTotales;
 }

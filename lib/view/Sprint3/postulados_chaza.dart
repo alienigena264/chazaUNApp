@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:chazaunapp/Services/Sprint3/crearPostulacion.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
@@ -61,13 +63,12 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
             icon: const Icon(Icons.arrow_back),
             iconSize: 40,
           ),
-
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -77,8 +78,8 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                     List<String> slots = timeSlots[day] ?? [];
 
                     return ExpansionTile(
-                      title: Text
-                        (day,
+                      title: Text(
+                        day,
                         style: const TextStyle(fontSize: 24),
                       ),
                       iconColor: colorTrabajador,
@@ -86,8 +87,10 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                       children: [
                         if (slots.isEmpty)
                           ListTile(
-                            title: Text('No tienes franjas horarias el $day',
-                            style: const TextStyle(fontSize: 16),),
+                            title: Text(
+                              'No tienes franjas horarias el $day',
+                              style: const TextStyle(fontSize: 16),
+                            ),
                           ),
                         ...slots.map((slot) => ListTile(
                               title: Text(slot),
@@ -100,11 +103,8 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                             child: const Text(
                               '+ Añadir franja nueva',
                               style: TextStyle(
-                                fontSize: 16,
-                                color: colorTrabajador
-                              ),
+                                  fontSize: 16, color: colorTrabajador),
                             ),
-
                           ),
                         ),
                       ],
@@ -112,22 +112,23 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                   },
                 ),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
                   crearPostulacion(horarioPostulacion, chaza);
                   mostrarDialogo();
-
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colorPrincipal,
-                  minimumSize: const Size(
-                      360, 50), // double.infinity is the width and 30 is the height
-                  shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
+                  minimumSize: const Size(360,
+                      50), // double.infinity is the width and 30 is the height
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14.0)),
                 ),
-                child: const Text('Terminar postulación', style: TextStyle(fontSize: 18, fontFamily: "Inder"),),
-
+                child: const Text(
+                  'Terminar postulación',
+                  style: TextStyle(fontSize: 18, fontFamily: "Inder"),
+                ),
               ),
             ],
           ),
@@ -138,45 +139,45 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
 
   Future<void> mostrarDialogo() async {
     await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text(
-            "Postulación completada",
-            style: TextStyle(fontSize: 35, color: colorPrincipal),
-          ),
-          content: const Text(
-              "Te notificaremos si el chazero te acepta o el chazero se contactara directamente contigo",
-              style: TextStyle(fontSize: 25)
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20, bottom: 5),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colorPrincipal,
-                  minimumSize: const Size(100, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                ),
-                child: const Text("Ok",
-                    style: TextStyle(fontSize: 25, color: Colors.white)),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => MenuInicialVistaView(),
-                    ),
-                        (_) => false,
-                  );
-                },
-              ),
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              "Postulación completada",
+              style: TextStyle(fontSize: 35, color: colorPrincipal),
             ),
-          ],
-        );
-      });
-}
+            content: const Text(
+                "Te notificaremos si el chazero te acepta o el chazero se contactara directamente contigo",
+                style: TextStyle(fontSize: 25)),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 20, bottom: 5),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: colorPrincipal,
+                    minimumSize: const Size(100, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                  child: const Text("Ok",
+                      style: TextStyle(fontSize: 25, color: Colors.white)),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const MenuInicialVistaView(),
+                      ),
+                      (_) => false,
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        });
+  }
 
   Future<void> _showAddSlotDialog(String day) async {
     String startTime = '8:00';
@@ -211,7 +212,6 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
       '20:00',
     ];
 
-
     await showDialog(
       context: context,
       builder: (context) {
@@ -222,15 +222,14 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
             children: [
               Row(
                 children: [
-                  Text('Desde:'),
-                  SizedBox(width: 10.0),
+                  const Text('Desde:'),
+                  const SizedBox(width: 10.0),
                   Expanded(
-                    child:
-                    StatefulBuilder(
+                    child: StatefulBuilder(
                       builder: (context, setState) {
                         return DropdownButton<String>(
                           value: selectedHour,
-                          hint: Text('Seleccionar hora'),
+                          hint: const Text('Seleccionar hora'),
                           onChanged: (String? value) {
                             setState(() {
                               selectedHour = value!;
@@ -249,23 +248,21 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                   ),
                 ],
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Row(
                 children: [
-                  Text('Hasta:'),
-                  SizedBox(width: 10.0),
+                  const Text('Hasta:'),
+                  const SizedBox(width: 10.0),
                   Expanded(
-                    child:
-                    StatefulBuilder(
+                    child: StatefulBuilder(
                       builder: (context, setState) {
                         return DropdownButton<String>(
                           value: selectedHour,
-                          hint: Text('Seleccionar hora'),
+                          hint: const Text('Seleccionar hora'),
                           onChanged: (String? value) {
                             setState(() {
                               selectedHour = value!;
                               endTime = selectedHour;
-
                             });
                           },
                           items: hoursList.map((String hour) {
@@ -287,10 +284,7 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
               onPressed: () => Navigator.pop(context),
               child: const Text(
                 'Cancelar',
-                style: TextStyle(
-                    color: colorPrincipal,
-                    fontFamily: "Inder"
-                ),
+                style: TextStyle(color: colorPrincipal, fontFamily: "Inder"),
               ),
             ),
             ElevatedButton(
@@ -304,15 +298,12 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: colorPrincipal,
-                shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14.0)),
               ),
               child: const Text(
-                  'Confirmar',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: "Inder"
-                ),
+                'Confirmar',
+                style: TextStyle(color: Colors.white, fontFamily: "Inder"),
               ),
             ),
           ],
@@ -321,19 +312,17 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
     );
   }
 
-  void convertirHorarioALista(String horaInicio, String horaFin, String dia){
-    
+  void convertirHorarioALista(String horaInicio, String horaFin, String dia) {
     List<int> horario = [];
 
     //List horaInicioParsed = parseHour(horaInicio);
-   // List horaFinParsed = parseHour(horaFin);
+    // List horaFinParsed = parseHour(horaFin);
 
     String horaInicioConvertida = horaInicio.replaceAll(":", "");
     String horaFinConvertida = horaFin.replaceAll(":", "");
 
-
-    print (horaInicioConvertida);
-    print (horaFinConvertida);
+    print(horaInicioConvertida);
+    print(horaFinConvertida);
     //int soloHoraInicio = horaInicioParsed[0];
     //int soloMinutosInicio = horaInicioParsed[1];
 
@@ -367,24 +356,21 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
       "1930",
     ];
 
-    for (var hora in horas){
-      if (hora == horaInicioConvertida){
+    for (var hora in horas) {
+      if (hora == horaInicioConvertida) {
         horario.add(int.parse(horaInicioConvertida));
-      }
-      else if (hora != horaFinConvertida &&
+      } else if (hora != horaFinConvertida &&
           int.parse(horaInicioConvertida) <= int.parse(hora) &&
-          int.parse(hora) <= int.parse(horaFinConvertida)
-      ){
+          int.parse(hora) <= int.parse(horaFinConvertida)) {
         horario.add(int.parse(hora));
       }
     }
     List<int>? temp = [...?horarioPostulacion[dia], ...horario];
     temp.sort();
     horarioPostulacion[dia] = temp;
-
   }
 
-  List<int> parseHour(String hora){
+  List<int> parseHour(String hora) {
     List<int> parsedHour = [];
 
     if (hora.length == 3) {
