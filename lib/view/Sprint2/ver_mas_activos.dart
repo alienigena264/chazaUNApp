@@ -110,6 +110,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
                         if (idHorario.isNotEmpty) {
                           print("funciona?");
                           actualizarEstadoRelacionTrabajadores(uid);
+                          buscarHorarioPorIdTrabajador(uid);
 
                           // ignore: use_build_context_synchronously
                           Navigator.pushNamed(context, '/menu/chazero/personal',
@@ -276,15 +277,6 @@ Widget telefono(String uid) {
     },
   );
 }
-
-Map<String, String> palabrasRelacionadas = {
-  'Lunes:       ': '09:00-10:30,   16:00-18:00',
-  'Martes:     ': '09:00-10:30',
-  'Miércoles:': '09:00-10:30,   16:00-18:00',
-  'Jueves:     ': 'No Disponible',
-  'Viernes:    ': '09:00-10:30,   16:00-18:00',
-  'Sábado:    ': '09:00-10:30,   16:00-18:00',
-};
 
 Widget buildDiasSemana(String uid) {
   return FutureBuilder<List<List<String>>>(
