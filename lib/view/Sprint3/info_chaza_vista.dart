@@ -120,23 +120,29 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Text(
-          nombre,
-          style: const TextStyle(
+        Flexible(
+          child: Text(
+            nombre,
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 31.0,
               fontFamily: "Inder",
-              fontWeight: FontWeight.normal),
+              fontWeight: FontWeight.normal,
+            ),
+            maxLines: null, // Permite un número ilimitado de líneas
+            overflow: TextOverflow.visible
+          ),
         ),
         Row(
           children: [
             Text(
               pago,
               style: const TextStyle(
-                  color: colorTrabajador,
-                  fontSize: 32.0,
-                  fontFamily: "Inder",
-                  fontWeight: FontWeight.normal),
+                color: colorTrabajador,
+                fontSize: 32.0,
+                fontFamily: "Inder",
+                fontWeight: FontWeight.normal,
+              ),
             ),
             SizedBox(
               width: screenWidth * 0.013,
@@ -150,10 +156,11 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
                   fontWeight: FontWeight.normal),
             )
           ],
-        )
+        ),
       ],
     );
   }
+
 
   Row rowUbicacion_(String ubicacion) {
     final screenSize = MediaQuery.of(context).size;
