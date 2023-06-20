@@ -5,57 +5,9 @@ import 'package:flutter/services.dart';
 class PostuladosChaza extends StatefulWidget {
   @override
   _PostuladosChazaState createState() => _PostuladosChazaState();
-/*
-  final String selectedHour = '';
 
-  final List<String> hoursList = [
-    '8:00 AM',
-    '8:30 AM',
-    '9:00 AM',
-    '9:30 AM',
-    '10:00 AM',
-    '10:30 AM',
-    '11:00 AM',
-    '11:30 AM',
-    '12:00 PM',
-    '12:30 PM',
-    '1:00 PM',
-    '1:30 PM',
-    '2:00 PM',
-    '2:30 PM',
-    '3:00 PM',
-    '3:30 PM',
-    '4:00 PM',
-    '4:30 PM',
-    '5:00 PM',
-    '5:30 PM',
-    '6:00 PM',
-    '6:30 PM',
-    '7:00 PM',
-    '7:30 PM',
-    '8:00 PM',
-  ];
 
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: selectedHour,
-      hint: Text('Seleccionar hora'),
-      onChanged: (String? value) {
-        setState(() {
-          selectedHour = value!;
-        });
-      },
-      items: hoursList.map((String hour) {
-        return DropdownMenuItem<String>(
-          value: hour,
-          child: Text(hour),
-        );
-      }).toList(),
-    );
-  }
-}
-  */
+
 }
 
 class _PostuladosChazaState extends State<PostuladosChaza> {
@@ -131,6 +83,36 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
   Future<void> _showAddSlotDialog(String day) async {
     String startTime = '800';
     String endTime = '830';
+    String selectedHour = '8:00 AM';
+
+    final List<String> hoursList = [
+      '8:00 AM',
+      '8:30 AM',
+      '9:00 AM',
+      '9:30 AM',
+      '10:00 AM',
+      '10:30 AM',
+      '11:00 AM',
+      '11:30 AM',
+      '12:00 PM',
+      '12:30 PM',
+      '1:00 PM',
+      '1:30 PM',
+      '2:00 PM',
+      '2:30 PM',
+      '3:00 PM',
+      '3:30 PM',
+      '4:00 PM',
+      '4:30 PM',
+      '5:00 PM',
+      '5:30 PM',
+      '6:00 PM',
+      '6:30 PM',
+      '7:00 PM',
+      '7:30 PM',
+      '8:00 PM',
+    ];
+
 
     await showDialog(
       context: context,
@@ -145,21 +127,26 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                   Text('Desde:'),
                   SizedBox(width: 10.0),
                   Expanded(
-                    child: 
-                    
-                    
-                    TextField(
-                      controller: _textFieldController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'^([8-9]|1[0-8])00$|^([8-9]|1[0-8])30$'),
-                        ),
-                      ],
-                      decoration: InputDecoration(
-                        hintText: '800',
-                        labelText: 'Hora',
-                      ),
+                    child:
+                    StatefulBuilder(
+                      builder: (context, setState) {
+                        return DropdownButton<String>(
+                          value: selectedHour,
+                          hint: Text('Seleccionar hora'),
+                          onChanged: (String? value) {
+                            setState(() {
+                              selectedHour = value!;
+                              startTime = selectedHour;
+                            });
+                          },
+                          items: hoursList.map((String hour) {
+                            return DropdownMenuItem<String>(
+                              value: hour,
+                              child: Text(hour),
+                            );
+                          }).toList(),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -170,17 +157,27 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                   Text('Hasta:'),
                   SizedBox(width: 10.0),
                   Expanded(
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        setState(() {
-                          endTime = value;
-                        });
+                    child:
+                    StatefulBuilder(
+                      builder: (context, setState) {
+                        return DropdownButton<String>(
+                          value: selectedHour,
+                          hint: Text('Seleccionar hora'),
+                          onChanged: (String? value) {
+                            setState(() {
+                              selectedHour = value!;
+                              endTime = selectedHour;
+
+                            });
+                          },
+                          items: hoursList.map((String hour) {
+                            return DropdownMenuItem<String>(
+                              value: hour,
+                              child: Text(hour),
+                            );
+                          }).toList(),
+                        );
                       },
-                      decoration: InputDecoration(
-                        hintText: '1930',
-                        labelText: 'Hora',
-                      ),
                     ),
                   ),
                 ],
