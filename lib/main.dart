@@ -77,7 +77,9 @@ class MyApp extends StatelessWidget {
             const InfoCuenta(),
         '/menu/configuracion/infoPersonalTrabajador': (context) =>
             const InfoCuentaTrabajador(),
-        '/menu/chazas/informacion': (context) => const InfoChazaVista()
+
+        '/menu/chazas/informacion': (context) => const  InfoChazaVista()
+
       },
     );
   }
