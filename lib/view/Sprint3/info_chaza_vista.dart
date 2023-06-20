@@ -266,7 +266,7 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
     return ElevatedButton(
-        onPressed: () {},
+        onPressed: _Postularse(context),
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrincipal,
           minimumSize: Size(screenWidth * 0.85, screenHeight * 0.064),
@@ -299,6 +299,12 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
           MaterialPageRoute(
               builder: (BuildContext context) => HorarioChazaVista(
                   nombreChaza: nombre, idHorario: idHorario)));
+    };
+  }
+
+  Function() _Postularse(BuildContext context){
+    return () {
+      Navigator.pushNamed(context, '/menu/trabajador/chaza/postulacion', arguments: chaza);
     };
   }
 
