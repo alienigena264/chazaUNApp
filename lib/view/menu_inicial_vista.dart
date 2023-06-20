@@ -1,4 +1,5 @@
 import 'package:chazaunapp/Services/services_menu_inicial.dart';
+// import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -112,55 +113,6 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     )),
               ]),
               mostrarChazas()
-              // SizedBox(
-              //   height: 500,
-              //   width: 410, // Tamaño fijo
-              //   child: FutureBuilder(
-              //     future: getChazas(),
-              //     builder: ((context, snapshot) {
-              //       if (snapshot.hasData) {
-              //         //Si la consulta devuelve algo o espera
-              //         return ListView.separated(
-              //           //Hace una lista de todas las filas que había en la matriz chazas
-              //           shrinkWrap: true,
-              //           padding: const EdgeInsets.only(bottom: 20),
-              //           itemCount: snapshot.data?.length ??
-              //               0, // casi como un for que itera las veces de las filas de la matriz
-              //           itemBuilder: (text, index) {
-              //             return Column(
-              //               children: [
-              //                 SizedBox(
-              //                   height: 250,
-              //                   width: 300,
-              //                   child: card(
-              //                     // hace una card infochaza con los detalles de cada fila, osea cada chaza
-              //                     snapshot.data?[index]['nombre'],
-              //                     snapshot.data?[index]['ubicacion'],
-              //                     snapshot.data?[index]['puntuacion'],
-              //                     snapshot.data?[index]['paga'],
-              //                     snapshot.data?[index]['imagen'],
-              //                     snapshot.data?[index]['horario'],
-              //                   ),
-              //                 ),
-              //                 const SizedBox(
-              //                   height: 15,
-              //                 )
-              //               ], //Espacio entre las cards
-              //             );
-              //           },
-              //           separatorBuilder: (BuildContext context, int index) {
-              //             return const SizedBox(height: 30);
-              //           },
-              //         );
-              //       } else {
-              //         return const Center(
-              //           child:
-              //               CircularProgressIndicator(), // Si la bd se tarda o no da nada
-              //         );
-              //       }
-              //     }),
-              //   ),
-              // )
             ],
           ),
         ),

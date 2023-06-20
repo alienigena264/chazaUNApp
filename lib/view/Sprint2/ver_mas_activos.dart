@@ -110,6 +110,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
                         if (idHorario.isNotEmpty) {
                           print("funciona?");
                           actualizarEstadoRelacionTrabajadores(uid);
+                          buscarHorarioPorIdTrabajador(uid);
 
                           // ignore: use_build_context_synchronously
                           Navigator.pushNamed(context, '/menu/chazero/personal',

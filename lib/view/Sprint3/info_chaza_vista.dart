@@ -138,10 +138,12 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
                   fontFamily: "Inder",
                   fontWeight: FontWeight.normal),
             ),
-            SizedBox(width: screenWidth*0.013,),
-            Text(
+            SizedBox(
+              width: screenWidth * 0.013,
+            ),
+            const Text(
               "/Hora",
-              style: const TextStyle(
+              style: TextStyle(
                   color: Color(0xff444444),
                   fontSize: 18.0,
                   fontFamily: "Inder",
@@ -264,7 +266,7 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
     return ElevatedButton(
-        onPressed: () {},
+        onPressed: _Postularse(context),
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrincipal,
           minimumSize: Size(screenWidth * 0.85, screenHeight * 0.064),
@@ -297,6 +299,12 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
           MaterialPageRoute(
               builder: (BuildContext context) => HorarioChazaVista(
                   nombreChaza: nombre, idHorario: idHorario)));
+    };
+  }
+
+  Function() _Postularse(BuildContext context){
+    return () {
+      Navigator.pushNamed(context, '/menu/trabajador/chaza/postulacion', arguments: chaza);
     };
   }
 
