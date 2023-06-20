@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 class VerMasPostulados extends StatelessWidget {
   final String uid;
   final String idHorario; //chaza id
-  const VerMasPostulados(this.uid, this.idHorario, {super.key});
+  final String cid;
+  const VerMasPostulados(this.uid, this.idHorario, this.cid, {super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +27,9 @@ class VerMasPostulados extends StatelessWidget {
             builder: ((context, snapshot) {
               goMenu(String texto) {
                 mostrarMensaje(context, texto);
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/menu/chazero/personal', ModalRoute.withName('/'),
-                    arguments: idHorario);
+                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, '/menu/chazero/personal',
+                    arguments: cid);
               }
 
               if (snapshot.hasData) {

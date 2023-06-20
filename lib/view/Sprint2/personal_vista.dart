@@ -210,7 +210,7 @@ class _PersonalVistaState extends State<PersonalVista> {
           } else {
             Navigator.of(context)
                 .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-              return VerMasPostulados(uid, idHorario);
+              return VerMasPostulados(uid, idHorario, chazaActual);
             }));
           }
         },
