@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:chazaunapp/Services/Sprint2/ver_mas_activos_services.dart';
+import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
+import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +17,29 @@ class VerMasActivos extends StatefulWidget {
   State<VerMasActivos> createState() => _VerMasActivosState();
 }
 
+int _currentIndex = 0; // Índice del ítem seleccionado actualmente
+
 class _VerMasActivosState extends State<VerMasActivos> {
   List<String> horasSemana = [];
 
   int click = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+      if (_currentIndex == 1) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const InfoCuenta()),
+        );
+      } else if (_currentIndex == 2) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ConfiguracionVista()),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +159,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
             ])),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.home), label: 'Inicio'), //Icono home
