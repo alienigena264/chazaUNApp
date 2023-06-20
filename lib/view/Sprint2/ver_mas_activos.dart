@@ -22,6 +22,12 @@ class _VerMasActivosState extends State<VerMasActivos> {
 
   @override
   Widget build(BuildContext context) {
+    goMenu(cid) {
+      Navigator.pop(context);
+      Navigator.popAndPushNamed(context, '/menu/chazero/personal',
+          arguments: cid);
+    }
+
     String uid = widget.uid;
     String cid = widget.cid;
     String idHorario = widget.idHorario;
@@ -112,9 +118,11 @@ class _VerMasActivosState extends State<VerMasActivos> {
                         print("fun");
                         if (idHorario.isNotEmpty) {
                           print("funciona?");
-                          actualizarEstadoRelacionTrabajadores(uid, cid);
-                          buscarHorarioPorIdTrabajador(uid, cid);
-                          goMenu(cid, context);
+                          await actualizarEstadoRelacionTrabajadores(uid, cid);
+                          await buscarHorarioPorIdTrabajador(uid, cid);
+                          goMenu(
+                            cid,
+                          );
                           // Navega a PersonalVista después de eliminar los documentos
                         }
                       },
@@ -176,11 +184,6 @@ Widget avatar(String uid) {
       }
     },
   );
-}
-
-goMenu(cid, context) {
-  Navigator.pop(context);
-  Navigator.popAndPushNamed(context, '/menu/chazero/personal', arguments: cid);
 }
 
 Widget linea() {
