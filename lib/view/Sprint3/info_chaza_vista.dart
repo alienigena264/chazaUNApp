@@ -71,7 +71,7 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
       String ubicacion, String puntuacion, String imagen) {
     final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
-    return Padding(padding: EdgeInsets.all(10.0),child:
+    return Padding(padding: const EdgeInsets.all(10.0),child:
     Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -93,10 +93,10 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
           height: screenHeight * 0.01,
         ),
         rowUbicacion_(ubicacion),
-        Divider(thickness: 1.3),
+        const Divider(thickness: 1.3),
         rowPuntuacion_(puntuacion),
-        Divider(thickness: 1.3),
-        SizedBox(
+        const Divider(thickness: 1.3),
+        const SizedBox(
           height: 1.8,
         ),
         _descripcion(descripcion),
@@ -134,9 +134,9 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
                   fontWeight: FontWeight.normal),
             ),
             SizedBox(width: screenWidth*0.013,),
-            Text(
+            const Text(
               "/Hora",
-              style: const TextStyle(
+              style:  TextStyle(
                   color: Color(0xff444444),
                   fontSize: 18.0,
                   fontFamily: "Inder",
@@ -209,9 +209,9 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(width: screenWidth * 0.02),
-            Text(
+            const Text(
               'Descripcion',
-              style: const TextStyle(
+              style: TextStyle(
                   color: Colors.black,
                   fontSize: 23.0,
                   fontFamily: "Inder",

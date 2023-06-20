@@ -10,7 +10,7 @@ Future<List> getChazas() async {
     Map<String, dynamic> chazaData = chaza.data() as Map<String, dynamic>; // Datos del documento
     chazaData['id'] = chaza.id; // Agregar el ID del documento a los datos
 
-    chazas.add(chazaData);;
+    chazas.add(chazaData);
   }
   Future.delayed(const Duration(milliseconds: 800));
 
