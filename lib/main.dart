@@ -9,6 +9,7 @@ import 'package:chazaunapp/view/Sprint2/perfil_trabajador_vista.dart';
 import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
 import 'package:chazaunapp/view/Sprint2/registro_chaza_vista.dart';
 import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
+import 'package:chazaunapp/view/Sprint3/info_chaza_vista.dart';
 import 'package:chazaunapp/view/Sprint3/horarios_chaza_chazero.dart';
 import 'package:chazaunapp/view/Sprint3/postulados_chaza.dart';
 // ignore: unused_import
@@ -74,7 +75,8 @@ class MyApp extends StatelessWidget {
         '/menu/configuracion/infoPersonalChazero': (context) =>
             const InfoCuenta(),
         '/menu/configuracion/infoPersonalTrabajador': (context) =>
-            const InfoCuentaTrabajador()
+            const InfoCuentaTrabajador(),
+        '/menu/chazas/informacion': (context) => InfoChazaVista()
       },
     );
   }

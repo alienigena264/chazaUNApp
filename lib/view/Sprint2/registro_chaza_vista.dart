@@ -194,7 +194,7 @@ class _RegistrarChazaState extends State<RegistrarChaza> {
             height: 130,
           ),
         ),
-        const Positioned(
+        Positioned(
           top: 5,
           left: 0,
           width: 160,
