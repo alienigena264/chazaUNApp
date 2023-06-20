@@ -1,17 +1,15 @@
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class PostuladosChaza extends StatefulWidget {
+  const PostuladosChaza({super.key});
+
   @override
   _PostuladosChazaState createState() => _PostuladosChazaState();
-
-
-
 }
 
 class _PostuladosChazaState extends State<PostuladosChaza> {
-  TextEditingController _textFieldController = TextEditingController();
+  final TextEditingController _textFieldController = TextEditingController();
   List<String> daysOfWeek = [
     'Lunes',
     'Martes',
@@ -33,7 +31,7 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Seleccionar horario',
             style: TextStyle(
               color: Colors.white,
@@ -46,7 +44,7 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
           toolbarHeight: 100.0,
         ),
         body: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: ListView.builder(
             itemCount: daysOfWeek.length,
             itemBuilder: (context, index) {
@@ -63,13 +61,13 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                   ...slots.map((slot) => ListTile(
                         title: Text(slot),
                       )),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   ElevatedButton(
                     onPressed: () => _showAddSlotDialog(day),
-                    child: Text('Añadir'),
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(colorPrincipal)),
+                    child: const Text('Añadir'),
                   ),
                 ],
               );
@@ -81,38 +79,37 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
   }
 
   Future<void> _showAddSlotDialog(String day) async {
-    String startTime = '800';
-    String endTime = '830';
-    String selectedHour = '8:00 AM';
+    String startTime = '8:00';
+    String endTime = '8:00';
+    String selectedHour = '8:00';
 
     final List<String> hoursList = [
-      '8:00 AM',
-      '8:30 AM',
-      '9:00 AM',
-      '9:30 AM',
-      '10:00 AM',
-      '10:30 AM',
-      '11:00 AM',
-      '11:30 AM',
-      '12:00 PM',
-      '12:30 PM',
-      '1:00 PM',
-      '1:30 PM',
-      '2:00 PM',
-      '2:30 PM',
-      '3:00 PM',
-      '3:30 PM',
-      '4:00 PM',
-      '4:30 PM',
-      '5:00 PM',
-      '5:30 PM',
-      '6:00 PM',
-      '6:30 PM',
-      '7:00 PM',
-      '7:30 PM',
-      '8:00 PM',
+      '8:00',
+      '8:30',
+      '9:00',
+      '9:30',
+      '10:00',
+      '10:30',
+      '11:00',
+      '11:30',
+      '12:00',
+      '12:30',
+      '13:00',
+      '13:30',
+      '14:00',
+      '14:30',
+      '15:00',
+      '15:30',
+      '16:00',
+      '16:30',
+      '17:00',
+      '17:30',
+      '18:00',
+      '18:30',
+      '19:00',
+      '19:30',
+      '20:00',
     ];
-
 
     await showDialog(
       context: context,
@@ -124,15 +121,14 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
             children: [
               Row(
                 children: [
-                  Text('Desde:'),
-                  SizedBox(width: 10.0),
+                  const Text('Desde:'),
+                  const SizedBox(width: 10.0),
                   Expanded(
-                    child:
-                    StatefulBuilder(
+                    child: StatefulBuilder(
                       builder: (context, setState) {
                         return DropdownButton<String>(
                           value: selectedHour,
-                          hint: Text('Seleccionar hora'),
+                          hint: Text("Seleccionar hora"),
                           onChanged: (String? value) {
                             setState(() {
                               selectedHour = value!;
@@ -151,14 +147,13 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                   ),
                 ],
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Row(
                 children: [
-                  Text('Hasta:'),
-                  SizedBox(width: 10.0),
+                  const Text('Hasta:'),
+                  const SizedBox(width: 10.0),
                   Expanded(
-                    child:
-                    StatefulBuilder(
+                    child: StatefulBuilder(
                       builder: (context, setState) {
                         return DropdownButton<String>(
                           value: selectedHour,
@@ -167,7 +162,6 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                             setState(() {
                               selectedHour = value!;
                               endTime = selectedHour;
-
                             });
                           },
                           items: hoursList.map((String hour) {
@@ -187,7 +181,7 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('Cancelar'),
+              child: const Text('Cancelar'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -197,7 +191,7 @@ class _PostuladosChazaState extends State<PostuladosChaza> {
                 });
                 Navigator.pop(context);
               },
-              child: Text('Confirmar'),
+              child: const Text('Confirmar'),
             ),
           ],
         );
