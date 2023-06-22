@@ -8,6 +8,11 @@ import 'package:chazaunapp/view/Sprint2/perfil_chazero_vista.dart';
 import 'package:chazaunapp/view/Sprint2/perfil_trabajador_vista.dart';
 import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
 import 'package:chazaunapp/view/Sprint2/registro_chaza_vista.dart';
+import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
+import 'package:chazaunapp/view/Sprint3/horarios_chaza_chazero.dart';
+import 'package:chazaunapp/view/Sprint3/postulados_chaza.dart';
+import 'package:chazaunapp/view/Sprint3/info_chaza_vista.dart';
+// ignore: unused_import
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
@@ -50,10 +55,18 @@ class MyApp extends StatelessWidget {
         '/registro/trabajador': (context) => const RegistroTrabajadorView(),
         '/registro/chazero': (context) => const RegistroChazeroVista(),
         '/menu/chazero': (context) => const MenuChazeroVista(""),
+        '/menu/chazero/horario': (context) =>
+            const HorarioChazaChazeroVista(nombreChaza: "", idHorario: ""),
         '/menu/chazero/personal': (context) => const PersonalVista(),
         '/menu/chazero/registrar/chaza': (context) => const RegistrarChaza(),
         '/menu/trabajador': (context) => const MenuInicialVistaView(),
         '/menu/trabajador/perfil': (context) => const PerfilTrabajadorVista(),
+        '/menu/trabajador/chaza/horario': (context) => const HorarioChazaVista(
+              nombreChaza: '',
+              idHorario: '',
+            ),
+        '/menu/trabajador/chaza/postulacion': (context) => const PostuladosChaza(idChaza: '',),
+
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),
         '/menu/configuracion': (context) => const ConfiguracionVista(),
         '/menu/configuracionTrabajo': (context) =>
@@ -63,7 +76,10 @@ class MyApp extends StatelessWidget {
         '/menu/configuracion/infoPersonalChazero': (context) =>
             const InfoCuenta(),
         '/menu/configuracion/infoPersonalTrabajador': (context) =>
-            const InfoCuentaTrabajador()
+            const InfoCuentaTrabajador(),
+
+        '/menu/chazas/informacion': (context) => const  InfoChazaVista()
+
       },
     );
   }

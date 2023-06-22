@@ -1,27 +1,57 @@
 // ignore_for_file: avoid_print
 
 import 'package:chazaunapp/Services/Sprint2/ver_mas_activos_services.dart';
-import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
+import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
+import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
 class VerMasActivos extends StatefulWidget {
   final String uid;
-
-  const VerMasActivos(this.uid, {Key? key}) : super(key: key);
+  final String cid;
+  final String idHorario;
+  const VerMasActivos(this.uid, this.cid, this.idHorario, {Key? key})
+      : super(key: key);
 
   @override
   State<VerMasActivos> createState() => _VerMasActivosState();
 }
+
+int _currentIndex = 0; // Índice del ítem seleccionado actualmente
 
 class _VerMasActivosState extends State<VerMasActivos> {
   List<String> horasSemana = [];
 
   int click = 0;
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+      if (_currentIndex == 1) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const InfoCuenta()),
+        );
+      } else if (_currentIndex == 2) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ConfiguracionVista()),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    goMenu(cid) {
+      Navigator.pop(context);
+      Navigator.popAndPushNamed(context, '/menu/chazero/personal',
+          arguments: cid);
+    }
+
     String uid = widget.uid;
+    String cid = widget.cid;
+    String idHorario = widget.idHorario;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -84,7 +114,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
               const SizedBox(
                 height: 10,
               ),
-              buildDiasSemana(uid),
+              buildDiasSemana(idHorario),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -107,14 +137,13 @@ class _VerMasActivosState extends State<VerMasActivos> {
                     child: ElevatedButton(
                       onPressed: () async {
                         print("fun");
-                        String idHorario = await fetchIDHorarioEliminar(uid);
                         if (idHorario.isNotEmpty) {
                           print("funciona?");
-                          actualizarEstadoRelacionTrabajadores(uid);
-
-                          Navigator.pushNamed(context, '/menu/chazero/personal',
-                              arguments: uid);
-
+                          await actualizarEstadoRelacionTrabajadores(uid, cid);
+                          await buscarHorarioPorIdTrabajador(uid, cid);
+                          goMenu(
+                            cid,
+                          );
                           // Navega a PersonalVista después de eliminar los documentos
                         }
                       },
@@ -130,6 +159,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
             ])),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.home), label: 'Inicio'), //Icono home
@@ -277,18 +307,9 @@ Widget telefono(String uid) {
   );
 }
 
-Map<String, String> palabrasRelacionadas = {
-  'Lunes:       ': '09:00-10:30,   16:00-18:00',
-  'Martes:     ': '09:00-10:30',
-  'Miércoles:': '09:00-10:30,   16:00-18:00',
-  'Jueves:     ': 'No Disponible',
-  'Viernes:    ': '09:00-10:30,   16:00-18:00',
-  'Sábado:    ': '09:00-10:30,   16:00-18:00',
-};
-
-Widget buildDiasSemana(String uid) {
+Widget buildDiasSemana(String idHorario) {
   return FutureBuilder<List<List<String>>>(
-    future: fetchIDHorario(uid),
+    future: fetchHoras(idHorario),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const CircularProgressIndicator();
@@ -309,37 +330,37 @@ Column buildColumnDiasSemana(List<List<String>> horasSemana) {
 
   // Lunes
   String diaLunes = 'Lunes:       ';
-  List<String> horasLunes = horasSemana[1];
+  List<String> horasLunes = horasSemana[0];
   columnChildren.add(buildDia(diaLunes, horasLunes));
   columnChildren.add(const SizedBox(height: 16));
 
   // Martes
   String diaMartes = 'Martes:     ';
-  List<String> horasMartes = horasSemana[2];
+  List<String> horasMartes = horasSemana[1];
   columnChildren.add(buildDia(diaMartes, horasMartes));
   columnChildren.add(const SizedBox(height: 16));
 
   // Miércoles
   String diaMiercoles = 'Miércoles:';
-  List<String> horasMiercoles = horasSemana[4];
+  List<String> horasMiercoles = horasSemana[2];
   columnChildren.add(buildDia(diaMiercoles, horasMiercoles));
   columnChildren.add(const SizedBox(height: 16));
 
   // Jueves
   String diaJueves = 'Jueves:     ';
-  List<String> horasJueves = horasSemana[5];
+  List<String> horasJueves = horasSemana[3];
   columnChildren.add(buildDia(diaJueves, horasJueves));
   columnChildren.add(const SizedBox(height: 16));
 
   // Viernes
   String diaViernes = 'Viernes:    ';
-  List<String> horasViernes = horasSemana[3];
+  List<String> horasViernes = horasSemana[4];
   columnChildren.add(buildDia(diaViernes, horasViernes));
   columnChildren.add(const SizedBox(height: 16));
 
   // Sábado
   String diaSabado = 'Sábado:    ';
-  List<String> horasSabado = horasSemana[0];
+  List<String> horasSabado = horasSemana[5];
   columnChildren.add(buildDia(diaSabado, horasSabado));
   columnChildren.add(const SizedBox(height: 16));
 
@@ -350,8 +371,7 @@ Column buildColumnDiasSemana(List<List<String>> horasSemana) {
 }
 
 Widget buildDia(String nombreDia, List<String> horas) {
-  String palabras = horas.isNotEmpty ? horas.join(', ') : 'No disponible';
-
+  String palabras = mostrarHorario(horas);
   return Container(
     margin: const EdgeInsets.only(bottom: 8),
     child: Row(
@@ -371,4 +391,58 @@ Widget buildDia(String nombreDia, List<String> horas) {
       ],
     ),
   );
+}
+
+String mostrarHorario(List<String> lista) {
+  String horarios = "";
+  int hora = 0;
+  bool buscando = false;
+  for (String i in lista) {
+    if (i == "") {
+      continue;
+    }
+    if (i.length == 3) {
+      hora = int.parse(i.substring(0, 1));
+    } else {
+      hora = int.parse(i.substring(0, 2));
+    }
+    //buscando significa que hay hora de inicio pero no final
+    if (!buscando) {
+      //horas tipo xx:30
+      if (i.endsWith('30')) {
+        if (!lista.contains("${hora + 1}00")) {
+          //si no hay mas de un bloque seguido agrega solo ese bloque
+          horarios = "$horarios $hora:30-${hora + 1}:00";
+        } else {
+          //si hay bloques seguidos añade la hora de inicio y busca el final
+          horarios = "$horarios $hora:30-";
+          buscando = true;
+        }
+      } else {
+        //lo mismo para horas tipo xx:00
+        if (!lista.contains("${hora}30")) {
+          horarios = "$horarios $hora:00-$hora:30";
+        } else {
+          horarios = "$horarios $hora:00-";
+          buscando = true;
+        }
+      }
+    } else {
+      //horas tipo xx:30
+      if (i.endsWith('30')) {
+        if (!lista.contains("${hora + 1}00")) {
+          //si ya no hay mas agrega la hora final y deja de buscar
+          horarios = "$horarios${hora + 1}:00";
+          buscando = false;
+        }
+      } else {
+        //lo mismo para horas tipo xx:00
+        if (!lista.contains("${hora}30")) {
+          horarios = "$horarios$hora:30";
+          buscando = false;
+        }
+      }
+    }
+  }
+  return horarios;
 }

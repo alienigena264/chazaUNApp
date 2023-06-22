@@ -50,7 +50,7 @@ class _ContactanosState extends State<ContactanosView> {
                     keyboardType: TextInputType.text,
                     controller: preguntasController,
                     decoration: InputDecoration(
-                      hintText: 'Cuentanos como podemos ayudarte',
+                      hintText: 'Cuéntanos como podemos ayudarte',
                       filled: true,
                       fillColor: colorFondoField,
                       border: const OutlineInputBorder(

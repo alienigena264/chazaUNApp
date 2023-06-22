@@ -52,6 +52,7 @@ class GAuthService {
       GoogleSignInAuthentication gAuth, String telefono) async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     CollectionReference coleccion = db.collection('Trabajador');
+    DateTime fechaHoy = DateTime.now();
     String email = gUser.email;
     Map<String, dynamic>? idMap = parseJwt(gAuth.idToken!);
     final String firstName = idMap!["given_name"];
@@ -69,6 +70,8 @@ class GAuthService {
           "estado": true,
           "telefono": telefono,
           "foto": foto,
+          "FechaCreacion":fechaHoy,
+          "FechaUltimaActualizacion":fechaHoy
         };
         coleccion.doc(FirebaseAuth.instance.currentUser?.uid).set(data);
       }

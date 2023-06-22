@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:chazaunapp/Services/Sprint2/select_image.dart';
 import 'package:chazaunapp/view/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
@@ -31,6 +32,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
   String foto = '';
   String uploades = '';
   String emailOculto = '';
+  Timestamp fechaCrea = Timestamp(0, 0);
   List<dynamic> resultado = [];
   @override
   void initState() {
@@ -58,6 +60,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
           foto = resultado[2];
           nombre = resultado[3];
           telefono = resultado[4];
+          fechaCrea = resultado[5];
           telefonoOculto = telefono.replaceRange(3, 6, '***');
           emailOculto = email.replaceRange(3, 8, '******');
         }); // Actualizar el estado para mostrar los datos en el widget
@@ -357,7 +360,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
     }
     if (FirebaseAuth.instance.currentUser != null) {
       await actualizarDatosTrabajador(FirebaseAuth.instance.currentUser?.uid,
-          apellido, email, foto, nombre, telefono);
+          apellido, email, foto, nombre, telefono, fechaCrea);
       controllerCampo.text = '';
     }
   }

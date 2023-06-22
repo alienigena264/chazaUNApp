@@ -70,30 +70,6 @@ Future<String?> getFotoUrlFromFirestore(String id) async {
   return null; // Valor predeterminado si no se encuentra la URL de foto en Firebase
 }
 
-Future<List<List<String>>> fetchIDHorario(String idTrabajador) async {
-  try {
-    QuerySnapshot querySnapshot = await db
-        .collection('RelacionTrabajadores')
-        .where('IDTrabajador', isEqualTo: idTrabajador)
-        .get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      // Se encontró al menos un documento con el IDTrabajador especificado
-      String idHorario = querySnapshot.docs[0]['IDHorario'];
-      // Acceder a la colección "Horario" utilizando el IDHorario obtenido
-      return fetchHoras(idHorario);
-    } else {
-      // No se encontró ningún documento con el IDTrabajador especificado
-      print(
-          'No se encontró el IDTrabajador en la colección "RelacionTrabajadores"');
-      return [];
-    }
-  } catch (error) {
-    print('Error al obtener los documentos de RelacionTrabajadores: $error');
-    return [];
-  }
-}
-
 Future<List<List<String>>> fetchHoras(String idHorario) async {
   Map<String, List<String>> horasMap = {};
 
@@ -102,12 +78,21 @@ Future<List<List<String>>> fetchHoras(String idHorario) async {
 
     if (documentSnapshot.exists) {
       var data = documentSnapshot.data();
+      print(data);
 
       var dias = data!['Dias'];
-      dias.forEach((dia, horas) {
-        horasMap[dia] = List<String>.from(horas);
-      });
-      print(dias);
+      var orderedDias = [
+        'Lunes',
+        'Martes',
+        'Miercoles',
+        'Jueves',
+        'Viernes',
+        'Sabado'
+      ];
+      for (var dia in orderedDias) {
+        horasMap[dia] = List<String>.from(dias[dia]);
+      }
+      print(orderedDias);
     } else {
       throw Exception('El ID de Horario no existe');
     }
@@ -120,34 +105,13 @@ Future<List<List<String>>> fetchHoras(String idHorario) async {
   return horasSemana;
 }
 
-Future<String> fetchIDHorarioEliminar(String idTrabajador) async {
+Future<void> actualizarEstadoRelacionTrabajadores(
+    String idTrabajador, String idChaza) async {
   try {
     QuerySnapshot querySnapshot = await db
         .collection('RelacionTrabajadores')
         .where('IDTrabajador', isEqualTo: idTrabajador)
-        .get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      // Se encontró al menos un documento con el IDTrabajador especificado
-      String idHorario = querySnapshot.docs[0]['IDHorario'];
-      return idHorario;
-    } else {
-      // No se encontró ningún documento con el IDTrabajador especificado
-      print(
-          'No se encontró el IDTrabajador en la colección "RelacionTrabajadores"');
-      return '';
-    }
-  } catch (error) {
-    print('Error al obtener los documentos de RelacionTrabajadores: $error');
-    return '';
-  }
-}
-
-Future<void> actualizarEstadoRelacionTrabajadores(String idTrabajador) async {
-  try {
-    QuerySnapshot querySnapshot = await db
-        .collection('RelacionTrabajadores')
-        .where('IDTrabajador', isEqualTo: idTrabajador)
+        .where('IDChaza', isEqualTo: idChaza)
         .get();
 
     for (var doc in querySnapshot.docs) {
@@ -157,5 +121,69 @@ Future<void> actualizarEstadoRelacionTrabajadores(String idTrabajador) async {
     print('Estado actualizado correctamente en RelacionTrabajadores');
   } catch (error) {
     print('Error al actualizar el estado en RelacionTrabajadores: $error');
+  }
+}
+
+Future<void> actualizarMapaEnFirestore(
+    String idDocumento, Map<String, dynamic> nuevoMapa) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('Horario')
+        .doc(idDocumento)
+        .update({'Dias': nuevoMapa});
+    print('Actualización exitosa en Firestore');
+  } catch (error) {
+    print('Error al actualizar en Firestore: $error');
+  }
+}
+
+void reemplazarIdTrabajadorEnMapa(
+    //elimina la coincidencia del trabajador en el horario
+    Map<String, dynamic> mapa,
+    String idTrabajador) {
+  for (var dia in mapa.keys) {
+    Map<String, dynamic> horarios = mapa[dia];
+    for (var horario in horarios.keys.toList()) {
+      if (horarios[horario] == idTrabajador) {
+        horarios[horario] = "";
+      }
+    }
+  }
+}
+
+Future<void> buscarHorarioPorIdTrabajador(
+    String idTrabajador, String idChaza) async {
+  // Buscar en la colección "RelacionTrabajadores" por el idTrabajador
+  // String idHorarioTrabajador = relacionSnapshot.docs[0]['IDHorario'];
+
+  // Buscar en la colección "Chaza" por el idChaza
+  DocumentSnapshot chazaSnapshot =
+      await db.collection('Chaza').doc(idChaza).get();
+
+  // Verificar si se encontró el documento en la colección "Chaza"
+  if (chazaSnapshot.exists) {
+    // Obtener el ID del horario desde el campo "horario" del documento
+    String idHorario = chazaSnapshot['horario'];
+
+    // Buscar en la colección "Horario" por el idHorario
+    DocumentSnapshot horarioSnapshot =
+        await db.collection('Horario').doc(idHorario).get();
+
+    // Verificar si se encontró el documento en la colección "Horario"
+    if (horarioSnapshot.exists) {
+      Map<String, dynamic> dias = horarioSnapshot['Dias'];
+      print(dias);
+      reemplazarIdTrabajadorEnMapa(dias, idTrabajador);
+      print("dias sin el id");
+      print(dias);
+
+      actualizarMapaEnFirestore(idHorario, dias);
+      print("dias sin el id en la base de datos");
+      print(dias);
+    } else {
+      print('El mapa "Dias" no contiene todos los días de la semana');
+    }
+  } else {
+    print('El horario no existe');
   }
 }
