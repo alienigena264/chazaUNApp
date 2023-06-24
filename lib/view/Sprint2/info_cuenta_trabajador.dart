@@ -1,7 +1,5 @@
 import 'dart:io';
 
-// ignore: file_names
-
 import 'package:chazaunapp/Services/Sprint2/select_image.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -66,8 +64,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
         }); // Actualizar el estado para mostrar los datos en el widget
       }
     } catch (e) {
-      // ignore: avoid_print
-      print('Error al obtener la información personal: $e');
+      throw Exception('Error al obtener la información personal: $e');
     }
   }
 
@@ -365,7 +362,8 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
     }
   }
 
-  Future<String?> openDialog(Function toExecute, int cambiarVariable, TextInputType tipoTeclado) =>
+  Future<String?> openDialog(
+          Function toExecute, int cambiarVariable, TextInputType tipoTeclado) =>
       showDialog<String>(
         context: context,
         builder: (context) => AlertDialog(
@@ -374,7 +372,7 @@ class _InfoCuentaTrabajadorState extends State<InfoCuentaTrabajador> {
             style: TextStyle(fontSize: 10),
           ),
           content: TextField(
-            keyboardType: tipoTeclado,
+              keyboardType: tipoTeclado,
               controller: controllerCampo,
               autofocus: true,
               decoration: const InputDecoration(hintText: 'Ingrese los datos')),

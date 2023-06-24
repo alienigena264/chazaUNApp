@@ -23,8 +23,7 @@ Future<String> getNombreTrabajador(String? uid) async {
       info.add(docSnapshot.get('apellidos'));
     } else {}
   } catch (e) {
-    // ignore: avoid_print
-    print('Error al obtener el documento: $e');
+    throw Exception('Error al obtener el documento: $e');
   }
   String nombre = info[0];
   return nombre;

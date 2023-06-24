@@ -20,23 +20,22 @@ Future<List<dynamic>> traerInfoGeneralTrabajo(String? uid) async {
       info.add(docSnapshot.get('FechaUltimaActualizacion'));
     } else {}
   } catch (e) {
-    // ignore: avoid_print
-    print('Error al obtener el documento: $e');
+    throw Exception('Error al obtener el documento: $e');
   }
   return info;
 }
 
-Future<void> actualizarDatosTrabajador(
-    String? uid, apellidos, correoActual, foto, nombres, telefono, Timestamp fechaCrea) async {
-    DateTime fechaActual = DateTime.now();
-    Timestamp fechaHoy = Timestamp.fromDate(fechaActual);
+Future<void> actualizarDatosTrabajador(String? uid, apellidos, correoActual,
+    foto, nombres, telefono, Timestamp fechaCrea) async {
+  DateTime fechaActual = DateTime.now();
+  Timestamp fechaHoy = Timestamp.fromDate(fechaActual);
   await db.collection('Trabajador').doc(uid).set({
     'apellidos': apellidos,
     'correo': correoActual,
     'foto': foto,
     'nombres': nombres,
     'telefono': telefono,
-    'FechaCreacion':fechaCrea,
+    'FechaCreacion': fechaCrea,
     'FechaUltimaActualizacion': fechaHoy
   });
 }

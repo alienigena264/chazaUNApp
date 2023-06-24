@@ -10,9 +10,8 @@ import 'package:chazaunapp/view/Sprint2/personal_vista.dart';
 import 'package:chazaunapp/view/Sprint2/registro_chaza_vista.dart';
 import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
 import 'package:chazaunapp/view/Sprint3/horarios_chaza_chazero.dart';
-import 'package:chazaunapp/view/Sprint3/postulados_chaza.dart';
 import 'package:chazaunapp/view/Sprint3/info_chaza_vista.dart';
-// ignore: unused_import
+import 'package:chazaunapp/view/Sprint3/postulados_chaza.dart';
 import 'package:chazaunapp/view/inicio.dart';
 import 'package:chazaunapp/view/menu_inicial_chazero_vista.dart';
 import 'package:chazaunapp/view/menu_inicial_vista.dart';
@@ -28,8 +27,6 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // ignore: deprecated_member_use
-  //SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
@@ -65,8 +62,10 @@ class MyApp extends StatelessWidget {
               nombreChaza: '',
               idHorario: '',
             ),
-        '/menu/trabajador/chaza/postulacion': (context) => const PostuladosChaza(idChaza: '',),
-
+        '/menu/trabajador/chaza/postulacion': (context) =>
+            const PostuladosChaza(
+              idChaza: '',
+            ),
         '/menu/chazero/perfil': (context) => const PerfilChazeroVista(),
         '/menu/configuracion': (context) => const ConfiguracionVista(),
         '/menu/configuracionTrabajo': (context) =>
@@ -77,9 +76,7 @@ class MyApp extends StatelessWidget {
             const InfoCuenta(),
         '/menu/configuracion/infoPersonalTrabajador': (context) =>
             const InfoCuentaTrabajador(),
-
-        '/menu/chazas/informacion': (context) => const  InfoChazaVista()
-
+        '/menu/chazas/informacion': (context) => const InfoChazaVista()
       },
     );
   }

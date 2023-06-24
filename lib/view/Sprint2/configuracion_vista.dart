@@ -39,8 +39,7 @@ class _ConfiguracionVistaState extends State<ConfiguracionVista> {
         }); // Actualizar el estado para mostrar los datos en el widget
       }
     } catch (e) {
-      // ignore: avoid_print
-      print('Error al obtener la información personal: $e');
+      throw Exception('Error al obtener la información personal: $e');
     }
   }
 

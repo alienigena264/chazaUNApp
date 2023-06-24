@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:chazaunapp/Services/Sprint2/ver_mas_activos_services.dart';
 import 'package:chazaunapp/view/Sprint2/configuracion_vista.dart';
 import 'package:chazaunapp/view/Sprint2/info_cuenta.dart';
@@ -136,9 +134,7 @@ class _VerMasActivosState extends State<VerMasActivos> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () async {
-                        print("fun");
                         if (idHorario.isNotEmpty) {
-                          print("funciona?");
                           await actualizarEstadoRelacionTrabajadores(uid, cid);
                           await buscarHorarioPorIdTrabajador(uid, cid);
                           goMenu(
@@ -189,13 +185,10 @@ Widget avatar(String uid) {
         return const CircularProgressIndicator();
       } else if (snapshot.hasError) {
         // Muestra un mensaje de error si ocurre un error al obtener la URL de la foto
-        print(
-            'Error al obtener la URL de la foto desde Firebase: ${snapshot.error}');
         return const Text('Error al obtener la foto');
       } else {
         // Obtiene la URL de la foto desde Firebase
         final fotoUrl = snapshot.data;
-        print('URL de la foto recibida desde Firebase: $fotoUrl');
         return SizedBox(
           width: 150,
           height: 150,
@@ -256,13 +249,10 @@ Widget apellido(String uid) {
         return const CircularProgressIndicator();
       } else if (snapshot.hasError) {
         // Muestra un mensaje de error si ocurre un error al obtener los apellidos
-        print(
-            'Error al obtener los apellidos desde Firebase: ${snapshot.error}');
         return const Text('Error al obtener los apellidos');
       } else {
         // Muestra los apellidos obtenidos desde Firebase
         final apellidos = snapshot.data ?? 'Apellidos no encontrados';
-        print('Apellidos recibidos desde Firebase: $apellidos');
         return Text(
           apellidos,
           style: const TextStyle(
@@ -287,12 +277,10 @@ Widget telefono(String uid) {
         return const CircularProgressIndicator();
       } else if (snapshot.hasError) {
         // Muestra un mensaje de error si ocurre un error al obtener el teléfono
-        print('Error al obtener el teléfono desde Firebase: ${snapshot.error}');
         return const Text('Error al obtener el teléfono');
       } else {
         // Muestra el teléfono obtenido desde Firebase
         final telefono = snapshot.data ?? 'Teléfono no encontrado';
-        print('Teléfono recibido desde Firebase: $telefono');
         return Text(
           telefono,
           style: const TextStyle(
@@ -314,11 +302,9 @@ Widget buildDiasSemana(String idHorario) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const CircularProgressIndicator();
       } else if (snapshot.hasError) {
-        print('Error al obtener las horas desde Firebase: ${snapshot.error}');
         return const Text('Error al obtener las horas');
       } else {
         final horasSemana = snapshot.data ?? [];
-        print('horasSemana: $horasSemana');
         return buildColumnDiasSemana(horasSemana);
       }
     },

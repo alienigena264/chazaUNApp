@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -14,12 +12,11 @@ Future<String> getNombreFromFirestore(String id) async {
     if (data != null && data['nombres'] != null) {
       return data['nombres'];
     } else {
-      print('Nombre no encontrado en Firebase');
+      throw Exception('Nombre no encontrado en Firebase');
     }
   } else {
-    print('Documento no encontrado en Firebase');
+    throw Exception('Documento no encontrado en Firebase');
   }
-  return ''; // Valor predeterminado si no se encuentra el nombre en Firebase
 }
 
 Future<String> getApellidosFromFirestore(String id) async {
@@ -30,12 +27,11 @@ Future<String> getApellidosFromFirestore(String id) async {
     if (data != null && data['apellidos'] != null) {
       return data['apellidos'];
     } else {
-      print('Apellidos no encontrados en Firebase');
+      throw Exception('Apellidos no encontrados en Firebase');
     }
   } else {
-    print('Documento no encontrado en Firebase');
+    throw Exception('Documento no encontrado en Firebase');
   }
-  return ''; // Valor predeterminado si no se encuentran los apellidos en Firebase
 }
 
 Future<String> getTelefonoFromFirestore(String id) async {
@@ -46,12 +42,11 @@ Future<String> getTelefonoFromFirestore(String id) async {
     if (data != null && data['telefono'] != null) {
       return data['telefono'];
     } else {
-      print('Teléfono no encontrado en Firebase');
+      throw Exception('Teléfono no encontrado en Firebase');
     }
   } else {
-    print('Documento no encontrado en Firebase');
+    throw Exception('Documento no encontrado en Firebase');
   }
-  return ''; // Valor predeterminado si no se encuentra el teléfono en Firebase
 }
 
 Future<String?> getFotoUrlFromFirestore(String id) async {
@@ -62,12 +57,11 @@ Future<String?> getFotoUrlFromFirestore(String id) async {
     if (data != null && data['foto'] != null) {
       return data['foto'];
     } else {
-      print('URL de foto no encontrada en Firebase');
+      throw Exception('URL de foto no encontrada en Firebase');
     }
   } else {
-    print('Documento no encontrado en Firebase');
+    throw Exception('Documento no encontrado en Firebase');
   }
-  return null; // Valor predeterminado si no se encuentra la URL de foto en Firebase
 }
 
 Future<List<List<String>>> fetchHoras(String idHorario) async {
@@ -78,7 +72,6 @@ Future<List<List<String>>> fetchHoras(String idHorario) async {
 
     if (documentSnapshot.exists) {
       var data = documentSnapshot.data();
-      print(data);
 
       var dias = data!['Dias'];
       var orderedDias = [
@@ -92,7 +85,6 @@ Future<List<List<String>>> fetchHoras(String idHorario) async {
       for (var dia in orderedDias) {
         horasMap[dia] = List<String>.from(dias[dia]);
       }
-      print(orderedDias);
     } else {
       throw Exception('El ID de Horario no existe');
     }
@@ -101,7 +93,6 @@ Future<List<List<String>>> fetchHoras(String idHorario) async {
   }
 
   List<List<String>> horasSemana = horasMap.values.toList();
-  print(horasSemana);
   return horasSemana;
 }
 
@@ -117,10 +108,9 @@ Future<void> actualizarEstadoRelacionTrabajadores(
     for (var doc in querySnapshot.docs) {
       await doc.reference.update({'Estado': false});
     }
-
-    print('Estado actualizado correctamente en RelacionTrabajadores');
   } catch (error) {
-    print('Error al actualizar el estado en RelacionTrabajadores: $error');
+    throw Exception(
+        'Error al actualizar el estado en RelacionTrabajadores: $error');
   }
 }
 
@@ -131,9 +121,8 @@ Future<void> actualizarMapaEnFirestore(
         .collection('Horario')
         .doc(idDocumento)
         .update({'Dias': nuevoMapa});
-    print('Actualización exitosa en Firestore');
   } catch (error) {
-    print('Error al actualizar en Firestore: $error');
+    throw Exception('Error al actualizar en Firestore: $error');
   }
 }
 
@@ -172,18 +161,13 @@ Future<void> buscarHorarioPorIdTrabajador(
     // Verificar si se encontró el documento en la colección "Horario"
     if (horarioSnapshot.exists) {
       Map<String, dynamic> dias = horarioSnapshot['Dias'];
-      print(dias);
       reemplazarIdTrabajadorEnMapa(dias, idTrabajador);
-      print("dias sin el id");
-      print(dias);
 
       actualizarMapaEnFirestore(idHorario, dias);
-      print("dias sin el id en la base de datos");
-      print(dias);
     } else {
-      print('El mapa "Dias" no contiene todos los días de la semana');
+      throw Exception('El mapa "Dias" no contiene todos los días de la semana');
     }
   } else {
-    print('El horario no existe');
+    throw Exception('El horario no existe');
   }
 }

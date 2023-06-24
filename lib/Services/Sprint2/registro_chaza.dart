@@ -8,7 +8,7 @@ FirebaseFirestore db = FirebaseFirestore.instance;
 Future<void> registrarChaza(String? uid, String descripcion, imagen, nombre,
     paga, puntuacion, ubicacion, int tipo) async {
   String horario = await crearDocumentoYObtenerNumero();
-  DateTime fecha =DateTime.now();
+  DateTime fecha = DateTime.now();
   await db.collection('Chaza').add({
     'ID_Chazero': uid,
     'descripcion': descripcion,
@@ -19,16 +19,17 @@ Future<void> registrarChaza(String? uid, String descripcion, imagen, nombre,
     'puntuacion': puntuacion,
     'tipo': tipo,
     'ubicacion': ubicacion,
-    'FechaCreacion':fecha
+    'FechaCreacion': fecha
   });
 }
+
 Future<String> crearDocumentoYObtenerNumero() async {
   // Crear un nuevo documento en la colección
   var horas = {
-  '800': '',
-  '830': '',
-  '900': '',
-  '930': '',
+    '800': '',
+    '830': '',
+    '900': '',
+    '930': '',
     '1000': '',
     '1030': '',
     '1100': '',
@@ -51,8 +52,7 @@ Future<String> crearDocumentoYObtenerNumero() async {
     '1930': ''
   };
 
-  // ignore: non_constant_identifier_names
-  var Dias = {
+  var dias = {
     'Lunes': horas,
     'Martes': horas,
     'Miercoles': horas,
@@ -61,16 +61,14 @@ Future<String> crearDocumentoYObtenerNumero() async {
     'Sabado': horas,
   };
 
-
-
-  final DocumentReference docRef = await db.collection('Horario').add({'Dias':Dias, 'Tipo':0});
+  final DocumentReference docRef =
+      await db.collection('Horario').add({'Dias': dias, 'Tipo': 0});
 
   // Obtener el número de documento asignado
   final String numeroDocumento = docRef.id;
 
   return numeroDocumento;
 }
-
 
 final FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -86,7 +84,5 @@ Future<String> uploadImageChaza(File image) async {
   final TaskSnapshot snapshot = await uploadTask.whenComplete(() => true);
   final String url = await snapshot.ref.getDownloadURL();
 
-  // ignore: avoid_print
-  print(url);
   return url;
 }

@@ -1,10 +1,8 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:chazaunapp/view/Sprint3/calendario_chaza_vista.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:flutter/material.dart';
 
-import '../../Services/Sprint3/infoChaza_services.dart';
+import '../../Services/Sprint3/info_chaza_services.dart';
 
 class InfoChazaVista extends StatefulWidget {
   const InfoChazaVista({super.key});
@@ -77,7 +75,7 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
     final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
     return Padding(
-      padding: const  EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -99,10 +97,10 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
             height: screenHeight * 0.01,
           ),
           rowUbicacion_(ubicacion),
-          const  Divider(thickness: 1.3),
+          const Divider(thickness: 1.3),
           rowPuntuacion_(puntuacion),
-          const  Divider(thickness: 1.3),
-          const  SizedBox(
+          const Divider(thickness: 1.3),
+          const SizedBox(
             height: 1.8,
           ),
           _descripcion(descripcion),
@@ -123,17 +121,15 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
       mainAxisSize: MainAxisSize.max,
       children: [
         Flexible(
-          child: Text(
-            nombre,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 31.0,
-              fontFamily: "Inder",
-              fontWeight: FontWeight.normal,
-            ),
-            maxLines: null, // Permite un número ilimitado de líneas
-            overflow: TextOverflow.visible
-          ),
+          child: Text(nombre,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 31.0,
+                fontFamily: "Inder",
+                fontWeight: FontWeight.normal,
+              ),
+              maxLines: null, // Permite un número ilimitado de líneas
+              overflow: TextOverflow.visible),
         ),
         Row(
           children: [
@@ -162,7 +158,6 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
       ],
     );
   }
-
 
   Row rowUbicacion_(String ubicacion) {
     final screenSize = MediaQuery.of(context).size;
@@ -275,7 +270,7 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
     return ElevatedButton(
-        onPressed: _Postularse(context),
+        onPressed: _postularse(context),
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrincipal,
           minimumSize: Size(screenWidth * 0.85, screenHeight * 0.064),
@@ -311,9 +306,10 @@ class _InfoChazaVistaState extends State<InfoChazaVista> {
     };
   }
 
-  Function() _Postularse(BuildContext context){
+  Function() _postularse(BuildContext context) {
     return () {
-      Navigator.pushNamed(context, '/menu/trabajador/chaza/postulacion', arguments: chaza);
+      Navigator.pushNamed(context, '/menu/trabajador/chaza/postulacion',
+          arguments: chaza);
     };
   }
 

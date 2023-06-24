@@ -55,7 +55,6 @@ contratar(uid, idHorarioTrabajador) async {
   String idHorario = snapshotChaza.get('horario');
   //guarda en relacion trabajador
 
-  print(horario);
   bool yaExiste = false;
   var horarioChaza = (await coleccionHorario.doc(idHorario).get()).get('Dias')
       as Map<String, dynamic>;
@@ -72,7 +71,6 @@ contratar(uid, idHorarioTrabajador) async {
         i,
         (value) {
           if (value != '') {
-            print(value);
             throw Exception('LLENO');
           }
           return uid;
@@ -81,7 +79,6 @@ contratar(uid, idHorarioTrabajador) async {
     }
     //almacena cada día
     dias.addAll({key: map});
-    // ignore: avoid_print
   }
   DateTime fechaHoy = DateTime.now();
   //manda a la bd

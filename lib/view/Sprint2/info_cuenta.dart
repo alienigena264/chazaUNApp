@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'package:chazaunapp/Services/Sprint2/info_personal_services.dart';
 import 'package:chazaunapp/view/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -28,7 +27,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
   String email = '';
   String emailOculto = '';
   Timestamp fechaCreacion = Timestamp(0, 0);
-  Timestamp fechaUltimaActualizacion =  Timestamp(0, 0);
+  Timestamp fechaUltimaActualizacion = Timestamp(0, 0);
   List<dynamic> resultado = [];
   @override
   void initState() {
@@ -57,14 +56,13 @@ class _InfoCuentaState extends State<InfoCuenta> {
           telefono = resultado[2];
           email = resultado[1];
           fechaCreacion = resultado[7];
-          fechaUltimaActualizacion = resultado [8];
+          fechaUltimaActualizacion = resultado[8];
           telefonoOculto = telefono.replaceRange(3, 6, '***');
           emailOculto = email.replaceRange(3, 8, '******');
         }); // Actualizar el estado para mostrar los datos en el widget
       }
     } catch (e) {
-      // ignore: avoid_print
-      print('Error al obtener la información personal: $e');
+      throw Exception('Error al obtener la información personal: $e');
     }
   }
 
@@ -162,7 +160,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: (){},
+            onPressed: () {},
             child: const Text(
               "Informacion Personal",
               style: TextStyle(fontSize: 20, color: Color(0xff404040)),
@@ -353,7 +351,8 @@ class _InfoCuentaState extends State<InfoCuenta> {
     }
   }
 
-  Future<String?> openDialog(Function toExecute, int cambiarVariable, TextInputType tipoTeclado) =>
+  Future<String?> openDialog(
+          Function toExecute, int cambiarVariable, TextInputType tipoTeclado) =>
       showDialog<String>(
         context: context,
         builder: (context) => AlertDialog(
@@ -362,7 +361,7 @@ class _InfoCuentaState extends State<InfoCuenta> {
             style: TextStyle(fontSize: 25),
           ),
           content: TextField(
-            keyboardType: tipoTeclado,
+              keyboardType: tipoTeclado,
               controller: controllerCampo,
               autofocus: true,
               decoration:

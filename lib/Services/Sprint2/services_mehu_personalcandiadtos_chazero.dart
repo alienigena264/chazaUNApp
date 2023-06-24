@@ -41,7 +41,6 @@ Future<List> getPostulacionesPorChaza(String idChaza) async {
         datosTrabajadorHorario); //Mete pareja trabajador-horario en la lista final
     datosTrabajadorHorario = []; //Reinicia la lista
   }
-  print(resultadosTotales);
   Future.delayed(const Duration(milliseconds: 800));
   return resultadosTotales;
 }

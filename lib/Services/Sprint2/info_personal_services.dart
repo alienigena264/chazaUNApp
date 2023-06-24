@@ -22,14 +22,13 @@ Future<List<dynamic>> traerInfoGeneral(String? uid) async {
       info.add(docSnapshot.get('FechaUltimaActualizacion'));
     } else {}
   } catch (e) {
-    // ignore: avoid_print
-    print('Error al obtener el documento: $e');
+    throw Exception('Error al obtener el documento: $e');
   }
   return info;
 }
 
 Future<void> actualizarDatos(String? uid, correoActual, contrasena, telefono,
-    pApellido, pNombre, sApellido, sNombre,Timestamp fechaCreacion) async {
+    pApellido, pNombre, sApellido, sNombre, Timestamp fechaCreacion) async {
   DateTime fechaHoy = DateTime.now();
   await db.collection('Chazero').doc(uid).set({
     'contraseña': contrasena,
@@ -40,6 +39,6 @@ Future<void> actualizarDatos(String? uid, correoActual, contrasena, telefono,
     'segundo_apellido': sApellido,
     'segundo_nombre': sNombre,
     'FechaCreacion': fechaCreacion,
-    'FechaUltimaActualizacion' : fechaHoy
+    'FechaUltimaActualizacion': fechaHoy
   });
 }
