@@ -4,7 +4,6 @@ import 'package:chazaunapp/view/colors.dart';
 import 'package:chazaunapp/view/menu_inicia_cards/fill_image_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'Sprint2/configuracion_trabajador_vista.dart';
 import 'Sprint2/info_cuenta_trabajador.dart';
 
@@ -67,7 +66,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            'Usuario', // el texto que quieres mostrar
+                            'Chazas', // el texto que quieres mostrar
                             style: TextStyle(
                                 color: Colors
                                     .white, // Establece el color del texto
@@ -232,12 +231,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
                     filtroTipo = 0; // Cambiar el filtro a tipo 2 (cubiertos)
                   });
                 },
-                child: Image.asset(
-                  'assets/imagenes/chef.png',
-                  height: 60,
-                  width: 60,
-                  fit: BoxFit.cover,
-                ))));
+                child: Icon(Icons.fastfood, color: colorPrincipal, size: 60,))));
   }
 
   cubiertosBottom_() {
@@ -254,7 +248,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
             });
           },
           child: Image.asset(
-            'assets/imagenes/snack.png',
+            'assets/imagenes/candy.png',
             height: 60,
             width: 60,
             fit: BoxFit.cover,
@@ -277,12 +271,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               filtroTipo = 2; // Cambiar el filtro a tipo 3 (más)
             });
           },
-          child: Image.asset(
-            'assets/imagenes/mas.png',
-            height: 60,
-            width: 60,
-            fit: BoxFit.cover,
-          ),
+          child: Icon(Icons.add, color: colorPrincipal, size: 80),
         ),
       ),
     );
@@ -319,12 +308,7 @@ class _MenuInicialVistaView extends State<MenuInicialVistaView> {
               filtroTipo = 3; // Sin filtro
             });
           },
-          child: Image.asset(
-            'assets/imagenes/todos.png',
-            height: 60,
-            width: 60,
-            fit: BoxFit.cover,
-          ),
+          child: Icon(Icons.clear_all, color: colorPrincipal, size: 70,)
         ),
       ),
     );
